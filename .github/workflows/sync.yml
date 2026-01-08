@@ -1,0 +1,22 @@
+name: Update Snowflake from Sheets
+on:
+  schedule:
+    - cron: '0 17 * * *' # 한국시간 오전 2시 (UTC 17시)
+  workflow_dispatch: # 수동 실행 버튼을 만들어줍니다
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install pandas gspread google-auth snowflake-connector-python[pandas]
+      - name: Run Script
+        env:
+          GOOGLE_JSON_KEY: ${{ secrets.GOOGLE_JSON_KEY }}
+          SF_USER: ${{ secrets.SF_USER }}
+          SF_PASSWORD: ${{ secrets.SF_PASSWORD }}
+        run: python main.py
