@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMC 통합 성과 대시보드 (Real-time)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <style>
+        body { font-family: 'Pretendard', 'Inter', sans-serif; }
+        .custom-scroll { overflow: auto; }
+        .custom-scroll::-webkit-scrollbar { height: 10px; width: 10px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f8fafc; border: 1px solid #e2e8f0; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; border: 2px solid #f8fafc; }
+        .timeline-bar { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+        .timeline-bar:hover { transform: scaleY(1.1); z-index: 40; filter: brightness(1.1); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 h-screen flex flex-col overflow-hidden">
+
+    <nav class="bg-white border-b border-slate-200 h-16 flex-none flex items-center justify-between px-6 z-30 shadow-sm">
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-black text-lg font-sans">D</div>
+                <h1 class="text-lg font-bold text-slate-800 tracking-tight">IMC 통합 성과 대시보드</h1>
+            </div>
+            <select id="brandFilter" onchange="applyFilter()" class="bg-slate-50 border border-slate-200 text-slate-700 text-sm font-bold rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-indigo-500 outline-none">
+                <option value="ALL">브랜드 전체</option>
+                <option value="V">듀베티카 (DV)</option>
+                <option value="ST">세르지오 타키니 (ST)</option>
+            </select>
+        </div>
+        <div class="text-xs font-bold text-green-600 bg-green-50 px-3 py-1.5 rounded-full flex items-center">
+            <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+            Snowflake 실시간 데이터 연동 중
+        </div>
+    </nav>
+
+    <main class="flex-1 flex overflow-hidden">
+        <aside class="w-64 bg-white border-r border-slate-200 p-6 flex flex-col gap-6 z-20">
+            <div>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">1월 통합 달성률</p>
+                <div class="bg-slate-900 rounded-2xl p-5 text-white shadow-lg">
+                    <p class="text-3xl font-black text-indigo-400" id="total-rate">0%</p>
+                    <div class="w-full bg-slate-700 h-1.5 rounded-full mt-4 overflow-hidden">
+                        <div id="rate-bar" class="bg-indigo-400 h-full transition-all duration-1000" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="channel-legend" class="space-y-2 pt-4">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">채널 범례</p>
+                </div>
+        </aside>
+
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <div class="h-[45%] bg-white border-b border-slate-200 flex flex-col">
+                <div class="px-6 py-3 border-b flex justify-between items-center bg-slate-50/50">
+                    <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest">프로모션 타임라인 (1-2월)</h2>
+                </div>
+                <div class="flex-1 custom-scroll" id="gantt-scroll">
+                    <div class="min-w-[2500px] h-full relative" id="gantt-canvas">
+                        <div class="h-8 border-b sticky top-0 bg-white/90 backdrop-blur-sm z-20 flex text-[10px] text-slate-400 font-bold" id="date-header"></div>
+                        <div class="absolute inset-0 top-8 flex pointer-events-none" id="grid-lines"></div>
+                        <div class="pt-4 px-2 space-y-4 relative z-10" id="timeline-rows"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-[55%] flex flex-col bg-slate-50">
+                <div class="px-6 py-3 border-b bg-white flex justify-between items-center">
+                    <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest">상세 실적 리스트</h2>
+                </div>
+                <div class="flex-1 p-4 overflow-auto custom-scroll">
+                    <table class="w-full text-sm text-left bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <thead class="bg-slate-50 text-[11px] font-bold text-slate-400 uppercase border-b border-slate-200">
+                            <tr>
+                                <th class="px-6 py-4">브랜드</th>
+                                <th class="px-6 py-4">채널</th>
+                                <th class="px-6 py-4">기획전명</th>
+                                <th class="px-6 py-4">기간</th>
+                                <th class="px-6 py-4">상태</th>
+                                <th class="px-6 py-4 text-right">상세보기</th>
+                            </tr>
+                        </thead>
+                        <tbody id="list-body" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in duration-200">
+            <div class="p-6 border-b flex justify-between items-center bg-slate-50">
+                <div class="flex items-center gap-3">
+                    <span id="m-brand" class="px-2 py-1 bg-black text-white text-[10px] font-bold rounded">BRAND</span>
+                    <h3 id="m-title" class="text-lg font-bold text-slate-800">Title</h3>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 text-2xl">&times;</button>
+            </div>
+            <div class="p-8 space-y-6">
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">혜택 상세</p>
+                        <p id="m-benefit" class="text-sm font-semibold text-slate-700"></p>
+                    </div>
+                    <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">MD 인사이트</p>
+                        <p id="m-comment" class="text-sm text-slate-600 italic leading-relaxed"></p>
+                    </div>
+                </div>
+                <div class="h-48 border border-slate-100 rounded-2xl p-4 relative">
+                    <canvas id="chart-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 변수 설정
+        let csvData = [];
+        const brandMap = { 'V': '듀베티카', 'ST': '세르지오 타키니' };
+        const colorMap = {
+            '자사몰': 'bg-slate-800', '무신사': 'bg-purple-600', 'SSF샵': 'bg-blue-600',
+            '네이버스토어': 'bg-green-500', 'W컨셉': 'bg-orange-500', '29CM': 'bg-indigo-500'
+        };
+
+        // 2. 데이터 로드 (핵심!)
+        async function loadData() {
+            try {
+                // 동일 폴더의 data.json을 읽어옵니다.
+                const response = await fetch('data.json');
+                if (!response.ok) throw new Error("JSON 파일을 찾을 수 없습니다.");
+                csvData = await response.json();
+                
+                // 데이터 로드 후 초기화
+                init();
+            } catch (err) {
+                console.error("Data Load Error:", err);
+                alert("데이터 로딩 실패! (data.json 파일이 생성되었는지 확인하세요)");
+            }
+        }
+
+        function init() {
+            renderLegend();
+            renderDates();
+            applyFilter();
+        }
+
+        function renderDates() {
+            const header = document.getElementById('date-header');
+            const grid = document.getElementById('grid-lines');
+            const totalDays = 59; // 1월(31) + 2월(28)
+            for(let i=1; i<=totalDays; i++) {
+                const day = i <= 31 ? i : i - 31;
+                header.innerHTML += `<div class="flex-1 flex justify-center items-center border-r border-slate-50 shrink-0">${day}</div>`;
+                grid.innerHTML += `<div class="flex-1 border-r border-slate-50 shrink-0 h-full ${i%7<2?'bg-slate-50/20':''}"></div>`;
+            }
+        }
+
+        function applyFilter() {
+            const brand = document.getElementById('brandFilter').value;
+            // Snowflake 컬럼명 'BRAND' 사용
+            const filtered = brand === 'ALL' ? csvData : csvData.filter(d => d.BRAND === brand);
+            
+            renderGantt(filtered);
+            renderList(filtered);
+        }
+
+        function renderGantt(data) {
+            const rows = document.getElementById('timeline-rows');
+            rows.innerHTML = '';
+            
+            // 채널별 그룹화 (Snowflake 컬럼명 'CHANNEL' 사용)
+            const grouped = data.reduce((acc, c) => { (acc[c.CHANNEL] = acc[c.CHANNEL] || []).push(c); return acc; }, {});
+            
+            Object.keys(grouped).forEach(ch => {
+                const row = document.createElement('div');
+                row.className = "relative h-10 w-full";
+                grouped[ch].forEach(item => {
+                    const s = parseDay(item.START_DATE);
+                    const e = parseDay(item.END_DATE);
+                    if(s < 1) return;
+                    
+                    const left = (s-1)*(100/59);
+                    const width = (e-s+1)*(100/59);
+                    
+                    const bar = document.createElement('div');
+                    bar.className = `absolute h-8 ${colorMap[ch] || 'bg-slate-400'} text-white text-[10px] font-bold flex items-center px-2 rounded-md shadow-sm timeline-bar`;
+                    bar.style.left = `${left}%`;
+                    bar.style.width = `calc(${width}% - 4px)`;
+                    bar.innerText = item.PROMO_NAME;
+                    bar.onclick = () => openModal(item);
+                    row.appendChild(bar);
+                });
+                rows.appendChild(row);
+            });
+        }
+
+        function renderList(data) {
+            const body = document.getElementById('list-body');
+            body.innerHTML = '';
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition-colors cursor-pointer group";
+                tr.onclick = () => openModal(item);
+                
+                const statusColor = item.STATUS === 'closed' ? 'bg-slate-200' : 'bg-indigo-100 text-indigo-600';
+
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-bold text-slate-800">${brandMap[item.BRAND] || item.BRAND}</td>
+                    <td class="px-6 py-4"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${statusColor}">${item.STATUS}</span></td>
+                    <td class="px-6 py-4 font-medium text-slate-500">${item.CHANNEL}</td>
+                    <td class="px-6 py-4 font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">${item.PROMO_NAME}</td>
+                    <td class="px-6 py-4 text-[10px] text-slate-400 font-mono">${item.START_DATE.substring(5)} ~ ${item.END_DATE.substring(5)}</td>
+                    <td class="px-6 py-4 text-right"><span class="text-indigo-500 font-bold">→</span></td>
+                `;
+                body.appendChild(tr);
+            });
+        }
+
+        function parseDay(str) {
+            if(!str) return -1;
+            const m = parseInt(str.split('-')[1]);
+            const d = parseInt(str.split('-')[2]);
+            return m === 1 ? d : (m === 2 ? 31 + d : 1);
+        }
+
+        function renderLegend() {
+            const leg = document.getElementById('channel-legend');
+            Object.keys(colorMap).forEach(ch => {
+                leg.innerHTML += `<div class="flex items-center gap-2 text-[11px] font-medium text-slate-600">
+                    <span class="w-2 h-2 rounded-full ${colorMap[ch]}"></span> ${ch}
+                </div>`;
+            });
+        }
+
+        let chart;
+        function openModal(item) {
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('m-title').innerText = item.PROMO_NAME;
+            document.getElementById('m-brand').innerText = brandMap[item.BRAND] || item.BRAND;
+            document.getElementById('m-benefit').innerText = item.BENEFIT_DETAIL || '정보 없음';
+            document.getElementById('m-comment').innerText = item.MD_COMMENT ? `"${item.MD_COMMENT}"` : "인사이트를 분석 중입니다.";
+            
+            const ctx = document.getElementById('chart-canvas').getContext('2d');
+            if(chart) chart.destroy();
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
+                    datasets: [{ data: [30, 45, 32, 70, 55], borderColor: '#6366f1', borderWidth: 3, tension: 0.4, fill: true, backgroundColor: 'rgba(99, 102, 241, 0.05)' }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } }
+            });
+        }
+
+        function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+
+        // 실행
+        loadData();
+    </script>
+</body>
+</html>
