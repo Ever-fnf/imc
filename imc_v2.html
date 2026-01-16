@@ -18,142 +18,135 @@
         .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; border: 2px solid #f8fafc; }
         .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        .timeline-bar { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
-        .timeline-bar:hover { transform: scaleY(1.1); z-index: 50; filter: brightness(1.1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .timeline-bar { transition: all 0.2s; }
+        .timeline-bar:hover { transform: scale(1.02); z-index: 60; box-shadow: 0 4px 12px rgba(0,0,0,0.15); opacity: 1 !important; filter: none; }
+        
+        /* Sticky Layout */
+        .sticky-col-header { position: sticky; top: 0; z-index: 50; }
+        .sticky-left-col { position: sticky; left: 0; z-index: 40; background: white; border-right: 1px solid #e2e8f0; }
+        
+        /* Filter Chip */
+        .filter-chip { transition: all 0.2s; cursor: pointer; user-select: none; }
+        .filter-chip:hover { transform: translateY(-1px); }
+        .filter-chip.active { box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2); }
+
+        /* Table */
+        .kpi-table th, .kpi-table td { white-space: nowrap; padding: 10px 16px; }
+        .kpi-table th { background-color: #f8fafc; color: #64748b; font-weight: 700; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; }
+        .kpi-table td { border-bottom: 1px solid #f1f5f9; font-size: 12px; font-weight: 500; color: #334155; }
+        .kpi-table .total-col { background-color: #f1f5f9; font-weight: 800; color: #1e293b; border-left: 2px solid #e2e8f0; }
+        
+        /* Today Highlight Animation */
+        .today-pulse { animation: pulse-border 2s infinite; }
+        @keyframes pulse-border {
+            0% { box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.2); }
+            50% { box-shadow: inset 0 0 0 2px rgba(239, 68, 68, 0.6); }
+            100% { box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.2); }
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 h-screen flex flex-col overflow-hidden">
+<body class="bg-[#F8F9FC] text-slate-800 h-screen flex flex-col overflow-hidden">
 
-    <nav class="bg-white border-b border-slate-200 h-16 flex-none flex items-center justify-between px-6 z-30 shadow-sm">
+    <nav class="bg-white border-b border-slate-200 h-14 flex-none flex items-center justify-between px-6 z-50 shadow-sm">
         <div class="flex items-center gap-6">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-black text-lg font-sans">D</div>
-                <h1 class="text-lg font-bold text-slate-800 tracking-tight">IMC 통합 성과 대시보드</h1>
+                <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-black text-lg">D</div>
+                <h1 class="text-lg font-bold text-slate-800 tracking-tight">IMC 통합 성과 대시보드 <span class="text-xs font-normal text-slate-400 ml-1">Live View</span></h1>
             </div>
-            <div class="h-8 border-l border-slate-300 mx-2"></div>
-            <div class="relative group">
-                <select id="brandFilter" onchange="updateFilter()" class="appearance-none bg-slate-50 border border-slate-200 text-slate-700 text-sm font-bold rounded-lg pl-3 pr-10 py-1.5 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-slate-100 transition-colors">
-                    <option value="ALL">브랜드 전체</option>
+            <div class="h-6 border-l border-slate-300 mx-2"></div>
+            <div class="flex items-center gap-3">
+                <select id="brandFilter" onchange="applyFilter()" class="bg-slate-900 text-white border border-slate-900 text-sm font-bold rounded pl-3 pr-8 py-1.5 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-slate-800 shadow-sm">
                     <option value="V">듀베티카 (DUVETICA)</option>
-                    <option value="ST">세르지오 타키니 (Sergio Tacchini)</option>
+                    <option value="ST">세르지오 타키니 (ST)</option>
                 </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
-                    <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
-                </div>
+
+                <select id="yearFilter" onchange="applyFilter()" class="bg-indigo-50 border border-indigo-200 text-indigo-700 text-sm font-bold rounded pl-3 pr-8 py-1.5 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-indigo-100">
+                    <option value="ALL">전체 (26년 / 25년 비교)</option>
+                    <option value="2026">2026년 (당해)</option>
+                    <option value="2025">2025년 (전년)</option>
+                </select>
+                <select id="monthFilter" onchange="applyFilter()" class="bg-white border border-slate-200 text-slate-700 text-sm font-bold rounded pl-3 pr-8 py-1.5 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-slate-50">
+                    <option value="ALL">1~2월 누적</option>
+                    <option value="1">1월 (January)</option>
+                    <option value="2">2월 (February)</option>
+                </select>
             </div>
         </div>
-
-        <div class="flex items-center gap-4">
-            <div class="flex items-center text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200 shadow-sm">
-                <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
-                Snowflake Live Sync
-            </div>
-            <div class="h-8 w-8 rounded-full bg-slate-200 border border-slate-300 overflow-hidden flex items-center justify-center text-xs font-bold text-slate-500">
-                PM
-            </div>
+        <div class="text-xs font-medium text-slate-500">
+            기준일: <span class="text-red-600 font-extrabold bg-red-50 px-2 py-0.5 rounded">2026.01.15 (목)</span>
         </div>
     </nav>
 
-    <div class="flex-1 flex overflow-hidden">
+    <div class="bg-white border-b border-slate-200 py-3 px-6 flex items-center gap-3 flex-wrap shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] z-40">
+        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-2">CHANNEL FILTER</span>
+        <div id="filter-all" onclick="toggleAllChannels()" class="filter-chip px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800 text-white active">ALL</div>
+        <div class="h-4 border-l border-slate-300 mx-1"></div>
+        <div id="channel-chips" class="flex items-center gap-2 overflow-x-auto custom-scroll pb-1"></div>
+    </div>
+
+    <div class="flex-1 flex flex-col overflow-hidden bg-white">
         
-        <aside class="w-72 bg-white border-r border-slate-200 flex-none flex flex-col p-6 gap-6 z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
-            <div>
-                <div class="flex items-center justify-between mb-3">
-                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Channel Legend</label>
-                    <button onclick="resetChannels()" class="text-[10px] text-indigo-500 hover:underline">Reset</button>
-                </div>
-                <div class="space-y-2" id="legend-container">
-                    </div>
-            </div>
-
-            <div class="mt-auto">
-                <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 shadow-xl text-white relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <svg class="w-16 h-16" fill="currentColor" viewBox="0 0 20 20"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"/><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"/></svg>
-                    </div>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">1월 통합 달성률 (예상)</p>
-                    <div class="flex items-baseline gap-2 mb-2">
-                        <p class="text-3xl font-black text-white tracking-tight" id="kpi-rate">0%</p>
-                        <span class="text-xs text-slate-400 font-medium">vs Goal</span>
-                    </div>
-                    <div class="w-full bg-slate-700/50 h-1.5 rounded-full overflow-hidden">
-                        <div id="kpi-bar" class="bg-indigo-500 h-full rounded-full transition-all duration-1000" style="width: 0%"></div>
-                    </div>
-                    <div class="mt-4 flex justify-between items-end">
-                        <div>
-                            <p class="text-[10px] text-slate-500 mb-0.5">Total Sales</p>
-                            <p class="text-sm font-bold text-slate-200" id="kpi-sales">₩0</p>
-                        </div>
-                        <div class="text-right">
-                             <p class="text-[10px] text-slate-500 mb-0.5">Active Promos</p>
-                             <p class="text-sm font-bold text-indigo-400" id="kpi-count">0</p>
+        <div class="flex-1 flex flex-col relative min-h-0">
+            <div class="flex-1 custom-scroll bg-white relative" id="gantt-container">
+                <div class="min-w-[2000px] h-full relative flex flex-col" id="gantt-content-wrapper">
+                    
+                    <div class="sticky-col-header bg-white border-b border-slate-200 shadow-sm flex shrink-0 flex-col z-50">
+                        <div class="flex w-full">
+                            <div class="sticky-left-col w-32 min-w-[8rem] bg-slate-50 z-50 border-r border-slate-200 flex flex-col">
+                                <div class="flex-1 border-b border-slate-100 flex items-center justify-center">
+                                    <span class="text-[10px] font-bold text-slate-400 uppercase">Channel</span>
+                                </div>
+                            </div>
+                            <div class="flex-1 flex flex-col relative">
+                                <div class="h-7 flex text-sm font-bold text-slate-600 bg-slate-100/50 border-b border-slate-100" id="month-header"></div>
+                                <div class="h-7 flex text-[11px] font-semibold text-slate-600 bg-slate-50 border-b border-slate-100" id="week-header"></div>
+                                <div class="h-7 flex text-[11px] text-slate-500 font-medium bg-white border-b border-slate-100" id="day-header"></div>
+                                <div class="h-10 flex bg-slate-50/80 border-b border-slate-200" id="market-issue-header"></div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="relative flex-1">
+                        <div class="absolute inset-0 flex pointer-events-none z-0 pl-32" id="grid-lines"></div>
+                        <div id="chart-content-layer" class="relative z-20 pt-0 pb-10"></div>
+                        
+                        </div>
                 </div>
             </div>
-        </aside>
+        </div>
 
-        <main class="flex-1 flex flex-col bg-white overflow-hidden relative">
+        <div class="h-64 bg-white border-t border-slate-200 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-30 shrink-0 flex flex-col">
+            <div class="px-6 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/30 shrink-0">
+                <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                    <span class="w-1.5 h-4 bg-indigo-600 rounded-sm"></span>
+                    <span id="summary-title">종합 결과 요약 (채널별 KPI 매트릭스)</span>
+                </h3>
+                <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">(단위: 천원)</span>
+            </div>
             
-            <div class="h-12 border-b border-slate-200 flex items-center px-6 bg-white sticky top-0 z-10 shrink-0 justify-between">
-                <h2 class="font-bold text-slate-700 text-sm flex items-center gap-2">
-                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    Promotion Schedule (Jan - Feb)
-                </h2>
-                <div class="flex gap-4 text-[10px] font-medium text-slate-400">
-                    <span class="flex items-center gap-1"><span class="w-2 h-2 bg-slate-100 border border-slate-300"></span> 2025 (Past)</span>
-                    <span class="flex items-center gap-1"><span class="w-2 h-2 bg-slate-800"></span> 2026 (Current)</span>
-                </div>
-            </div>
-
-            <div class="h-[55%] overflow-auto custom-scroll relative bg-slate-50/30" id="gantt-scroll-area">
-                <div class="min-w-[2000px] h-full relative pb-10 bg-white" id="gantt-canvas">
-                    <div class="h-9 border-b border-slate-100 flex sticky top-0 bg-white/95 backdrop-blur z-20 shadow-[0_1px_2px_rgba(0,0,0,0.02)]" id="date-header"></div>
-                    
-                    <div class="absolute inset-0 top-9 pointer-events-none flex" id="grid-lines"></div>
-                    
-                    <div class="pt-4 px-2 space-y-3 relative z-10" id="timeline-rows"></div>
-                    
-                    <div class="absolute top-9 bottom-0 border-l-2 border-red-500/30 z-0 dashed" style="left: 25%" title="Today"></div>
-                </div>
-            </div>
-
-            <div class="h-[45%] border-t border-slate-200 bg-slate-50 flex flex-col">
-                <div class="px-6 py-3 border-b border-slate-200 bg-white flex justify-between items-center shrink-0">
-                    <h3 class="font-bold text-xs text-slate-500 uppercase tracking-widest">Detail List</h3>
-                </div>
-                <div class="flex-1 overflow-auto custom-scroll p-4">
-                    <table class="w-full text-left border-collapse">
-                        <thead class="text-[11px] text-slate-400 uppercase font-bold sticky top-0 bg-slate-50 z-10">
-                            <tr>
-                                <th class="pb-3 pl-4 w-20">Brand</th>
-                                <th class="pb-3 w-28">Channel</th>
-                                <th class="pb-3">Promotion Name</th>
-                                <th class="pb-3 w-32">Period</th>
-                                <th class="pb-3 w-24">Type</th>
-                                <th class="pb-3 w-24">Benefit</th>
-                                <th class="pb-3 text-right w-24 pr-4">Sales (Est)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="list-body" class="text-sm divide-y divide-slate-100 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden"></tbody>
+            <div class="flex-1 custom-scroll p-0 relative">
+                <div class="min-w-full inline-block align-middle">
+                    <table class="kpi-table w-full text-right">
+                        <thead id="summary-thead"></thead>
+                        <tbody id="summary-tbody"></tbody>
                     </table>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 
-    <div id="modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4 transition-all duration-300">
-        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-100">
-            <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+    <div id="modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <div class="flex items-center gap-3">
-                    <span id="m-year-badge" class="text-[10px] font-bold text-slate-400 border border-slate-200 px-1.5 py-0.5 rounded bg-white">2026</span>
-                    <span id="m-brand-badge" class="px-2 py-1 bg-slate-900 text-white text-[10px] font-bold uppercase rounded">BRAND</span>
-                    <h3 id="m-title" class="text-lg font-bold text-slate-800 tracking-tight">Title</h3>
+                    <span id="m-year-badge" class="px-2 py-1 bg-slate-600 text-white text-[10px] font-bold uppercase rounded">YEAR</span>
+                    <span id="m-brand-badge" class="px-2 py-1 bg-black text-white text-[10px] font-bold uppercase rounded">BRAND</span>
+                    <h3 id="m-title" class="text-lg font-bold text-slate-800">Title</h3>
                 </div>
-                <button onclick="document.getElementById('modal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 text-2xl transition-colors">&times;</button>
+                <button onclick="document.getElementById('modal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 text-2xl">&times;</button>
             </div>
-            <div class="p-8">
-                <div class="grid grid-cols-2 gap-6 mb-8">
+            <div class="p-6">
+                <div class="grid grid-cols-2 gap-4 mb-6">
                     <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
                         <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">상세 혜택</p>
                         <p id="m-benefit" class="font-medium text-slate-700 text-sm"></p>
@@ -198,214 +191,354 @@
         // --- DATA LOADING & MAPPING ---
         async function loadData() {
             try {
-                // Fetch data.json
+                // Fetch data.json from GitHub Actions result
                 const response = await fetch('data.json');
                 if (!response.ok) throw new Error("Failed to load data.json");
                 const rawData = await response.json();
                 
                 // Map Snowflake keys (Uppercase) to Dashboard keys (Lowercase)
-                // And simulate missing sales data
                 csvData = rawData.map((item, index) => {
-                    // Simulation for demo purposes (missing in DB yet)
-                    const goal = Math.floor(Math.random() * 30000) + 20000;
-                    const actual = Math.floor(goal * (Math.random() * 0.4 + 0.8));
+                    // 1. Channel Mapping (Safety fallback)
+                    let ch = item.CHANNEL || '기타 제휴몰';
+                    if(!channelConfig[ch]) ch = '기타 제휴몰';
+
+                    // 2. Sales Simulation (Since DB doesn't have sales data yet)
+                    // Random goal between 20,000 ~ 50,000 (Unit: 1000 KRW)
+                    const showGoal = (index % 2 === 0); // Simulate some having goals
+                    const goalAmount = Math.floor(Math.random() * 30000) + 20000;
+                    const finalGoal = showGoal ? goalAmount : 0;
+                    
+                    const year = parseInt(item.START_DATE.substring(0,4));
+                    const sDate = new Date(item.START_DATE);
+                    const eDate = new Date(item.END_DATE);
+                    
+                    let actual = 0;
+                    if (year === 2025) {
+                        actual = Math.floor((showGoal ? goalAmount : 30000) * (Math.random() * 0.3 + 0.8));
+                    } else {
+                        const todayObj = new Date(2026, 0, 15);
+                        if (eDate < todayObj) actual = Math.floor((showGoal ? goalAmount : 30000) * (Math.random() * 0.3 + 0.9));
+                        else if (sDate > todayObj) actual = 0;
+                        else actual = Math.floor((showGoal ? goalAmount : 30000) * 0.4);
+                    }
 
                     return {
                         id: index + 1,
                         brand: item.BRAND || 'V',
-                        channel: item.CHANNEL || '기타 제휴몰',
+                        channel: ch,
                         name: item.PROMO_NAME || '제목 없음',
                         start: item.START_DATE,
                         end: item.END_DATE,
                         type: item.PROMO_TYPE || '자체',
                         benefitType: item.BENEFIT_TYPE || '쿠폰',
                         benefit: item.BENEFIT_DETAIL,
-                        comment: item.MD_COMMENT,
-                        goal: goal,
+                        comment: item.MD_COMMENT || '',
+                        goal: finalGoal,
                         actual: actual,
-                        status: item.STATUS
+                        status: item.STATUS // Keep original status for reference
                     };
                 });
                 
+                // 데이터 정렬 (날짜순)
+                csvData.sort((a, b) => new Date(a.start) - new Date(b.start));
+
                 init(); // Start rendering
             } catch (error) {
                 console.error("Data Load Error:", error);
-                alert("데이터 로딩 실패: data.json을 확인하세요. (최초 실행 시 1~2분 소요될 수 있습니다)");
+                alert("데이터 로딩 실패: data.json을 확인하세요.");
             }
         }
 
-        // --- RENDER LOGIC (Kept Original) ---
+        // --- UI LOGIC ---
         function init() {
-            renderLegend();
-            renderTimeline();
-            renderStats();
+            renderHeaderAndGrid();
+            renderChannelChips();
+            applyFilter();
         }
 
-        function renderLegend() {
-            const container = document.getElementById('legend-container');
+        function renderChannelChips() {
+            const container = document.getElementById('channel-chips');
             container.innerHTML = '';
             channels.forEach(ch => {
+                const isActive = activeChannels.has(ch);
+                const chip = document.createElement('div');
                 const conf = channelConfig[ch];
-                const item = document.createElement('div');
-                item.className = "flex items-center gap-2 cursor-pointer group";
-                item.onclick = () => toggleChannel(ch);
-                
-                const dot = document.createElement('div');
-                dot.className = `w-2.5 h-2.5 rounded-full transition-all ${activeChannels.has(ch) ? conf.class.split(' ')[0] : 'bg-slate-200'}`;
-                if(conf.class.includes('border-2')) dot.classList.add('border', 'border-slate-400'); // handling yellow case
-                
-                const text = document.createElement('span');
-                text.className = `text-xs font-medium transition-colors ${activeChannels.has(ch) ? 'text-slate-600' : 'text-slate-300 line-through'}`;
-                text.innerText = ch;
-                
-                item.appendChild(dot);
-                item.appendChild(text);
-                container.appendChild(item);
+                let css = isActive 
+                    ? `bg-white text-slate-800 border ${conf.border} shadow-sm font-bold ring-1 ring-inset ${conf.border.replace('border','ring')}` 
+                    : `bg-slate-100 text-slate-400 border border-slate-200`;
+                chip.className = `filter-chip px-3 py-1.5 rounded-full text-xs whitespace-nowrap ${css}`;
+                chip.innerText = ch;
+                chip.onclick = () => toggleChannel(ch);
+                container.appendChild(chip);
             });
+            const allBtn = document.getElementById('filter-all');
+            const isAll = channels.length === activeChannels.size;
+            allBtn.className = `filter-chip px-3 py-1.5 rounded-full text-xs font-bold ${isAll ? 'bg-slate-800 text-white' : 'bg-slate-100 text-slate-400'}`;
         }
 
         function toggleChannel(ch) {
             if(activeChannels.has(ch)) activeChannels.delete(ch);
             else activeChannels.add(ch);
-            renderTimeline(); // re-render
+            renderChannelChips();
+            applyFilter();
         }
 
-        function resetChannels() {
-            activeChannels = new Set(channels);
-            renderLegend();
-            renderTimeline();
+        function toggleAllChannels() {
+            if(activeChannels.size === channels.length) activeChannels.clear();
+            else channels.forEach(c => activeChannels.add(c));
+            renderChannelChips();
+            applyFilter();
         }
 
-        function updateFilter() {
-            renderTimeline();
-        }
+        // --- GANTT RENDER ---
+        const totalDays = 59; 
 
-        function renderTimeline() {
-            const selectedBrand = document.getElementById('brandFilter').value;
+        function applyFilter() {
+            const sBrand = document.getElementById('brandFilter').value;
+            const sYear = document.getElementById('yearFilter').value;
+            const sMonth = document.getElementById('monthFilter').value;
             
-            // Filter Data
-            const filtered = csvData.filter(d => 
-                (selectedBrand === 'ALL' || d.brand === selectedBrand) &&
-                activeChannels.has(d.channel)
-            );
-
-            // 1. Draw Header (Jan 1 - Feb 28)
-            const head = document.getElementById('date-header');
-            const grid = document.getElementById('grid-lines');
-            head.innerHTML = ''; grid.innerHTML = '';
-            
-            // Generate Jan-Feb (59 days)
-            const totalDays = 59; 
-            const monthDivs = [{m:'1월', d:31}, {m:'2월', d:28}];
-            
-            // Simple approach: Render by weeks or days? Original used weeks. Let's use simple day grid for accuracy.
-            // Using a simple 59-column grid.
-            for(let i=1; i<=totalDays; i++) {
-                let m = i<=31 ? 1 : 2;
-                let d = i<=31 ? i : i-31;
-                let isToday = (m===TODAY_M && d===TODAY_D);
-                
-                const dayEl = document.createElement('div');
-                dayEl.className = "flex-1 flex flex-col items-center justify-end pb-2 border-r border-slate-100 relative text-[10px] font-medium text-slate-400";
-                dayEl.innerText = d;
-                
-                // Month Label
-                if(d===1) {
-                    const mLab = document.createElement('span');
-                    mLab.className = "absolute top-1 left-1.5 font-bold text-slate-800 text-xs";
-                    mLab.innerText = m + '월';
-                    dayEl.appendChild(mLab);
-                }
-                
-                // Issue Label
-                const key = `${m}-${d}`;
-                if(marketIssues[key]) {
-                    const issue = document.createElement('div');
-                    issue.className = "absolute top-1 right-1 text-[9px] bg-red-50 text-red-500 px-1 rounded";
-                    issue.innerText = marketIssues[key];
-                    dayEl.appendChild(issue);
-                }
-
-                head.appendChild(dayEl);
-
-                const gridEl = document.createElement('div');
-                gridEl.className = `flex-1 border-r border-slate-100 h-full ${isToday ? 'bg-indigo-50/30' : ''}`;
-                grid.appendChild(gridEl);
-            }
-
-            // 2. Draw Rows
-            const rows = document.getElementById('timeline-rows');
-            const listBody = document.getElementById('list-body');
-            rows.innerHTML = '';
-            listBody.innerHTML = '';
-
-            // Group by Channel
-            const grouped = filtered.reduce((acc, c) => { (acc[c.channel] = acc[c.channel] || []).push(c); return acc; }, {});
-            
-            // Render Order by channelConfig keys
-            channels.forEach(ch => {
-                if(!activeChannels.has(ch) || !grouped[ch]) return;
-                
-                const row = document.createElement('div');
-                row.className = "relative h-8 w-full"; // Single row height
-                
-                grouped[ch].forEach(item => {
-                    const s = getDateIndex(item.start);
-                    const e = getDateIndex(item.end);
-                    if(s < 1) return; // Skip if out of range
-
-                    const left = (s - 1) * (100 / totalDays);
-                    const width = (e - s + 1) * (100 / totalDays);
-                    
-                    const bar = document.createElement('div');
-                    const conf = channelConfig[ch] || { class: 'bg-gray-400 text-white' };
-                    bar.className = `absolute h-6 top-1 rounded text-[10px] font-bold flex items-center px-2 truncate shadow-sm timeline-bar ${conf.class}`;
-                    bar.style.left = `${left}%`;
-                    bar.style.width = `calc(${width}% - 2px)`;
-                    bar.innerText = item.name;
-                    if(item.brand==='ST') bar.classList.add('ring-2', 'ring-white'); // Distinguish ST
-                    
-                    bar.onclick = () => openModal(item);
-                    row.appendChild(bar);
-                    
-                    // Add to List
-                    const tr = document.createElement('tr');
-                    tr.className = "hover:bg-slate-50 transition-colors cursor-pointer";
-                    tr.onclick = () => openModal(item);
-                    tr.innerHTML = `
-                        <td class="pl-4 py-3 font-bold text-slate-700">${brandMap[item.brand]}</td>
-                        <td class="py-3 font-medium text-slate-500">${item.channel}</td>
-                        <td class="py-3 font-bold text-slate-800">${item.name}</td>
-                        <td class="py-3 text-[11px] font-mono text-slate-400">${item.start.substring(5)} ~ ${item.end.substring(5)}</td>
-                        <td class="py-3"><span class="px-2 py-0.5 rounded bg-slate-100 text-[10px] font-bold text-slate-500">${item.type}</span></td>
-                        <td class="py-3 text-xs text-slate-500 truncate max-w-[100px]">${item.benefitType}</td>
-                        <td class="py-3 text-right pr-4 font-bold text-indigo-600">₩${(item.actual/1000).toLocaleString()}K</td>
-                    `;
-                    listBody.appendChild(tr);
-                });
-                rows.appendChild(row);
+            const filtered = csvData.filter(d => {
+                const y = parseInt(d.start.substring(0,4));
+                const m = parseInt(d.start.substring(5,7));
+                const bm = d.brand === sBrand;
+                const mm = sMonth === 'ALL' || m == sMonth;
+                let ym = true;
+                if(sYear !== 'ALL') ym = (y == sYear);
+                return bm && mm && ym; 
             });
-            
-            renderStats(filtered);
+
+            const summaryData = filtered.filter(d => activeChannels.has(d.channel));
+            renderGanttRows(filtered, sYear);
+            renderSummaryTable(summaryData);
         }
 
-        function renderStats(data) {
-            const total = data.reduce((a,b)=>a+b.actual, 0);
-            const goal = data.reduce((a,b)=>a+b.goal, 0);
-            const rate = goal > 0 ? Math.round((total/goal)*100) : 0;
+        function renderGanttRows(data, selectedYear) {
+            const container = document.getElementById('chart-content-layer');
+            container.innerHTML = '';
+
+            const drawSection = (yearData, year) => {
+                const yearLabelRow = document.createElement('div');
+                yearLabelRow.className = "flex w-full h-8 border-b border-indigo-100 bg-indigo-50/30 items-center shrink-0";
+                const stickyLabel = document.createElement('div');
+                stickyLabel.className = "sticky-left-col w-32 min-w-[8rem] h-full flex items-center justify-center bg-indigo-50 font-bold text-indigo-900 text-xs gap-2 z-40";
+                stickyLabel.innerHTML = `<span class="bg-indigo-600 text-white px-2 py-0.5 rounded text-[10px]">${year}</span>`;
+                yearLabelRow.appendChild(stickyLabel);
+                container.appendChild(yearLabelRow);
+
+                const group = {};
+                channels.forEach(ch => group[ch] = []);
+                yearData.forEach(d => { if(group[d.channel]) group[d.channel].push(d); });
+
+                channels.forEach(ch => {
+                    if(!activeChannels.has(ch)) return; 
+                    const items = group[ch];
+                    const row = document.createElement('div');
+                    row.className = "flex w-full h-9 border-b border-slate-100 bg-white items-center group shrink-0";
+
+                    const stickyCol = document.createElement('div');
+                    stickyCol.className = "sticky-left-col w-32 min-w-[8rem] h-full flex items-center px-3 bg-white z-40 shadow-[2px_0_5px_rgba(0,0,0,0.02)]";
+                    const conf = channelConfig[ch];
+                    const bgClass = conf.class.split(' ')[0];
+                    stickyCol.innerHTML = `
+                        <div class="flex items-center gap-2 w-full cursor-pointer" onclick="toggleChannel('${ch}')">
+                            <span class="w-2.5 h-2.5 rounded-sm ${bgClass} opacity-80"></span>
+                            <span class="text-[11px] text-slate-600 font-medium truncate select-none">${ch}</span>
+                        </div>
+                    `;
+                    row.appendChild(stickyCol);
+
+                    const barsArea = document.createElement('div');
+                    barsArea.className = "flex-1 h-full relative";
+
+                    if(items.length > 0) {
+                        items.forEach(item => {
+                            const s = getDateIndex(item.start);
+                            const e = getDateIndex(item.end);
+                            if(s > totalDays || e < 1) return;
+                            
+                            const start = Math.max(1, s);
+                            const end = Math.min(totalDays, e);
+                            const width = (end - start + 1) * (100/totalDays);
+                            const left = (start - 1) * (100/totalDays);
+                            
+                            let baseClass = channelConfig[ch].class;
+                            let opacityStyle = "";
+                            let isPast = (year === 2025);
+                            const todayObj = new Date(2026, 0, 15);
+                            if(!isPast) {
+                                const endObj = new Date(item.end);
+                                if(endObj < todayObj) isPast = true;
+                            }
+                            if(isPast) opacityStyle = "opacity: 0.5; filter: grayscale(20%);"; 
+                            
+                            // 상세 정보 노출
+                            const details = [];
+                            if(item.type) details.push(item.type);
+                            if(item.benefitType) details.push(item.benefitType);
+                            if(item.goal > 0) details.push(`🎯${item.goal.toLocaleString()}`);
+                            
+                            let detailHtml = "";
+                            if(details.length > 0) {
+                                detailHtml = `<span class="ml-1 opacity-70 text-[9px] font-normal tracking-tight">| ${details.join(' | ')}</span>`;
+                            }
+                            const fullTooltip = `${item.name} | ${details.join(' | ')}`;
+
+                            const bar = document.createElement('div');
+                            bar.className = `absolute top-1.5 h-6 rounded-sm shadow-sm text-[11px] font-bold flex items-center px-2 cursor-pointer timeline-bar overflow-hidden ${baseClass}`;
+                            bar.setAttribute('style', `left: ${left}%; width: calc(${width}% - 1px); ${opacityStyle}; white-space: nowrap; text-overflow: ellipsis;`);
+                            bar.setAttribute('title', fullTooltip); 
+                            bar.innerHTML = `<span>${item.name}</span>${detailHtml}`;
+                            bar.onclick = () => openModal(item);
+                            barsArea.appendChild(bar);
+                        });
+                    }
+                    row.appendChild(barsArea);
+                    container.appendChild(row);
+                });
+            };
+
+            const d26 = data.filter(d => d.start.startsWith('2026'));
+            const d25 = data.filter(d => d.start.startsWith('2025'));
+
+            if(selectedYear === 'ALL' || selectedYear === '2026') drawSection(d26, 2026);
+            if(selectedYear === 'ALL') {
+                 const div = document.createElement('div');
+                 div.className = "h-4 bg-slate-50 border-y border-slate-100 shrink-0";
+                 container.appendChild(div);
+            }
+            if(selectedYear === 'ALL' || selectedYear === '2025') drawSection(d25, 2025);
+        }
+
+        // --- SUMMARY MATRIX ---
+        function renderSummaryTable(data) {
+            const thead = document.getElementById('summary-thead');
+            const tbody = document.getElementById('summary-tbody');
+            thead.innerHTML = ''; tbody.innerHTML = '';
+
+            const activeList = channels.filter(c => activeChannels.has(c));
             
-            document.getElementById('kpi-sales').innerText = `₩${(total/1000000).toFixed(1)}M`;
-            document.getElementById('kpi-count').innerText = data.length;
+            let headerHTML = '<tr><th class="sticky left-0 bg-slate-50 z-20 w-32 min-w-[8rem] border-r border-slate-200">구분 (KPI)</th>';
+            activeList.forEach(ch => { headerHTML += `<th>${ch}</th>`; });
+            headerHTML += '<th class="total-col sticky right-0">Total</th></tr>';
+            thead.innerHTML = headerHTML;
+
+            const d26 = data.filter(d => d.start.startsWith('2026'));
+            const d25 = data.filter(d => d.start.startsWith('2025'));
+
+            const sums26 = {}; const sums25 = {};
+            activeList.forEach(ch => { sums26[ch] = { goal: 0, rev: 0 }; sums25[ch] = { goal: 0, rev: 0 }; });
+
+            d26.forEach(d => { if(sums26[d.channel]) { sums26[d.channel].goal += d.goal; sums26[d.channel].rev += d.actual; } });
+            d25.forEach(d => { if(sums25[d.channel]) { sums25[d.channel].goal += d.goal; sums25[d.channel].rev += d.actual; } });
+
+            const fmt = n => n.toLocaleString();
             
-            const rateEl = document.getElementById('kpi-rate');
-            const barEl = document.getElementById('kpi-bar');
-            rateEl.innerText = `${rate}%`;
-            barEl.style.width = `${Math.min(rate, 100)}%`;
+            // Goal
+            let trGoal = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">목표 (Goal)</td>';
+            let totalGoal = 0;
+            activeList.forEach(ch => { const val = sums26[ch].goal; totalGoal += val; trGoal += `<td>${fmt(val)}</td>`; });
+            trGoal += `<td class="total-col sticky right-0">${fmt(totalGoal)}</td></tr>`;
+
+            // Revenue
+            let trRev = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">실적 (Revenue)</td>';
+            let totalRev = 0;
+            activeList.forEach(ch => { const val = sums26[ch].rev; totalRev += val; trRev += `<td class="font-bold text-indigo-600 bg-indigo-50/10">${fmt(val)}</td>`; });
+            trRev += `<td class="total-col sticky right-0 text-indigo-800">${fmt(totalRev)}</td></tr>`;
+
+            // Rate
+            let trRate = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">달성률 (Rate)</td>';
+            activeList.forEach(ch => {
+                const g = sums26[ch].goal; const r = sums26[ch].rev;
+                const rate = g > 0 ? (r/g*100).toFixed(1) : 0;
+                let colorClass = rate >= 100 ? 'text-green-600 font-bold' : (rate >= 80 ? 'text-slate-600' : 'text-red-500');
+                trRate += `<td class="${colorClass}">${rate}%</td>`;
+            });
+            const totalRate = totalGoal > 0 ? (totalRev/totalGoal*100).toFixed(1) : 0;
+            trRate += `<td class="total-col sticky right-0">${totalRate}%</td></tr>`;
+
+            // YoY
+            let trYoY = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">전년비 (YoY)</td>';
+            let totalRev25 = 0;
+            activeList.forEach(ch => {
+                const cur = sums26[ch].rev; const prev = sums25[ch].rev;
+                totalRev25 += prev;
+                if(prev === 0) trYoY += `<td class="text-slate-300">-</td>`;
+                else {
+                    const growth = ((cur - prev)/prev*100).toFixed(1);
+                    const isPos = growth >= 0;
+                    const colorClass = isPos ? 'text-red-600' : 'text-blue-600';
+                    trYoY += `<td class="${colorClass} font-bold text-[11px]">${isPos?'▲':'▼'} ${Math.abs(growth)}%</td>`;
+                }
+            });
+            let totalGrowthHtml = '-';
+            if(totalRev25 > 0) {
+                 const g = ((totalRev - totalRev25)/totalRev25*100).toFixed(1);
+                 const p = g >= 0;
+                 const tc = p ? 'text-red-600' : 'text-blue-600';
+                 totalGrowthHtml = `<span class="${tc}">${p?'▲':'▼'} ${Math.abs(g)}%</span>`;
+            }
+            trYoY += `<td class="total-col sticky right-0">${totalGrowthHtml}</td></tr>`;
+
+            tbody.innerHTML = trGoal + trRev + trRate + trYoY;
+        }
+
+        // Header Grid
+        function renderHeaderAndGrid() {
+            const mHead = document.getElementById('month-header');
+            const wHead = document.getElementById('week-header');
+            const dHead = document.getElementById('day-header');
+            const miHead = document.getElementById('market-issue-header');
+            const gl = document.getElementById('grid-lines');
             
-            // Color logic
-            if(rate >= 100) { rateEl.className = "text-3xl font-black text-green-400 tracking-tight"; barEl.className = "bg-green-500 h-full rounded-full transition-all duration-1000"; }
-            else if(rate >= 80) { rateEl.className = "text-3xl font-black text-indigo-400 tracking-tight"; barEl.className = "bg-indigo-500 h-full rounded-full transition-all duration-1000"; }
-            else { rateEl.className = "text-3xl font-black text-orange-400 tracking-tight"; barEl.className = "bg-orange-500 h-full rounded-full transition-all duration-1000"; }
+            mHead.innerHTML = ''; wHead.innerHTML = ''; dHead.innerHTML = ''; miHead.innerHTML = ''; gl.innerHTML = '';
+
+            const months = [ { name: '1월', days: 31 }, { name: '2월', days: 28 } ];
+            let globalDayIndex = 0; 
+
+            months.forEach((m, mIdx) => {
+                const mDiv = document.createElement('div');
+                mDiv.className = "flex items-center justify-center border-r border-slate-200 h-full relative";
+                mDiv.style.width = `${(m.days / totalDays) * 100}%`;
+                mDiv.innerHTML = `<span class="sticky left-0">${m.name}</span>`;
+                mHead.appendChild(mDiv);
+
+                for(let i=1; i<=m.days; i++) {
+                    globalDayIndex++;
+                    const key = `${mIdx+1}-${i}`;
+                    const isToday = (mIdx + 1 === TODAY_M && i === TODAY_D);
+                    const highlightClass = isToday ? "bg-red-50 text-red-600 font-extrabold today-pulse border-red-200 border-x" : "";
+                    
+                    const dDiv = document.createElement('div');
+                    dDiv.className = `flex-1 border-r border-slate-100 flex items-center justify-center h-full text-[11px] ${highlightClass}`;
+                    dDiv.innerText = i;
+                    if(!isToday && (globalDayIndex % 7 === 3 || globalDayIndex % 7 === 4)) dDiv.classList.add('text-red-400', 'bg-red-50/20');
+                    dHead.appendChild(dDiv);
+
+                    const miDiv = document.createElement('div');
+                    miDiv.className = `flex-1 border-r border-slate-200 flex items-center justify-center h-full overflow-hidden px-0.5 ${isToday ? "bg-red-50 border-x border-red-200" : ""}`;
+                    if(marketIssues[key]) miDiv.innerHTML = `<span class="text-indigo-700 font-bold text-[10px] w-full text-center leading-3 break-all whitespace-normal">${marketIssues[key]}</span>`;
+                    miHead.appendChild(miDiv);
+
+                    const lDiv = document.createElement('div');
+                    lDiv.className = "flex-1 border-r border-slate-100 h-full " + ((globalDayIndex % 7 === 3 || globalDayIndex % 7 === 4) ? 'bg-slate-50/50' : '');
+                    gl.appendChild(lDiv);
+                }
+            });
+
+            const weeks = [
+                { name: '1주', days: 4 }, { name: '2주', days: 7 }, { name: '3주', days: 7 }, 
+                { name: '4주', days: 7 }, { name: '5주', days: 6, class: 'border-r-0' }, 
+                { name: '5주', days: 1, class: 'border-l-0 text-transparent' }, 
+                { name: '6주', days: 7 }, { name: '7주', days: 7 }, { name: '8주', days: 7 }, { name: '9주', days: 6 }, 
+            ];
+            weeks.forEach(w => {
+                const wDiv = document.createElement('div');
+                wDiv.className = `flex items-center justify-center border-r border-slate-300 h-full text-[11px] bg-white ${w.class || ''}`;
+                wDiv.style.width = `${(w.days / totalDays) * 100}%`;
+                wDiv.innerText = (w.name === '5주' && w.days === 1) ? '' : w.name;
+                wHead.appendChild(wDiv);
+            });
         }
 
         function getDateIndex(dateStr) {
