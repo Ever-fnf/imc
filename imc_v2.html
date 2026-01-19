@@ -67,6 +67,21 @@
                     <option value="2026">2026년 (Current)</option>
                     <option value="2025">2025년 (Past)</option>
                 </select>
+                <select id="monthFilter" onchange="applyFilter()" class="bg-white border border-slate-200 text-slate-600 text-sm font-bold rounded-lg pl-3 pr-10 py-2 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
+                    <option value="ALL">누적</option>
+                    <option value="1">1월</option>
+                    <option value="2">2월</option>
+                    <option value="3">3월</option>
+                    <option value="4">4월</option>
+                    <option value="5">5월</option>
+                    <option value="6">6월</option>
+                    <option value="7">7월</option>
+                    <option value="8">8월</option>
+                    <option value="9">9월</option>
+                    <option value="10">10월</option>
+                    <option value="11">11월</option>
+                    <option value="12">12월</option>
+                </select>
             </div>
         </div>
         <div class="text-xs font-medium text-slate-500 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-100" id="current-date-display"></div>
@@ -344,6 +359,7 @@
         function applyFilter() {
             const sBrand = document.getElementById('brandFilter').value;
             const sYear = document.getElementById('yearFilter').value;
+            const sMonth = document.getElementById('monthFilter').value;
             
             const filtered = csvData.filter(d => {
                 // 시작일 기준 필터링 보완 (2025년 시작이어도 2026년 조회 시 포함되어야 함)
@@ -364,7 +380,27 @@
                      if (sDate > end25) ym = false;
                 }
                 
-                return bm && ym; 
+                // 월 필터링 (해당 월에 걸쳐있는 프로모션만 표시)
+                let mm = true;
+                if(sMonth !== 'ALL') {
+                    const targetMonth = parseInt(sMonth);
+                    // 프로모션 시작월과 종료월 추출
+                    const startMonth = parseInt(d.start.substring(5,7));
+                    const endMonth = parseInt(d.end.substring(5,7));
+                    const startYear = parseInt(d.start.substring(0,4));
+                    const endYear = parseInt(d.end.substring(0,4));
+                    
+                    // 해당 월에 걸쳐있는지 확인 (연도 무관하게 월만 비교)
+                    if(startYear === endYear) {
+                        // 같은 해: 시작월~종료월 범위에 포함되는지
+                        mm = (targetMonth >= startMonth && targetMonth <= endMonth);
+                    } else {
+                        // 연도가 다른 경우 (12월~1월 등)
+                        mm = (targetMonth >= startMonth || targetMonth <= endMonth);
+                    }
+                }
+                
+                return bm && ym && mm; 
             });
 
             const summaryData = filtered.filter(d => activeChannels.has(d.channel));
