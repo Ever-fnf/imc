@@ -175,9 +175,9 @@
             return Date.UTC(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
         }
 
-        // 기준일: 2025년 12월 1일 ~ 2026년 12월 31일 (YoY 비교용)
-        const START_DATE_MS = Date.UTC(2025, 11, 1);  // 2025-12-01
-        const END_DATE_MS = Date.UTC(2026, 11, 31);   // 2026-12-31
+        // 기준일: 2025년 12월 29일(마지막주) ~ 2026년 12월 31일 (YoY 비교용)
+        const START_DATE_MS = Date.UTC(2025, 11, 29);  // 2025-12-29 (12월 마지막주 월요일)
+        const END_DATE_MS = Date.UTC(2026, 11, 31);    // 2026-12-31
         const TOTAL_DAYS = Math.ceil((END_DATE_MS - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
 
         // 오늘 날짜 표시
@@ -421,7 +421,7 @@
                     row.style.height = `${rowHeight}px`;
 
                     const stickyCol = document.createElement('div');
-                    stickyCol.className = "sticky-left-col w-40 min-w-[10rem] h-full flex items-center px-4 bg-white z-40 border-r border-slate-200 absolute top-0 left-0 group-hover:bg-slate-50 transition-colors";
+                    stickyCol.className = "sticky-left-col w-40 min-w-[10rem] h-full flex items-center px-4 bg-white z-40 border-r border-slate-200 group-hover:bg-slate-50 transition-colors";
                     const conf = channelConfig[ch];
                     const bgClass = conf.class.split(' ')[0]; 
                     
@@ -437,7 +437,7 @@
                     }
 
                     stickyCol.innerHTML = `
-                        <div class="flex items-center gap-3 w-full cursor-pointer absolute top-0 h-10" onclick="toggleChannel('${ch}')">
+                        <div class="flex items-center gap-3 w-full cursor-pointer" onclick="toggleExpand('${ch}')">
                             <span class="w-2.5 h-2.5 rounded-full ${bgClass} shadow-sm"></span>
                             <span class="text-[13px] text-slate-700 font-bold truncate select-none">${ch}</span>
                         </div>
@@ -446,7 +446,7 @@
                     row.appendChild(stickyCol);
 
                     const barsArea = document.createElement('div');
-                    barsArea.className = "flex-1 h-full relative ml-40";
+                    barsArea.className = "flex-1 h-full relative";
 
                     if(laneCount > 0) {
                         lanes.forEach((laneItems, laneIndex) => {
@@ -597,7 +597,44 @@
             let currentMonth = -1;
             let monthDaysCount = 0;
             let currentWeekDayCount = 0;
-            let weekNumber = 1;
+            let lastWeekLabel = '';
+
+            // ISO 기준 주차 계산 (1월 1일이 포함된 주 = 1주차)
+            function getWeekLabel(date) {
+                const y = date.getUTCFullYear();
+                const m = date.getUTCMonth();
+                const d = date.getUTCDate();
+                
+                // 해당 연도의 1월 1일
+                const jan1 = new Date(Date.UTC(y, 0, 1));
+                const jan1Day = jan1.getUTCDay(); // 0=Sun
+                
+                // 1월 1일이 포함된 주의 월요일 찾기
+                const jan1Monday = new Date(jan1);
+                const diffToMonday = (jan1Day === 0) ? -6 : 1 - jan1Day;
+                jan1Monday.setUTCDate(jan1.getUTCDate() + diffToMonday);
+                
+                // 현재 날짜가 포함된 주의 월요일 찾기
+                const currDay = date.getUTCDay();
+                const currMonday = new Date(date);
+                const currDiffToMonday = (currDay === 0) ? -6 : 1 - currDay;
+                currMonday.setUTCDate(date.getUTCDate() + currDiffToMonday);
+                
+                // 주차 계산
+                const weekDiff = Math.floor((currMonday - jan1Monday) / (7 * 24 * 60 * 60 * 1000));
+                const weekNum = weekDiff + 1;
+                
+                // 12월인데 주차가 1 이하면 이전 연도 마지막 주
+                if (m === 11 && weekNum <= 0) {
+                    return `${y}년 W${52 + weekNum}`;
+                }
+                // 1월인데 주차가 0 이하면 이전 연도 마지막 주
+                if (m === 0 && weekNum <= 0) {
+                    return `${y-1}년 W53`;
+                }
+                
+                return `W${weekNum}`;
+            }
 
             for(let i=1; i<=TOTAL_DAYS; i++) {
                 const y = curr.getUTCFullYear();
@@ -647,16 +684,22 @@
                 }
                 monthDaysCount++;
 
-                // Week Logic
+                // Week Logic (ISO 기준: 월요일 시작, 1월1일 = W1)
+                const currWeekLabel = getWeekLabel(curr);
                 currentWeekDayCount++;
-                if (currentWeekDayCount === 7 || i === TOTAL_DAYS) {
+                
+                // 주가 바뀌거나 마지막 날일 때 주차 헤더 추가
+                const nextDay = new Date(curr);
+                nextDay.setUTCDate(curr.getUTCDate() + 1);
+                const nextWeekLabel = (i < TOTAL_DAYS) ? getWeekLabel(nextDay) : '';
+                
+                if (currWeekLabel !== nextWeekLabel || i === TOTAL_DAYS) {
                     const wDiv = document.createElement('div');
                     wDiv.className = "flex items-center justify-center border-r border-slate-200 h-full text-[11px] text-slate-500 bg-white";
                     wDiv.style.flex = currentWeekDayCount;
-                    wDiv.innerText = `${weekNumber}주`;
+                    wDiv.innerText = currWeekLabel;
                     wHead.appendChild(wDiv);
                     
-                    weekNumber++;
                     currentWeekDayCount = 0;
                 }
 
