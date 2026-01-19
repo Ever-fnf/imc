@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMC 통합 성과 대시보드 (Final Verified)</title>
+    <title>IMC 통합 성과 대시보드 (v4 Final - Date Fix)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -83,7 +83,7 @@
         
         <div class="flex-1 flex flex-col relative min-h-0">
             <div class="flex-1 custom-scroll bg-slate-50/50 relative" id="gantt-container">
-                <div class="min-w-[2800px] h-full relative flex flex-col" id="gantt-content-wrapper">
+                <div class="min-w-[2400px] h-full relative flex flex-col" id="gantt-content-wrapper">
                     
                     <div class="sticky-col-header bg-white border-b border-slate-200 shadow-sm flex shrink-0 flex-col z-50">
                         <div class="flex w-full">
@@ -185,7 +185,7 @@
         const dateStr = `${NOW.getFullYear()}.${String(NOW.getMonth()+1).padStart(2,'0')}.${String(NOW.getDate()).padStart(2,'0')} (${weekDays[NOW.getDay()]})`;
         document.getElementById('current-date-display').innerHTML = `기준일: <span class="text-indigo-600 font-extrabold ml-1">${dateStr}</span>`;
 
-        // 하드코딩 유지
+        // 하드코딩된 공휴일 (요청 유지)
         const marketIssues = { 
             '2025-12-25': '크리스마스',
             '2026-1-1': '신정', 
@@ -195,13 +195,13 @@
             '2026-3-1': '삼일절'
         };
 
-        // [수정] SI빌리지 제거 -> 신세계V 추가 (색상: 붉은 갈색 계열 유지)
+        // [수정] 신세계V 추가 (SI빌리지 제거)
         const channelConfig = {
             '자사몰': { class: 'bg-orange-500 text-white border-orange-600', border: 'border-orange-500' },
             'SSF샵': { class: 'bg-sky-500 text-white border-sky-600', border: 'border-sky-400' },
             '무신사': { class: 'bg-slate-900 text-white border-slate-950', border: 'border-slate-800' },
             'SSG닷컴': { class: 'bg-[#FFEB00] text-[#4A3C31] border-[#4A3C31]', border: 'border-[#4A3C31]' },
-            '신세계V': { class: 'bg-[#5D4037] text-white border-[#3E2723]', border: 'border-[#5D4037]' }, // SI빌리지 스타일 계승
+            '신세계V': { class: 'bg-[#5D4037] text-white border-[#3E2723]', border: 'border-[#5D4037]' }, // 붉은 갈색 계열
             '네이버스토어': { class: 'bg-[#03C75A] text-white border-[#02B150]', border: 'border-[#03C75A]' },
             '더카트골프': { class: 'bg-violet-600 text-white border-violet-700', border: 'border-violet-500' },
             '롯데ON': { class: 'bg-red-600 text-white border-red-700', border: 'border-red-500' },
@@ -226,13 +226,12 @@
                     let ch = item.CHANNEL || '기타 제휴몰';
                     if(!channelConfig[ch]) ch = '기타 제휴몰';
 
-                    // 하드코딩 유지: 난수 매출 생성
+                    // 하드코딩 유지: 난수 매출
                     const showGoal = (index % 2 === 0);
                     const goalAmount = Math.floor(Math.random() * 30000) + 20000;
                     const finalGoal = showGoal ? goalAmount : 0;
                     
                     const year = parseInt(item.START_DATE.substring(0,4));
-                    // 날짜 계산은 나중에 일괄 처리하므로 여기선 문자열 유지해도 됨 (정렬 위해 파싱)
                     const sDate = parseDate(item.START_DATE);
                     const eDate = parseDate(item.END_DATE);
                     
@@ -343,16 +342,37 @@
             const sYear = document.getElementById('yearFilter').value;
             
             const filtered = csvData.filter(d => {
+                // 시작일 기준 필터링 보완 (2025년 시작이어도 2026년 조회 시 포함되어야 함)
                 const y = parseInt(d.start.substring(0,4));
+                const sDate = parseDate(d.start);
+                const eDate = parseDate(d.end);
+                
                 const bm = (sBrand === 'ALL' || d.brand === sBrand);
+                
+                // 기간 필터링 로직 수정 (겹치는 기간 확인)
                 let ym = true;
-                if(sYear !== 'ALL') ym = (y == sYear);
+                if(sYear === '2026') {
+                     // 2026년에 걸쳐있는지 확인
+                     const start26 = Date.UTC(2026, 0, 1);
+                     if (eDate < start26) ym = false;
+                } else if(sYear === '2025') {
+                     const end25 = Date.UTC(2025, 11, 31);
+                     if (sDate > end25) ym = false;
+                }
+                
                 return bm && ym; 
             });
 
             const summaryData = filtered.filter(d => activeChannels.has(d.channel));
             renderGanttRows(filtered, sYear);
             renderSummaryTable(summaryData);
+        }
+
+        // [핵심 수정] 날짜 계산 로직: (대상일 - 기준일) + 1
+        function getDaysFromStart(dateStr) {
+            if(!dateStr) return -999;
+            const targetMs = parseDate(dateStr);
+            return Math.floor((targetMs - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
         }
 
         function renderGanttRows(data, selectedYear) {
@@ -419,6 +439,7 @@
                             laneItems.forEach((item, itemIdx) => {
                                 const s = getDaysFromStart(item.start);
                                 const e = getDaysFromStart(item.end);
+                                // 범위 밖이면 렌더링 안함
                                 if(s > TOTAL_DAYS || e < 1) return;
                                 
                                 const start = Math.max(1, s);
@@ -547,13 +568,6 @@
             tbody.innerHTML = trGoal + trRev + trRate + trYoY;
         }
 
-        // [수정] 절대적인 날짜 차이 계산 (UTC to UTC) -> 날짜 밀림 현상 원천 차단
-        function getDaysFromStart(dateStr) {
-            if(!dateStr) return -999;
-            const targetMs = parseDate(dateStr);
-            return Math.floor((targetMs - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
-        }
-
         function renderHeaderAndGrid() {
             const mHead = document.getElementById('month-header');
             const wHead = document.getElementById('week-header');
@@ -570,7 +584,6 @@
             let weekNumber = 1;
 
             for(let i=1; i<=TOTAL_DAYS; i++) {
-                // Use UTC methods to read the "fake" UTC date as local conceptual date
                 const y = curr.getUTCFullYear();
                 const m = curr.getUTCMonth() + 1;
                 const d = curr.getUTCDate();
