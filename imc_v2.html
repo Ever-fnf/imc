@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMC 통합 성과 대시보드 (v3 Final - Big & Clear)</title>
+    <title>IMC 통합 성과 대시보드 (Final Fix)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
         .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; border: 3px solid #f1f5f9; }
         .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        /* Timeline Bar Animation & Interaction */
+        /* Timeline Bar Animation */
         .timeline-bar { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
         .timeline-bar:hover { 
             transform: translateY(-2px); 
@@ -93,8 +93,9 @@
                                 </div>
                             </div>
                             <div class="flex-1 flex flex-col relative">
-                                <div class="h-8 flex text-sm font-bold text-slate-600 bg-slate-50/80 border-b border-slate-200 backdrop-blur-sm" id="month-header"></div>
-                                <div class="h-9 flex text-[12px] text-slate-500 font-medium bg-white border-b border-slate-100" id="day-header"></div>
+                                <div class="h-7 flex text-sm font-bold text-slate-600 bg-slate-50/80 border-b border-slate-200 backdrop-blur-sm" id="month-header"></div>
+                                <div class="h-6 flex text-[11px] font-semibold text-slate-600 bg-slate-50 border-b border-slate-100" id="week-header"></div>
+                                <div class="h-8 flex text-[12px] text-slate-500 font-medium bg-white border-b border-slate-100" id="day-header"></div>
                                 <div class="h-7 flex bg-slate-50 border-b border-slate-200" id="market-issue-header"></div>
                             </div>
                         </div>
@@ -165,11 +166,19 @@
         // --- CONFIG ---
         const NOW = new Date();
         
-        // [수정] 날짜 범위 설정: 2025년 12월 29일 ~ 2026년 2월 28일
-        const START_DATE = new Date(2025, 11, 29); // Dec 29, 2025
-        const END_DATE = new Date(2026, 1, 28);    // Feb 28, 2026
+        // 날짜 파싱 헬퍼 (Timezone 문제 해결을 위해 YYYY, MM, DD 직접 사용)
+        function parseDate(str) {
+            // str ex: "2026-01-07"
+            if(!str) return null;
+            const parts = str.split('-');
+            return new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+        }
+
+        // 기준일: 2025년 12월 29일 (월)
+        const START_DATE = new Date(2025, 11, 29); 
+        const END_DATE = new Date(2026, 1, 28);    // 2월 28일까지
         
-        // 날짜 차이 계산 (Total days)
+        // 총 일수 계산
         const TOTAL_DAYS = Math.ceil((END_DATE - START_DATE) / (1000 * 60 * 60 * 24)) + 1;
 
         // 오늘 날짜 표시
@@ -177,7 +186,7 @@
         const dateStr = `${NOW.getFullYear()}.${String(NOW.getMonth()+1).padStart(2,'0')}.${String(NOW.getDate()).padStart(2,'0')} (${weekDays[NOW.getDay()]})`;
         document.getElementById('current-date-display').innerHTML = `기준일: <span class="text-indigo-600 font-extrabold ml-1">${dateStr}</span>`;
 
-        // [수정] 2026년 설날 반영 (2/16~18) + 12월 말/1월 이슈
+        // 마켓 이슈 (하드코딩 유지)
         const marketIssues = { 
             '2025-12-25': '크리스마스',
             '2026-1-1': '신정', 
@@ -223,11 +232,10 @@
                     const finalGoal = showGoal ? goalAmount : 0;
                     
                     const year = parseInt(item.START_DATE.substring(0,4));
-                    const sDate = new Date(item.START_DATE);
-                    const eDate = new Date(item.END_DATE);
+                    const sDate = parseDate(item.START_DATE);
+                    const eDate = parseDate(item.END_DATE);
                     
                     let actual = 0;
-                    // Mock sales logic
                     if (year === 2025) actual = Math.floor((showGoal ? goalAmount : 30000) * (Math.random() * 0.3 + 0.8));
                     else {
                         if (eDate < NOW) actual = Math.floor((showGoal ? goalAmount : 30000) * (Math.random() * 0.3 + 0.9));
@@ -242,8 +250,8 @@
                         name: item.PROMO_NAME || '제목 없음',
                         start: item.START_DATE,
                         end: item.END_DATE,
-                        type: item.PROMO_TYPE || '자체',
-                        benefitType: item.BENEFIT_TYPE || '쿠폰',
+                        type: item.PROMO_TYPE || '기획전',
+                        benefitType: item.BENEFIT_TYPE || '',
                         benefit: item.BENEFIT_DETAIL,
                         comment: item.MD_COMMENT || '',
                         goal: finalGoal,
@@ -252,7 +260,7 @@
                     };
                 });
                 
-                csvData.sort((a, b) => new Date(a.start) - new Date(b.start));
+                csvData.sort((a, b) => parseDate(a.start) - parseDate(b.start));
                 init(); 
             } catch (error) { console.error(error); }
         }
@@ -294,7 +302,6 @@
             applyFilter();
         }
 
-        // --- OVERLAP LOGIC (PACKING) ---
         function packItems(items) {
             if (!items || items.length === 0) return [];
             const sorted = [...items].sort((a, b) => getDaysFromStart(a.start) - getDaysFromStart(b.start));
@@ -305,7 +312,6 @@
                 for (let i = 0; i < lanes.length; i++) {
                     const lane = lanes[i];
                     const lastItem = lane[lane.length - 1];
-                    // Buffer 0 to allow tight packing, but Z-index will handle visual overlap
                     if (start >= getDaysFromStart(lastItem.end) + 0) {
                         lane.push(item);
                         placed = true;
@@ -334,7 +340,6 @@
             const sBrand = document.getElementById('brandFilter').value;
             const sYear = document.getElementById('yearFilter').value;
             
-            // Filter logic
             const filtered = csvData.filter(d => {
                 const y = parseInt(d.start.substring(0,4));
                 const bm = (sBrand === 'ALL' || d.brand === sBrand);
@@ -343,7 +348,6 @@
                 return bm && ym; 
             });
 
-            // Summary Data (All active channels)
             const summaryData = filtered.filter(d => activeChannels.has(d.channel));
             renderGanttRows(filtered, sYear);
             renderSummaryTable(summaryData);
@@ -354,7 +358,6 @@
             container.innerHTML = '';
 
             const drawSection = (yearData, year) => {
-                // Year Header
                 const yearRow = document.createElement('div');
                 yearRow.className = "flex w-full h-8 border-b border-indigo-100 bg-indigo-50/40 items-center shrink-0";
                 const stickyLabel = document.createElement('div');
@@ -363,7 +366,6 @@
                 yearRow.appendChild(stickyLabel);
                 container.appendChild(yearRow);
 
-                // Group by Channel
                 const group = {};
                 channels.forEach(ch => group[ch] = []);
                 yearData.forEach(d => { if(group[d.channel]) group[d.channel].push(d); });
@@ -375,8 +377,6 @@
                     const laneCount = lanes.length;
                     const isExpanded = channelExpanded[ch] || false;
                     
-                    // [수정] 토글 안하면 1줄 높이(44px) 고정, 토글 하면 Lane 개수만큼 늘어남
-                    // [수정] 토글 안해도 바들은 '모두' 렌더링됨 (겹쳐서 보임)
                     const LANE_H = 40;
                     const rowHeight = isExpanded ? (Math.max(1, laneCount) * LANE_H + 10) : 44; 
                     
@@ -384,13 +384,12 @@
                     row.className = "flex w-full border-b border-slate-100 bg-white items-center group shrink-0 relative hover:bg-slate-50 transition-colors";
                     row.style.height = `${rowHeight}px`;
 
-                    // Left Sticky Col
+                    // Sticky Column (Left)
                     const stickyCol = document.createElement('div');
                     stickyCol.className = "sticky-left-col w-40 min-w-[10rem] h-full flex items-center px-4 bg-white z-40 border-r border-slate-200 absolute top-0 left-0 group-hover:bg-slate-50 transition-colors";
                     const conf = channelConfig[ch];
-                    const bgClass = conf.class.split(' ')[0]; // Extract bg color
+                    const bgClass = conf.class.split(' ')[0]; 
                     
-                    // Toggle Button
                     let toggleHtml = '';
                     if (laneCount > 1) {
                         toggleHtml = `
@@ -402,23 +401,21 @@
                         `;
                     }
 
+                    // [수정 4] 채널명 글자 크기 13px (text-[13px])
                     stickyCol.innerHTML = `
                         <div class="flex items-center gap-3 w-full cursor-pointer absolute top-0 h-10" onclick="toggleChannel('${ch}')">
                             <span class="w-2.5 h-2.5 rounded-full ${bgClass} shadow-sm"></span>
-                            <span class="text-[12px] text-slate-700 font-bold truncate select-none">${ch}</span>
+                            <span class="text-[13px] text-slate-700 font-bold truncate select-none">${ch}</span>
                         </div>
                         ${toggleHtml}
                     `;
                     row.appendChild(stickyCol);
 
-                    // Bars Area
                     const barsArea = document.createElement('div');
                     barsArea.className = "flex-1 h-full relative";
 
                     if(laneCount > 0) {
                         lanes.forEach((laneItems, laneIndex) => {
-                            // [수정] isExpanded가 false여도 모든 lane을 그린다.
-                            // 단, top 위치를 모두 동일하게(첫번째 줄) 강제한다.
                             laneItems.forEach((item, itemIdx) => {
                                 const s = getDaysFromStart(item.start);
                                 const e = getDaysFromStart(item.end);
@@ -429,47 +426,40 @@
                                 const widthPct = (end - start + 1) * (100/TOTAL_DAYS);
                                 const leftPct = (start - 1) * (100/TOTAL_DAYS);
                                 
-                                // Layout Calculation
-                                // Expanded: Spread vertically
-                                // Collapsed: All in top row, overlapping using z-index
                                 let topPos = 8;
                                 if (isExpanded) topPos = (laneIndex * LANE_H) + 6;
-                                else topPos = 8; // Collapsed: Fixed top
+                                else topPos = 8;
 
-                                // Style Config
                                 let baseClass = channelConfig[ch].class;
                                 let opacityStyle = "";
                                 if(year < 2026) opacityStyle = "opacity: 0.6; filter: grayscale(30%);";
-                                
-                                // Z-Index Logic for Collapsed Mode: Later starts on top, or hover handles it
                                 const zIdx = 10 + laneIndex;
 
-                                // [수정] 글자 크기 13px로 확대
-                                const fontSize = '13px';
+                                // [수정 3] 포맷: 기획전명 | 유형 | 혜택
+                                // 메인은 굵게(bold), 뒤는 얇고 작게(font-normal text-[11px])
+                                let content = `<span class="font-bold mr-1.5">${item.name}</span>`;
+                                const subs = [];
+                                if(item.type) subs.push(item.type);
+                                if(item.benefitType) subs.push(item.benefitType);
                                 
-                                // Content
-                                const details = [];
-                                if(isExpanded) {
-                                    if(item.benefitType) details.push(item.benefitType);
-                                    if(item.goal > 0) details.push(`🎯${(item.goal/1000).toFixed(0)}K`);
+                                if(subs.length > 0) {
+                                    content += `<span class="font-normal opacity-90 text-[11px] border-l border-white/40 pl-1.5 tracking-tight">${subs.join(' | ')}</span>`;
                                 }
-                                let detailHtml = "";
-                                if(details.length > 0) detailHtml = `<span class="ml-2 opacity-80 text-[11px] font-medium tracking-normal border-l border-white/30 pl-2">${details.join(' ')}</span>`;
                                 
                                 const bar = document.createElement('div');
-                                bar.className = `absolute h-[28px] rounded shadow-sm border font-bold flex items-center px-3 cursor-pointer timeline-bar overflow-hidden ${baseClass}`;
+                                bar.className = `absolute h-[28px] rounded shadow-sm border flex items-center px-3 cursor-pointer timeline-bar overflow-hidden ${baseClass}`;
                                 
                                 bar.style.top = `${topPos}px`;
                                 bar.style.left = `${leftPct}%`;
                                 bar.style.width = `calc(${widthPct}% - 2px)`;
-                                bar.style.fontSize = fontSize;
+                                bar.style.fontSize = '13px'; // 간트바 텍스트 크기
                                 bar.style.zIndex = zIdx;
                                 bar.style.cssText += opacityStyle;
                                 bar.style.whiteSpace = "nowrap";
                                 bar.style.textOverflow = "ellipsis";
                                 
-                                bar.setAttribute('title', `${item.name} (${item.start}~${item.end})`); 
-                                bar.innerHTML = `<span class="truncate">${item.name}</span>${detailHtml}`;
+                                bar.setAttribute('title', `${item.name} | ${item.type} | ${item.benefitType}`); 
+                                bar.innerHTML = content;
                                 bar.onclick = () => openModal(item);
                                 barsArea.appendChild(bar);
                             });
@@ -492,7 +482,6 @@
             if(selectedYear === 'ALL' || selectedYear === '2025') drawSection(d25, 2025);
         }
 
-        // --- SUMMARY MATRIX ---
         function renderSummaryTable(data) {
             const thead = document.getElementById('summary-thead');
             const tbody = document.getElementById('summary-tbody');
@@ -516,19 +505,16 @@
 
             const fmt = n => n.toLocaleString();
             
-            // Goal
             let trGoal = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">목표 (Goal)</td>';
             let totalGoal = 0;
             activeList.forEach(ch => { const val = sums26[ch].goal; totalGoal += val; trGoal += `<td>${fmt(val)}</td>`; });
             trGoal += `<td class="total-col sticky right-0">${fmt(totalGoal)}</td></tr>`;
 
-            // Revenue
             let trRev = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">실적 (Revenue)</td>';
             let totalRev = 0;
             activeList.forEach(ch => { const val = sums26[ch].rev; totalRev += val; trRev += `<td class="font-bold text-indigo-600 bg-indigo-50/10">${fmt(val)}</td>`; });
             trRev += `<td class="total-col sticky right-0 text-indigo-800">${fmt(totalRev)}</td></tr>`;
 
-            // Rate
             let trRate = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">달성률 (Rate)</td>';
             activeList.forEach(ch => {
                 const g = sums26[ch].goal; const r = sums26[ch].rev;
@@ -539,7 +525,6 @@
             const totalRate = totalGoal > 0 ? (totalRev/totalGoal*100).toFixed(1) : 0;
             trRate += `<td class="total-col sticky right-0">${totalRate}%</td></tr>`;
 
-            // YoY
             let trYoY = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">전년비 (YoY)</td>';
             let totalRev25 = 0;
             activeList.forEach(ch => {
@@ -561,80 +546,73 @@
                  totalGrowthHtml = `<span class="${tc}">${p?'▲':'▼'} ${Math.abs(g)}%</span>`;
             }
             trYoY += `<td class="total-col sticky right-0">${totalGrowthHtml}</td></tr>`;
-
             tbody.innerHTML = trGoal + trRev + trRate + trYoY;
         }
 
-        // --- HEADER GRID (UPDATED FOR DEC START) ---
+        // [수정 2] 정확한 일수 계산을 위해 Date 객체(YYYY, MM, DD) 비교 사용 (Timezone 무시)
         function getDaysFromStart(dateStr) {
-            const d = new Date(dateStr);
-            // Difference in days from START_DATE
-            return Math.floor((d - START_DATE) / (1000 * 60 * 60 * 24)) + 1;
+            // dateStr ex: "2026-01-07"
+            if(!dateStr) return -999;
+            const target = parseDate(dateStr);
+            // Difference in days
+            return Math.floor((target - START_DATE) / (1000 * 60 * 60 * 24)) + 1;
         }
 
         function renderHeaderAndGrid() {
             const mHead = document.getElementById('month-header');
+            const wHead = document.getElementById('week-header'); // [수정 1] 주차 헤더 추가
             const dHead = document.getElementById('day-header');
             const miHead = document.getElementById('market-issue-header');
             const gl = document.getElementById('grid-lines');
             
-            mHead.innerHTML = ''; dHead.innerHTML = ''; miHead.innerHTML = ''; gl.innerHTML = '';
+            mHead.innerHTML = ''; wHead.innerHTML = ''; dHead.innerHTML = ''; miHead.innerHTML = ''; gl.innerHTML = '';
 
             let curr = new Date(START_DATE);
-            let dayIndex = 0;
             let currentMonth = -1;
             let monthDaysCount = 0;
+            let currentWeekDayCount = 0;
+            let weekNumber = 1;
 
-            // Loop day by day
             for(let i=1; i<=TOTAL_DAYS; i++) {
                 const y = curr.getFullYear();
                 const m = curr.getMonth() + 1;
                 const d = curr.getDate();
-                const dayOfWeek = curr.getDay(); // 0=Sun, 6=Sat
+                const dayOfWeek = curr.getDay(); // 0=Sun
                 const dateKey = `${y}-${m}-${d}`;
                 const isToday = (y === NOW.getFullYear() && (curr.getMonth() === NOW.getMonth()) && d === NOW.getDate());
                 
-                // --- Day Cell ---
+                // Day Cell
                 const dDiv = document.createElement('div');
                 let dayClass = "flex-1 border-r border-slate-100 flex flex-col items-center justify-center h-full text-[12px] font-medium relative ";
-                
-                // Color logic
                 if (isToday) dayClass += "bg-red-50 text-red-600 font-extrabold border-red-200 border-x z-10 ";
                 else if (dayOfWeek === 0 || dayOfWeek === 6) dayClass += "text-red-400 bg-slate-50/40 ";
                 else dayClass += "text-slate-400 ";
-                
                 dDiv.className = dayClass;
                 dDiv.innerHTML = `<span>${d}</span>`;
-                // If start of month, show label in Month Header later, here maybe just bold 1
                 if(d === 1) dDiv.classList.add("font-black", "text-slate-800");
-
                 dHead.appendChild(dDiv);
 
-                // --- Market Issue Cell ---
+                // Market Issue
                 const miDiv = document.createElement('div');
                 miDiv.className = `flex-1 border-r border-slate-200 flex items-center justify-center h-full overflow-hidden px-0.5 ${isToday ? "bg-red-50 border-x border-red-200" : ""}`;
                 if(marketIssues[dateKey]) {
-                    const issueName = marketIssues[dateKey];
-                    // Red badge for holidays
-                    miDiv.innerHTML = `<span class="bg-red-100 text-red-600 text-[10px] font-bold px-1 rounded truncate w-full text-center">${issueName}</span>`;
+                    miDiv.innerHTML = `<span class="bg-red-100 text-red-600 text-[10px] font-bold px-1 rounded truncate w-full text-center">${marketIssues[dateKey]}</span>`;
                 }
                 miHead.appendChild(miDiv);
 
-                // --- Grid Line ---
+                // Grid Line
                 const lDiv = document.createElement('div');
                 lDiv.className = "flex-1 border-r border-slate-100 h-full relative ";
                 if(dayOfWeek === 0 || dayOfWeek === 6) lDiv.classList.add('bg-slate-50/40');
                 if(isToday) lDiv.classList.add('bg-red-50/20', 'border-l', 'border-l-red-200', 'border-r-red-200');
                 gl.appendChild(lDiv);
 
-                // --- Month Header Logic ---
+                // Month Logic
                 if (currentMonth !== m) {
                     if (currentMonth !== -1) {
-                        // Close previous month div
                         const mDiv = document.createElement('div');
                         mDiv.className = "flex items-center justify-center border-r border-slate-200 h-full relative text-slate-700 bg-white";
                         mDiv.style.flex = monthDaysCount; 
-                        // Label
                         mDiv.innerHTML = `<span class="sticky left-0 font-extrabold">${currentMonth}월</span>`;
                         mHead.appendChild(mDiv);
                     }
@@ -642,12 +620,27 @@
                     monthDaysCount = 0;
                 }
                 monthDaysCount++;
-                
-                // Next day
+
+                // Week Logic
+                currentWeekDayCount++;
+                // 월요일이 시작(1)이거나, 루프의 마지막 날이면 주차 마감
+                // 여기선 12/29(월) 시작이므로 7일씩 끊으면 됨
+                if (currentWeekDayCount === 7 || i === TOTAL_DAYS) {
+                    const wDiv = document.createElement('div');
+                    wDiv.className = "flex items-center justify-center border-r border-slate-200 h-full text-[11px] text-slate-500 bg-white";
+                    wDiv.style.flex = currentWeekDayCount;
+                    wDiv.innerText = `${weekNumber}주`;
+                    wHead.appendChild(wDiv);
+                    
+                    weekNumber++;
+                    currentWeekDayCount = 0;
+                }
+
+                // Next Day
                 curr.setDate(curr.getDate() + 1);
             }
             
-            // Append last month
+            // Last Month Render
             if (monthDaysCount > 0) {
                 const mDiv = document.createElement('div');
                 mDiv.className = "flex items-center justify-center border-r border-slate-200 h-full relative text-slate-700 bg-white";
@@ -664,7 +657,7 @@
             document.getElementById('m-year-badge').innerText = item.start.substring(0,4);
             document.getElementById('m-brand-badge').innerText = brandMap[item.brand];
             document.getElementById('m-benefit').innerText = item.benefit || '-';
-            document.getElementById('m-comment').innerText = item.comment ? `"${item.comment}"` : "작성된 코멘트가 없습니다.";
+            document.getElementById('m-comment').innerText = item.comment ? `"${item.comment}"` : "No comments";
             const ctx = document.getElementById('chart-canvas').getContext('2d');
             if(chartInstance) chartInstance.destroy();
             chartInstance = new Chart(ctx, {
@@ -672,7 +665,7 @@
                 data: {
                     labels: ['D+1', 'D+2', 'D+3', 'D+4', 'D+5', 'D+6', 'D+7'],
                     datasets: [{ 
-                        label: '일별 매출 (예상)', 
+                        label: 'Sales', 
                         data: [120, 190, 150, 220, 300, 250, 210], 
                         backgroundColor: '#6366f1', 
                         borderRadius: 4,
