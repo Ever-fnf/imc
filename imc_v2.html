@@ -190,10 +190,15 @@
             return Date.UTC(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
         }
 
-        // 기준일: 2025년 12월 29일(마지막주) ~ 2026년 12월 31일 (YoY 비교용)
-        const START_DATE_MS = Date.UTC(2025, 11, 29);  // 2025-12-29 (12월 마지막주 월요일)
-        const END_DATE_MS = Date.UTC(2026, 11, 31);    // 2026-12-31
-        const TOTAL_DAYS = Math.ceil((END_DATE_MS - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
+        // 기준일: 동적으로 변경 가능 (월 필터에 따라)
+        // 기본값: 2025년 12월 29일(마지막주) ~ 2026년 12월 31일 (YoY 비교용)
+        let START_DATE_MS = Date.UTC(2025, 11, 29);  // 2025-12-29
+        let END_DATE_MS = Date.UTC(2026, 11, 31);    // 2026-12-31
+        let TOTAL_DAYS = Math.ceil((END_DATE_MS - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
+        
+        // 기본 범위 저장 (누적 선택 시 복원용)
+        const DEFAULT_START = Date.UTC(2025, 11, 29);
+        const DEFAULT_END = Date.UTC(2026, 11, 31);
 
         // 오늘 날짜 표시
         const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
@@ -360,6 +365,35 @@
             const sBrand = document.getElementById('brandFilter').value;
             const sYear = document.getElementById('yearFilter').value;
             const sMonth = document.getElementById('monthFilter').value;
+            
+            // [타임라인 범위 동적 변경] 월 필터에 따라 간트 차트 범위 조정
+            if(sMonth === 'ALL') {
+                // 누적: 기본 범위 (2025-12-29 ~ 2026-12-31)
+                START_DATE_MS = DEFAULT_START;
+                END_DATE_MS = DEFAULT_END;
+            } else {
+                const targetMonth = parseInt(sMonth);
+                // 해당 월의 시작일 (전주 월요일부터 시작하도록 여유)
+                const monthStart = new Date(Date.UTC(2026, targetMonth - 1, 1));
+                const dayOfWeek = monthStart.getUTCDay();
+                const daysToMonday = (dayOfWeek === 0) ? 6 : dayOfWeek - 1;
+                START_DATE_MS = Date.UTC(2026, targetMonth - 1, 1 - daysToMonday);
+                
+                // 해당 월의 마지막일 (다음주까지 여유)
+                const lastDay = new Date(Date.UTC(2026, targetMonth, 0)).getUTCDate();
+                const monthEnd = new Date(Date.UTC(2026, targetMonth - 1, lastDay));
+                const endDayOfWeek = monthEnd.getUTCDay();
+                const daysToSunday = (endDayOfWeek === 0) ? 0 : 7 - endDayOfWeek;
+                END_DATE_MS = Date.UTC(2026, targetMonth - 1, lastDay + daysToSunday);
+            }
+            TOTAL_DAYS = Math.ceil((END_DATE_MS - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
+            
+            // 컨테이너 너비 동적 조정
+            const dynamicWidth = Math.max(1200, TOTAL_DAYS * 30 + 160);
+            document.getElementById('gantt-content-wrapper').style.minWidth = `${dynamicWidth}px`;
+            
+            // 헤더 및 그리드 다시 그리기
+            renderHeaderAndGrid();
             
             const filtered = csvData.filter(d => {
                 // 시작일 기준 필터링 보완 (2025년 시작이어도 2026년 조회 시 포함되어야 함)
