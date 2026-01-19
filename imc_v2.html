@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMC 통합 성과 대시보드 (v2 - Live Data)</title>
+    <title>IMC 통합 성과 대시보드 (v3 - Final Layout)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -44,9 +44,15 @@
             100% { box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.2); }
         }
 
-        /* Toggle Button Animation */
-        .rotate-icon { transition: transform 0.2s; }
+        /* Accordion & Toggle Animations */
+        .rotate-icon { transition: transform 0.3s; }
         .rotate-icon.open { transform: rotate(180deg); }
+        
+        .accordion-content { transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; max-height: 500px; opacity: 1; overflow: hidden; }
+        .accordion-content.collapsed { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; border: none; }
+
+        /* Gantt Row Transition */
+        .gantt-row { transition: height 0.3s ease-in-out; }
     </style>
 </head>
 <body class="bg-[#F8F9FC] text-slate-800 h-screen flex flex-col overflow-hidden">
@@ -55,7 +61,7 @@
         <div class="flex items-center gap-6">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-black text-lg">D</div>
-                <h1 class="text-lg font-bold text-slate-800 tracking-tight">IMC 통합 성과 대시보드 <span class="text-xs font-normal text-slate-400 ml-1">Report View</span></h1>
+                <h1 class="text-lg font-bold text-slate-800 tracking-tight">IMC 통합 성과 대시보드 <span class="text-xs font-normal text-slate-400 ml-1">Live View</span></h1>
             </div>
             <div class="h-6 border-l border-slate-300 mx-2"></div>
             <div class="flex items-center gap-3">
@@ -118,16 +124,17 @@
             </div>
         </div>
 
-        <div class="h-64 bg-white border-t border-slate-200 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-30 shrink-0 flex flex-col">
-            <div class="px-6 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/30 shrink-0">
-                <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+        <div class="bg-white border-t border-slate-200 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-30 shrink-0 flex flex-col transition-all">
+            <div class="px-6 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/30 shrink-0 cursor-pointer hover:bg-slate-50" onclick="toggleKpiSection()">
+                <div class="flex items-center gap-2">
                     <span class="w-1.5 h-4 bg-indigo-600 rounded-sm"></span>
-                    <span id="summary-title">종합 결과 요약 (채널별 KPI 매트릭스)</span>
-                </h3>
+                    <h3 class="font-bold text-sm text-slate-800" id="summary-title">종합 결과 요약 (채널별 KPI 매트릭스)</h3>
+                    <svg id="kpi-chevron" class="w-4 h-4 text-slate-400 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
                 <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">(단위: 천원)</span>
             </div>
             
-            <div class="flex-1 custom-scroll p-0 relative">
+            <div id="kpi-content" class="flex-1 custom-scroll p-0 relative accordion-content collapsed h-64">
                 <div class="min-w-full inline-block align-middle">
                     <table class="kpi-table w-full text-right">
                         <thead id="summary-thead"></thead>
@@ -168,7 +175,7 @@
     </div>
 
     <script>
-        // --- CONFIG ---
+        // --- CONFIG & DYNAMIC DATE ---
         const NOW = new Date();
         const TODAY_Y = NOW.getFullYear();
         const TODAY_M = NOW.getMonth() + 1; 
@@ -179,7 +186,14 @@
         const dateStr = `${TODAY_Y}.${String(TODAY_M).padStart(2,'0')}.${String(TODAY_D).padStart(2,'0')} (${weekDays[NOW.getDay()]})`;
         document.getElementById('current-date-display').innerHTML = `기준일: <span class="text-red-600 font-extrabold bg-red-50 px-2 py-0.5 rounded">${dateStr}</span>`;
 
-        const marketIssues = { '1-1': '신정', '1-29': '설날', '2-14': '발렌타인데이' };
+        // 2026년 실제 공휴일 (하드코딩 수정)
+        const marketIssues = { 
+            '1-1': '신정', 
+            '2-16': '설날 연휴', 
+            '2-17': '설날', 
+            '2-18': '설날 연휴', 
+            '3-1': '삼일절' 
+        };
         
         const channelConfig = {
             '자사몰': { class: 'bg-orange-500 text-white', border: 'border-orange-500' },
@@ -198,10 +212,10 @@
         const brandMap = { 'V': '듀베티카', 'ST': '세르지오 타키니' };
 
         let activeChannels = new Set(channels);
-        let channelExpanded = {}; // 토글 상태 저장
+        let channelExpanded = {}; // 토글 상태
         let csvData = []; 
 
-        // --- DATA LOADING & MAPPING ---
+        // --- DATA LOADING ---
         async function loadData() {
             try {
                 const response = await fetch('data.json');
@@ -248,7 +262,6 @@
                     };
                 });
                 
-                // Sort by date
                 csvData.sort((a, b) => new Date(a.start) - new Date(b.start));
                 init(); 
             } catch (error) {
@@ -299,7 +312,6 @@
         // --- OVERLAP LOGIC ---
         function packItems(items) {
             if (!items || items.length === 0) return [];
-            // Sort by start date
             const sorted = [...items].sort((a, b) => getDateIndex(a.start) - getDateIndex(b.start));
             const lanes = [];
             
@@ -310,7 +322,7 @@
                 for (let i = 0; i < lanes.length; i++) {
                     const lane = lanes[i];
                     const lastItem = lane[lane.length - 1];
-                    // Add buffer of 1 day to prevent visual collision
+                    // 겹침 방지 (Buffer 0일)
                     if (start > getDateIndex(lastItem.end) + 0) {
                         lane.push(item);
                         placed = true;
@@ -324,7 +336,14 @@
 
         function toggleExpand(ch) {
             channelExpanded[ch] = !channelExpanded[ch];
-            applyFilter(); // Re-render
+            applyFilter(); // Re-render logic
+        }
+
+        function toggleKpiSection() {
+            const content = document.getElementById('kpi-content');
+            const icon = document.getElementById('kpi-chevron');
+            content.classList.toggle('collapsed');
+            icon.classList.toggle('open');
         }
 
         // --- GANTT RENDER ---
@@ -371,23 +390,26 @@
                     if(!activeChannels.has(ch)) return; 
                     const items = group[ch];
                     const lanes = packItems(items);
-                    const isExpanded = channelExpanded[ch] || false;
                     const laneCount = lanes.length;
+                    const isExpanded = channelExpanded[ch] || false;
                     
-                    // Height Calculation
-                    // Base h-9 (36px). If expanded, height is lanes.length * 36px.
-                    const rowHeight = (isExpanded && laneCount > 1) ? (laneCount * 36) : 36;
+                    // Height Logic:
+                    // Default (Collapsed): Show ALL bars but tightly packed (20px per lane)
+                    // Expanded: Show ALL bars with more detail/height (40px per lane)
+                    const laneHeight = isExpanded ? 40 : 20; 
+                    const rowHeight = Math.max(36, laneCount * laneHeight);
+                    const padding = 10;
                     
                     const row = document.createElement('div');
-                    row.className = "flex w-full border-b border-slate-100 bg-white items-center group shrink-0 transition-all duration-300 overflow-hidden";
-                    row.style.height = `${rowHeight}px`;
+                    row.className = "gantt-row flex w-full border-b border-slate-100 bg-white items-center group shrink-0 overflow-hidden relative";
+                    row.style.height = `${rowHeight + padding}px`;
 
                     const stickyCol = document.createElement('div');
-                    stickyCol.className = "sticky-left-col w-32 min-w-[8rem] h-full flex items-center px-3 bg-white z-40 shadow-[2px_0_5px_rgba(0,0,0,0.02)] border-r border-slate-200 relative";
+                    stickyCol.className = "sticky-left-col w-32 min-w-[8rem] h-full flex items-center px-3 bg-white z-40 shadow-[2px_0_5px_rgba(0,0,0,0.02)] border-r border-slate-200 absolute top-0 left-0";
                     const conf = channelConfig[ch];
                     const bgClass = conf.class.split(' ')[0];
                     
-                    // Sticky Column Content (with Toggle)
+                    // Toggle Icon (Only if overlapping exists)
                     let toggleHtml = '';
                     if (laneCount > 1) {
                         toggleHtml = `
@@ -400,11 +422,11 @@
                     }
 
                     stickyCol.innerHTML = `
-                        <div class="flex items-center gap-2 w-full cursor-pointer h-9 absolute top-0 left-0 px-3" onclick="toggleChannel('${ch}')">
+                        <div class="flex items-center gap-2 w-full cursor-pointer absolute top-3 left-3" onclick="toggleChannel('${ch}')">
                             <span class="w-2.5 h-2.5 rounded-sm ${bgClass} opacity-80"></span>
-                            <span class="text-[11px] text-slate-600 font-medium truncate select-none">${ch}</span>
-                            ${toggleHtml}
+                            <span class="text-[11px] text-slate-600 font-medium truncate select-none w-16">${ch}</span>
                         </div>
+                        ${toggleHtml}
                     `;
                     row.appendChild(stickyCol);
 
@@ -413,9 +435,7 @@
 
                     if(laneCount > 0) {
                         lanes.forEach((laneItems, laneIndex) => {
-                            // If collapsed, only show 1st lane
-                            if (!isExpanded && laneIndex > 0) return;
-
+                            // SHOW ALL LANES always. Just change appearance based on expansion.
                             laneItems.forEach(item => {
                                 const s = getDateIndex(item.start);
                                 const e = getDateIndex(item.end);
@@ -426,10 +446,11 @@
                                 const width = (end - start + 1) * (100/totalDays);
                                 const left = (start - 1) * (100/totalDays);
                                 
-                                // Calculate Top Position
-                                // Each lane is 36px height. Bar is 24px (h-6) top 6px (top-1.5).
-                                const topPos = (laneIndex * 36) + 6;
-
+                                // Position Calculation
+                                const topPos = (laneIndex * laneHeight) + (isExpanded ? 6 : 4);
+                                const barH = isExpanded ? 28 : 16;
+                                const fontSize = isExpanded ? '11px' : '9px';
+                                
                                 let baseClass = channelConfig[ch].class;
                                 let opacityStyle = "";
                                 let isPast = (year === 2025);
@@ -440,30 +461,33 @@
                                 }
                                 if(isPast) opacityStyle = "opacity: 0.5; filter: grayscale(20%);"; 
                                 
-                                // Details string
+                                // Content Logic
                                 const details = [];
-                                if(item.type) details.push(item.type);
-                                if(item.benefitType) details.push(item.benefitType);
-                                if(item.goal > 0) details.push(`🎯${item.goal.toLocaleString()}`);
+                                if(isExpanded) {
+                                    if(item.type) details.push(item.type);
+                                    if(item.benefitType) details.push(item.benefitType);
+                                    if(item.goal > 0) details.push(`🎯${item.goal.toLocaleString()}`);
+                                }
                                 
                                 let detailHtml = "";
                                 if(details.length > 0) {
                                     detailHtml = `<span class="ml-1 opacity-70 text-[9px] font-normal tracking-tight">| ${details.join(' | ')}</span>`;
                                 }
-                                const fullTooltip = `${item.name} | ${details.join(' | ')}`;
+                                const fullTooltip = `${item.name} | ${item.benefit} | ${item.comment}`;
 
                                 const bar = document.createElement('div');
-                                bar.className = `absolute h-6 rounded-sm shadow-sm text-[11px] font-bold flex items-center px-2 cursor-pointer timeline-bar overflow-hidden ${baseClass}`;
-                                // Dynamic Top Position
+                                bar.className = `absolute rounded-sm shadow-sm font-bold flex items-center px-2 cursor-pointer timeline-bar overflow-hidden ${baseClass}`;
+                                // Apply Styles
                                 bar.style.top = `${topPos}px`;
-                                bar.setAttribute('style', `left: ${left}%; width: calc(${width}% - 1px); top: ${topPos}px; ${opacityStyle}; white-space: nowrap; text-overflow: ellipsis;`);
-                                bar.setAttribute('title', fullTooltip); 
+                                bar.style.left = `${left}%`;
+                                bar.style.width = `calc(${width}% - 1px)`;
+                                bar.style.height = `${barH}px`;
+                                bar.style.fontSize = fontSize;
+                                bar.style.cssText += opacityStyle;
+                                bar.style.whiteSpace = "nowrap";
+                                bar.style.textOverflow = "ellipsis";
                                 
-                                // If collapsed and multiple lanes exist, add shadow to indicate depth
-                                if (!isExpanded && laneCount > 1) {
-                                    bar.classList.add('shadow-[0_2px_4px_rgba(0,0,0,0.3)]');
-                                }
-
+                                bar.setAttribute('title', fullTooltip); 
                                 bar.innerHTML = `<span>${item.name}</span>${detailHtml}`;
                                 bar.onclick = () => openModal(item);
                                 barsArea.appendChild(bar);
