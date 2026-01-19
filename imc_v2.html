@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMC 통합 성과 대시보드 (v3 - Final Layout)</title>
+    <title>IMC 통합 성과 대시보드 (v3 Final - Big & Clear)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,161 +13,148 @@
         
         /* Scrollbars */
         .custom-scroll { overflow: auto; }
-        .custom-scroll::-webkit-scrollbar { height: 10px; width: 10px; }
-        .custom-scroll::-webkit-scrollbar-track { background: #f8fafc; border: 1px solid #e2e8f0; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; border: 2px solid #f8fafc; }
+        .custom-scroll::-webkit-scrollbar { height: 12px; width: 12px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-top: 1px solid #e2e8f0; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; border: 3px solid #f1f5f9; }
         .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        .timeline-bar { transition: all 0.2s; }
-        .timeline-bar:hover { transform: scale(1.02); z-index: 60; box-shadow: 0 4px 12px rgba(0,0,0,0.15); opacity: 1 !important; filter: none; }
-        
-        /* Sticky Layout */
-        .sticky-col-header { position: sticky; top: 0; z-index: 50; }
-        .sticky-left-col { position: sticky; left: 0; z-index: 40; background: white; border-right: 1px solid #e2e8f0; }
-        
-        /* Filter Chip */
-        .filter-chip { transition: all 0.2s; cursor: pointer; user-select: none; }
-        .filter-chip:hover { transform: translateY(-1px); }
-        .filter-chip.active { box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2); }
-
-        /* Table */
-        .kpi-table th, .kpi-table td { white-space: nowrap; padding: 10px 16px; }
-        .kpi-table th { background-color: #f8fafc; color: #64748b; font-weight: 700; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; }
-        .kpi-table td { border-bottom: 1px solid #f1f5f9; font-size: 12px; font-weight: 500; color: #334155; }
-        .kpi-table .total-col { background-color: #f1f5f9; font-weight: 800; color: #1e293b; border-left: 2px solid #e2e8f0; }
-        
-        /* Today Highlight Animation */
-        .today-pulse { animation: pulse-border 2s infinite; }
-        @keyframes pulse-border {
-            0% { box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.2); }
-            50% { box-shadow: inset 0 0 0 2px rgba(239, 68, 68, 0.6); }
-            100% { box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.2); }
+        /* Timeline Bar Animation & Interaction */
+        .timeline-bar { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .timeline-bar:hover { 
+            transform: translateY(-2px); 
+            z-index: 100 !important; 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
+            opacity: 1 !important;
+            filter: brightness(1.05);
         }
-
-        /* Accordion & Toggle Animations */
-        .rotate-icon { transition: transform 0.3s; }
-        .rotate-icon.open { transform: rotate(180deg); }
         
-        .accordion-content { transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; max-height: 500px; opacity: 1; overflow: hidden; }
-        .accordion-content.collapsed { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; border: none; }
+        /* Sticky Columns */
+        .sticky-col-header { position: sticky; top: 0; z-index: 50; }
+        .sticky-left-col { position: sticky; left: 0; z-index: 40; background: white; border-right: 1px solid #e2e8f0; box-shadow: 4px 0 8px rgba(0,0,0,0.02); }
+        
+        /* Table Styles */
+        .kpi-table th, .kpi-table td { white-space: nowrap; padding: 12px 18px; }
+        .kpi-table th { background-color: #f8fafc; color: #64748b; font-weight: 700; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; }
+        .kpi-table td { border-bottom: 1px solid #f1f5f9; font-size: 13px; font-weight: 500; color: #334155; }
+        .kpi-table .total-col { background-color: #f8fafc; font-weight: 800; color: #1e293b; border-left: 2px solid #e2e8f0; }
 
-        /* Gantt Row Transition */
-        .gantt-row { transition: height 0.3s ease-in-out; }
+        /* Accordion Animation */
+        .accordion-content { transition: max-height 0.3s ease-in-out, opacity 0.3s; max-height: 1000px; opacity: 1; overflow: hidden; }
+        .accordion-content.collapsed { max-height: 0; opacity: 0; }
+        .rotate-icon { transition: transform 0.3s; }
+        .rotate-icon.closed { transform: rotate(-90deg); }
     </style>
 </head>
 <body class="bg-[#F8F9FC] text-slate-800 h-screen flex flex-col overflow-hidden">
 
-    <nav class="bg-white border-b border-slate-200 h-14 flex-none flex items-center justify-between px-6 z-50 shadow-sm">
+    <nav class="bg-white border-b border-slate-200 h-16 flex-none flex items-center justify-between px-6 z-50 shadow-sm">
         <div class="flex items-center gap-6">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white font-black text-lg">D</div>
-                <h1 class="text-lg font-bold text-slate-800 tracking-tight">IMC 통합 성과 대시보드 <span class="text-xs font-normal text-slate-400 ml-1">Live View</span></h1>
+                <div class="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-500/20">D</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-800 tracking-tight leading-tight">IMC 통합 성과 대시보드</h1>
+                    <p class="text-[11px] text-slate-400 font-medium">Performance Monitoring System</p>
+                </div>
             </div>
-            <div class="h-6 border-l border-slate-300 mx-2"></div>
+            <div class="h-8 border-l border-slate-200 mx-2"></div>
             <div class="flex items-center gap-3">
-                <select id="brandFilter" onchange="applyFilter()" class="bg-slate-900 text-white border border-slate-900 text-sm font-bold rounded pl-3 pr-8 py-1.5 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-slate-800 shadow-sm">
+                <select id="brandFilter" onchange="applyFilter()" class="bg-slate-50 border border-slate-200 text-slate-700 text-sm font-bold rounded-lg pl-3 pr-10 py-2 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-slate-100 transition-colors shadow-sm">
                     <option value="V">듀베티카 (DUVETICA)</option>
                     <option value="ST">세르지오 타키니 (ST)</option>
                 </select>
-
-                <select id="yearFilter" onchange="applyFilter()" class="bg-indigo-50 border border-indigo-200 text-indigo-700 text-sm font-bold rounded pl-3 pr-8 py-1.5 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-indigo-100">
-                    <option value="ALL">전체 (26년 / 25년 비교)</option>
-                    <option value="2026">2026년 (당해)</option>
-                    <option value="2025">2025년 (전년)</option>
-                </select>
-                <select id="monthFilter" onchange="applyFilter()" class="bg-white border border-slate-200 text-slate-700 text-sm font-bold rounded pl-3 pr-8 py-1.5 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-slate-50">
-                    <option value="ALL">1~2월 누적</option>
-                    <option value="1">1월 (January)</option>
-                    <option value="2">2월 (February)</option>
+                <select id="yearFilter" onchange="applyFilter()" class="bg-white border border-slate-200 text-slate-600 text-sm font-bold rounded-lg pl-3 pr-10 py-2 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
+                    <option value="ALL">2026 / 2025 비교</option>
+                    <option value="2026">2026년 (Current)</option>
+                    <option value="2025">2025년 (Past)</option>
                 </select>
             </div>
         </div>
-        <div class="text-xs font-medium text-slate-500" id="current-date-display">
-            </div>
+        <div class="text-xs font-medium text-slate-500 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-100" id="current-date-display"></div>
     </nav>
 
-    <div class="bg-white border-b border-slate-200 py-3 px-6 flex items-center gap-3 flex-wrap shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02)] z-40">
-        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-2">CHANNEL FILTER</span>
-        <div id="filter-all" onclick="toggleAllChannels()" class="filter-chip px-3 py-1.5 rounded-full text-xs font-bold bg-slate-800 text-white active">ALL</div>
-        <div class="h-4 border-l border-slate-300 mx-1"></div>
+    <div class="bg-white border-b border-slate-200 py-3 px-6 flex items-center gap-4 flex-wrap shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] z-40">
+        <span class="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Channel</span>
+        <div id="filter-all" onclick="toggleAllChannels()" class="cursor-pointer px-4 py-1.5 rounded-full text-xs font-bold bg-slate-800 text-white shadow-md shadow-slate-200 transition-transform active:scale-95">ALL</div>
+        <div class="h-4 border-l border-slate-300"></div>
         <div id="channel-chips" class="flex items-center gap-2 overflow-x-auto custom-scroll pb-1"></div>
     </div>
 
     <div class="flex-1 flex flex-col overflow-hidden bg-white">
         
         <div class="flex-1 flex flex-col relative min-h-0">
-            <div class="flex-1 custom-scroll bg-white relative" id="gantt-container">
-                <div class="min-w-[2000px] h-full relative flex flex-col" id="gantt-content-wrapper">
+            <div class="flex-1 custom-scroll bg-slate-50/50 relative" id="gantt-container">
+                <div class="min-w-[2800px] h-full relative flex flex-col" id="gantt-content-wrapper">
                     
                     <div class="sticky-col-header bg-white border-b border-slate-200 shadow-sm flex shrink-0 flex-col z-50">
                         <div class="flex w-full">
-                            <div class="sticky-left-col w-32 min-w-[8rem] bg-slate-50 z-50 border-r border-slate-200 flex flex-col">
-                                <div class="flex-1 border-b border-slate-100 flex items-center justify-center">
-                                    <span class="text-[10px] font-bold text-slate-400 uppercase">Channel</span>
+                            <div class="sticky-left-col w-40 min-w-[10rem] bg-white z-50 border-r border-slate-200 flex flex-col shadow-[4px_0_12px_rgba(0,0,0,0.03)]">
+                                <div class="flex-1 border-b border-slate-100 flex items-center justify-center bg-slate-50">
+                                    <span class="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Channel List</span>
                                 </div>
                             </div>
                             <div class="flex-1 flex flex-col relative">
-                                <div class="h-7 flex text-sm font-bold text-slate-600 bg-slate-100/50 border-b border-slate-100" id="month-header"></div>
-                                <div class="h-7 flex text-[11px] font-semibold text-slate-600 bg-slate-50 border-b border-slate-100" id="week-header"></div>
-                                <div class="h-7 flex text-[11px] text-slate-500 font-medium bg-white border-b border-slate-100" id="day-header"></div>
-                                <div class="h-10 flex bg-slate-50/80 border-b border-slate-200" id="market-issue-header"></div>
+                                <div class="h-8 flex text-sm font-bold text-slate-600 bg-slate-50/80 border-b border-slate-200 backdrop-blur-sm" id="month-header"></div>
+                                <div class="h-9 flex text-[12px] text-slate-500 font-medium bg-white border-b border-slate-100" id="day-header"></div>
+                                <div class="h-7 flex bg-slate-50 border-b border-slate-200" id="market-issue-header"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="relative flex-1">
-                        <div class="absolute inset-0 flex pointer-events-none z-0 pl-32" id="grid-lines"></div>
-                        <div id="chart-content-layer" class="relative z-20 pt-0 pb-10"></div>
-                        
-                        </div>
+                    <div class="relative flex-1 bg-white">
+                        <div class="absolute inset-0 flex pointer-events-none z-0 pl-40" id="grid-lines"></div>
+                        <div id="chart-content-layer" class="relative z-20 pt-2 pb-10"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white border-t border-slate-200 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-30 shrink-0 flex flex-col transition-all">
-            <div class="px-6 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/30 shrink-0 cursor-pointer hover:bg-slate-50" onclick="toggleKpiSection()">
-                <div class="flex items-center gap-2">
-                    <span class="w-1.5 h-4 bg-indigo-600 rounded-sm"></span>
-                    <h3 class="font-bold text-sm text-slate-800" id="summary-title">종합 결과 요약 (채널별 KPI 매트릭스)</h3>
-                    <svg id="kpi-chevron" class="w-4 h-4 text-slate-400 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        <div class="bg-white border-t border-slate-200 shadow-[0_-8px_30px_rgba(0,0,0,0.04)] z-30 shrink-0 flex flex-col transition-all duration-300">
+            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 cursor-pointer hover:bg-slate-100 transition-colors group" onclick="toggleKpiSection()">
+                <div class="flex items-center gap-3">
+                    <div class="p-1 rounded-md bg-white border border-slate-200 shadow-sm group-hover:border-indigo-300 transition-colors">
+                        <svg id="kpi-chevron" class="w-4 h-4 text-slate-400 rotate-icon closed" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <h3 class="font-bold text-sm text-slate-700">종합 결과 요약 (KPI Matrix)</h3>
                 </div>
-                <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">(단위: 천원)</span>
+                <span class="text-[11px] font-bold text-slate-400 bg-white border border-slate-200 px-2 py-1 rounded shadow-sm">단위: 천원</span>
             </div>
             
-            <div id="kpi-content" class="flex-1 custom-scroll p-0 relative accordion-content collapsed h-64">
-                <div class="min-w-full inline-block align-middle">
-                    <table class="kpi-table w-full text-right">
-                        <thead id="summary-thead"></thead>
-                        <tbody id="summary-tbody"></tbody>
-                    </table>
+            <div id="kpi-content" class="flex-1 custom-scroll p-0 relative accordion-content collapsed bg-slate-50/30">
+                <div class="min-w-full inline-block align-middle p-4">
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <table class="kpi-table w-full text-right">
+                            <thead id="summary-thead"></thead>
+                            <tbody id="summary-tbody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+    <div id="modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/40 backdrop-blur-md p-4 transition-all">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-100 ring-1 ring-slate-900/5">
+            <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <div class="flex items-center gap-3">
-                    <span id="m-year-badge" class="px-2 py-1 bg-slate-600 text-white text-[10px] font-bold uppercase rounded">YEAR</span>
-                    <span id="m-brand-badge" class="px-2 py-1 bg-black text-white text-[10px] font-bold uppercase rounded">BRAND</span>
-                    <h3 id="m-title" class="text-lg font-bold text-slate-800">Title</h3>
+                    <span id="m-year-badge" class="px-2.5 py-1 bg-slate-800 text-white text-[11px] font-bold uppercase rounded-md shadow-sm">YEAR</span>
+                    <span id="m-brand-badge" class="px-2.5 py-1 bg-white border border-slate-200 text-slate-700 text-[11px] font-bold uppercase rounded-md">BRAND</span>
+                    <h3 id="m-title" class="text-lg font-bold text-slate-800 tracking-tight">Promo Title</h3>
                 </div>
-                <button onclick="document.getElementById('modal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 text-2xl">&times;</button>
+                <button onclick="document.getElementById('modal').classList.add('hidden')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-200 text-slate-400 transition-colors text-xl">&times;</button>
             </div>
-            <div class="p-6">
-                <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">상세 혜택</p>
-                        <p id="m-benefit" class="font-medium text-slate-700 text-sm"></p>
+            <div class="p-8">
+                <div class="grid grid-cols-2 gap-6 mb-8">
+                    <div class="p-5 bg-indigo-50/50 rounded-xl border border-indigo-100">
+                        <p class="text-[11px] font-bold text-indigo-400 uppercase mb-2 tracking-wider">상세 혜택 (Benefit)</p>
+                        <p id="m-benefit" class="font-bold text-indigo-900 text-sm"></p>
                     </div>
-                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">MD 코멘트</p>
-                        <p id="m-comment" class="font-medium text-slate-600 text-sm italic"></p>
+                    <div class="p-5 bg-slate-50 rounded-xl border border-slate-100">
+                        <p class="text-[11px] font-bold text-slate-400 uppercase mb-2 tracking-wider">MD 코멘트</p>
+                        <p id="m-comment" class="font-medium text-slate-600 text-sm italic leading-relaxed"></p>
                     </div>
                 </div>
-                <div class="h-40 border border-slate-100 rounded-xl p-4 bg-white relative">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase absolute top-4 left-4">기간별 매출 추이</p>
+                <div class="h-48 border border-slate-100 rounded-xl p-5 bg-white relative shadow-sm">
+                    <p class="text-[11px] font-bold text-slate-400 uppercase absolute top-5 left-5">Daily Sales Trend</p>
                     <canvas id="chart-canvas"></canvas>
                 </div>
             </div>
@@ -175,58 +162,62 @@
     </div>
 
     <script>
-        // --- CONFIG & DYNAMIC DATE ---
+        // --- CONFIG ---
         const NOW = new Date();
-        const TODAY_Y = NOW.getFullYear();
-        const TODAY_M = NOW.getMonth() + 1; 
-        const TODAY_D = NOW.getDate();      
         
-        // 날짜 표시
-        const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
-        const dateStr = `${TODAY_Y}.${String(TODAY_M).padStart(2,'0')}.${String(TODAY_D).padStart(2,'0')} (${weekDays[NOW.getDay()]})`;
-        document.getElementById('current-date-display').innerHTML = `기준일: <span class="text-red-600 font-extrabold bg-red-50 px-2 py-0.5 rounded">${dateStr}</span>`;
+        // [수정] 날짜 범위 설정: 2025년 12월 29일 ~ 2026년 2월 28일
+        const START_DATE = new Date(2025, 11, 29); // Dec 29, 2025
+        const END_DATE = new Date(2026, 1, 28);    // Feb 28, 2026
+        
+        // 날짜 차이 계산 (Total days)
+        const TOTAL_DAYS = Math.ceil((END_DATE - START_DATE) / (1000 * 60 * 60 * 24)) + 1;
 
-        // 2026년 실제 공휴일 (하드코딩 수정)
+        // 오늘 날짜 표시
+        const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
+        const dateStr = `${NOW.getFullYear()}.${String(NOW.getMonth()+1).padStart(2,'0')}.${String(NOW.getDate()).padStart(2,'0')} (${weekDays[NOW.getDay()]})`;
+        document.getElementById('current-date-display').innerHTML = `기준일: <span class="text-indigo-600 font-extrabold ml-1">${dateStr}</span>`;
+
+        // [수정] 2026년 설날 반영 (2/16~18) + 12월 말/1월 이슈
         const marketIssues = { 
-            '1-1': '신정', 
-            '2-16': '설날 연휴', 
-            '2-17': '설날', 
-            '2-18': '설날 연휴', 
-            '3-1': '삼일절' 
+            '2025-12-25': '크리스마스',
+            '2026-1-1': '신정', 
+            '2026-2-16': '설날 연휴', 
+            '2026-2-17': '설날(당일)', 
+            '2026-2-18': '설날 연휴',
+            '2026-3-1': '삼일절'
         };
-        
+
         const channelConfig = {
-            '자사몰': { class: 'bg-orange-500 text-white', border: 'border-orange-500' },
-            'SSF샵': { class: 'bg-sky-400 text-white', border: 'border-sky-400' },
-            '무신사': { class: 'bg-black text-white', border: 'border-black' },
-            'SSG닷컴': { class: 'bg-[#FFEB00] text-[#4A3C31] border-2 border-[#4A3C31]', border: 'border-[#4A3C31]' }, 
-            'SI빌리지': { class: 'bg-[#5D4037] text-white', border: 'border-[#5D4037]' },
-            '네이버스토어': { class: 'bg-green-500 text-white', border: 'border-green-500' },
-            '더카트골프': { class: 'bg-violet-500 text-white', border: 'border-violet-500' },
-            '롯데ON': { class: 'bg-red-500 text-white', border: 'border-red-500' },
-            '29CM': { class: 'bg-[#000080] text-white', border: 'border-[#000080]' },
-            'EQL': { class: 'bg-lime-400 text-lime-900', border: 'border-lime-400' },
-            '기타 제휴몰': { class: 'bg-[#A89F91] text-white', border: 'border-[#A89F91]' }
+            '자사몰': { class: 'bg-orange-500 text-white border-orange-600', border: 'border-orange-500' },
+            'SSF샵': { class: 'bg-sky-500 text-white border-sky-600', border: 'border-sky-400' },
+            '무신사': { class: 'bg-slate-900 text-white border-slate-950', border: 'border-slate-800' },
+            'SSG닷컴': { class: 'bg-[#FFEB00] text-[#4A3C31] border-[#4A3C31]', border: 'border-[#4A3C31]' }, 
+            'SI빌리지': { class: 'bg-[#5D4037] text-white border-[#3E2723]', border: 'border-[#5D4037]' },
+            '네이버스토어': { class: 'bg-[#03C75A] text-white border-[#02B150]', border: 'border-[#03C75A]' },
+            '더카트골프': { class: 'bg-violet-600 text-white border-violet-700', border: 'border-violet-500' },
+            '롯데ON': { class: 'bg-red-600 text-white border-red-700', border: 'border-red-500' },
+            '29CM': { class: 'bg-[#000080] text-white border-[#000060]', border: 'border-[#000080]' },
+            'EQL': { class: 'bg-lime-400 text-lime-950 border-lime-500', border: 'border-lime-400' },
+            '기타 제휴몰': { class: 'bg-slate-400 text-white border-slate-500', border: 'border-slate-400' }
         };
         const channels = Object.keys(channelConfig);
         const brandMap = { 'V': '듀베티카', 'ST': '세르지오 타키니' };
 
         let activeChannels = new Set(channels);
-        let channelExpanded = {}; // 토글 상태
+        let channelExpanded = {}; 
         let csvData = []; 
 
         // --- DATA LOADING ---
         async function loadData() {
             try {
                 const response = await fetch('data.json');
-                if (!response.ok) throw new Error("Failed to load data.json");
+                if (!response.ok) throw new Error("Failed");
                 const rawData = await response.json();
                 
                 csvData = rawData.map((item, index) => {
                     let ch = item.CHANNEL || '기타 제휴몰';
                     if(!channelConfig[ch]) ch = '기타 제휴몰';
 
-                    // Sales Simulation
                     const showGoal = (index % 2 === 0);
                     const goalAmount = Math.floor(Math.random() * 30000) + 20000;
                     const finalGoal = showGoal ? goalAmount : 0;
@@ -236,12 +227,11 @@
                     const eDate = new Date(item.END_DATE);
                     
                     let actual = 0;
-                    if (year === 2025) {
-                        actual = Math.floor((showGoal ? goalAmount : 30000) * (Math.random() * 0.3 + 0.8));
-                    } else {
-                        const todayObj = new Date(TODAY_Y, TODAY_M-1, TODAY_D);
-                        if (eDate < todayObj) actual = Math.floor((showGoal ? goalAmount : 30000) * (Math.random() * 0.3 + 0.9));
-                        else if (sDate > todayObj) actual = 0;
+                    // Mock sales logic
+                    if (year === 2025) actual = Math.floor((showGoal ? goalAmount : 30000) * (Math.random() * 0.3 + 0.8));
+                    else {
+                        if (eDate < NOW) actual = Math.floor((showGoal ? goalAmount : 30000) * (Math.random() * 0.3 + 0.9));
+                        else if (sDate > NOW) actual = 0;
                         else actual = Math.floor((showGoal ? goalAmount : 30000) * 0.4);
                     }
 
@@ -264,9 +254,7 @@
                 
                 csvData.sort((a, b) => new Date(a.start) - new Date(b.start));
                 init(); 
-            } catch (error) {
-                console.error("Data Load Error:", error);
-            }
+            } catch (error) { console.error(error); }
         }
 
         function init() {
@@ -280,19 +268,16 @@
             container.innerHTML = '';
             channels.forEach(ch => {
                 const isActive = activeChannels.has(ch);
-                const chip = document.createElement('div');
                 const conf = channelConfig[ch];
+                const chip = document.createElement('div');
                 let css = isActive 
                     ? `bg-white text-slate-800 border ${conf.border} shadow-sm font-bold ring-1 ring-inset ${conf.border.replace('border','ring')}` 
-                    : `bg-slate-100 text-slate-400 border border-slate-200`;
-                chip.className = `filter-chip px-3 py-1.5 rounded-full text-xs whitespace-nowrap ${css}`;
+                    : `bg-slate-100 text-slate-400 border border-slate-200 hover:bg-slate-200`;
+                chip.className = `cursor-pointer px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-all ${css}`;
                 chip.innerText = ch;
                 chip.onclick = () => toggleChannel(ch);
                 container.appendChild(chip);
             });
-            const allBtn = document.getElementById('filter-all');
-            const isAll = channels.length === activeChannels.size;
-            allBtn.className = `filter-chip px-3 py-1.5 rounded-full text-xs font-bold ${isAll ? 'bg-slate-800 text-white' : 'bg-slate-100 text-slate-400'}`;
         }
 
         function toggleChannel(ch) {
@@ -309,21 +294,19 @@
             applyFilter();
         }
 
-        // --- OVERLAP LOGIC ---
+        // --- OVERLAP LOGIC (PACKING) ---
         function packItems(items) {
             if (!items || items.length === 0) return [];
-            const sorted = [...items].sort((a, b) => getDateIndex(a.start) - getDateIndex(b.start));
+            const sorted = [...items].sort((a, b) => getDaysFromStart(a.start) - getDaysFromStart(b.start));
             const lanes = [];
-            
             sorted.forEach(item => {
-                const start = getDateIndex(item.start);
-                const end = getDateIndex(item.end);
+                const start = getDaysFromStart(item.start);
                 let placed = false;
                 for (let i = 0; i < lanes.length; i++) {
                     const lane = lanes[i];
                     const lastItem = lane[lane.length - 1];
-                    // 겹침 방지 (Buffer 0일)
-                    if (start > getDateIndex(lastItem.end) + 0) {
+                    // Buffer 0 to allow tight packing, but Z-index will handle visual overlap
+                    if (start >= getDaysFromStart(lastItem.end) + 0) {
                         lane.push(item);
                         placed = true;
                         break;
@@ -336,34 +319,31 @@
 
         function toggleExpand(ch) {
             channelExpanded[ch] = !channelExpanded[ch];
-            applyFilter(); // Re-render logic
+            applyFilter(); 
         }
 
         function toggleKpiSection() {
             const content = document.getElementById('kpi-content');
             const icon = document.getElementById('kpi-chevron');
             content.classList.toggle('collapsed');
-            icon.classList.toggle('open');
+            icon.classList.toggle('closed');
         }
 
-        // --- GANTT RENDER ---
-        const totalDays = 59; 
-
+        // --- CORE RENDER ---
         function applyFilter() {
             const sBrand = document.getElementById('brandFilter').value;
             const sYear = document.getElementById('yearFilter').value;
-            const sMonth = document.getElementById('monthFilter').value;
             
+            // Filter logic
             const filtered = csvData.filter(d => {
                 const y = parseInt(d.start.substring(0,4));
-                const m = parseInt(d.start.substring(5,7));
-                const bm = d.brand === sBrand;
-                const mm = sMonth === 'ALL' || m == sMonth;
+                const bm = (sBrand === 'ALL' || d.brand === sBrand);
                 let ym = true;
                 if(sYear !== 'ALL') ym = (y == sYear);
-                return bm && mm && ym; 
+                return bm && ym; 
             });
 
+            // Summary Data (All active channels)
             const summaryData = filtered.filter(d => activeChannels.has(d.channel));
             renderGanttRows(filtered, sYear);
             renderSummaryTable(summaryData);
@@ -374,14 +354,16 @@
             container.innerHTML = '';
 
             const drawSection = (yearData, year) => {
-                const yearLabelRow = document.createElement('div');
-                yearLabelRow.className = "flex w-full h-8 border-b border-indigo-100 bg-indigo-50/30 items-center shrink-0";
+                // Year Header
+                const yearRow = document.createElement('div');
+                yearRow.className = "flex w-full h-8 border-b border-indigo-100 bg-indigo-50/40 items-center shrink-0";
                 const stickyLabel = document.createElement('div');
-                stickyLabel.className = "sticky-left-col w-32 min-w-[8rem] h-full flex items-center justify-center bg-indigo-50 font-bold text-indigo-900 text-xs gap-2 z-40";
-                stickyLabel.innerHTML = `<span class="bg-indigo-600 text-white px-2 py-0.5 rounded text-[10px]">${year}</span>`;
-                yearLabelRow.appendChild(stickyLabel);
-                container.appendChild(yearLabelRow);
+                stickyLabel.className = "sticky-left-col w-40 min-w-[10rem] h-full flex items-center justify-center bg-indigo-50 font-bold text-indigo-900 text-xs gap-2 z-40";
+                stickyLabel.innerHTML = `<span class="bg-indigo-600 text-white px-2 py-0.5 rounded text-[10px] shadow-sm">${year}</span>`;
+                yearRow.appendChild(stickyLabel);
+                container.appendChild(yearRow);
 
+                // Group by Channel
                 const group = {};
                 channels.forEach(ch => group[ch] = []);
                 yearData.forEach(d => { if(group[d.channel]) group[d.channel].push(d); });
@@ -393,28 +375,27 @@
                     const laneCount = lanes.length;
                     const isExpanded = channelExpanded[ch] || false;
                     
-                    // Height Logic:
-                    // Default (Collapsed): Show ALL bars but tightly packed (20px per lane)
-                    // Expanded: Show ALL bars with more detail/height (40px per lane)
-                    const laneHeight = isExpanded ? 40 : 20; 
-                    const rowHeight = Math.max(36, laneCount * laneHeight);
-                    const padding = 10;
+                    // [수정] 토글 안하면 1줄 높이(44px) 고정, 토글 하면 Lane 개수만큼 늘어남
+                    // [수정] 토글 안해도 바들은 '모두' 렌더링됨 (겹쳐서 보임)
+                    const LANE_H = 40;
+                    const rowHeight = isExpanded ? (Math.max(1, laneCount) * LANE_H + 10) : 44; 
                     
                     const row = document.createElement('div');
-                    row.className = "gantt-row flex w-full border-b border-slate-100 bg-white items-center group shrink-0 overflow-hidden relative";
-                    row.style.height = `${rowHeight + padding}px`;
+                    row.className = "flex w-full border-b border-slate-100 bg-white items-center group shrink-0 relative hover:bg-slate-50 transition-colors";
+                    row.style.height = `${rowHeight}px`;
 
+                    // Left Sticky Col
                     const stickyCol = document.createElement('div');
-                    stickyCol.className = "sticky-left-col w-32 min-w-[8rem] h-full flex items-center px-3 bg-white z-40 shadow-[2px_0_5px_rgba(0,0,0,0.02)] border-r border-slate-200 absolute top-0 left-0";
+                    stickyCol.className = "sticky-left-col w-40 min-w-[10rem] h-full flex items-center px-4 bg-white z-40 border-r border-slate-200 absolute top-0 left-0 group-hover:bg-slate-50 transition-colors";
                     const conf = channelConfig[ch];
-                    const bgClass = conf.class.split(' ')[0];
+                    const bgClass = conf.class.split(' ')[0]; // Extract bg color
                     
-                    // Toggle Icon (Only if overlapping exists)
+                    // Toggle Button
                     let toggleHtml = '';
                     if (laneCount > 1) {
                         toggleHtml = `
-                            <div onclick="event.stopPropagation(); toggleExpand('${ch}')" class="absolute right-2 cursor-pointer p-1 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-600">
-                                <svg class="w-3 h-3 rotate-icon ${isExpanded ? 'open' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div onclick="event.stopPropagation(); toggleExpand('${ch}')" class="absolute right-3 cursor-pointer p-1.5 hover:bg-slate-200 rounded-md text-slate-400 hover:text-slate-700 transition-colors">
+                                <svg class="w-3.5 h-3.5 rotate-icon ${isExpanded ? 'open' : 'closed'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </div>
@@ -422,73 +403,73 @@
                     }
 
                     stickyCol.innerHTML = `
-                        <div class="flex items-center gap-2 w-full cursor-pointer absolute top-3 left-3" onclick="toggleChannel('${ch}')">
-                            <span class="w-2.5 h-2.5 rounded-sm ${bgClass} opacity-80"></span>
-                            <span class="text-[11px] text-slate-600 font-medium truncate select-none w-16">${ch}</span>
+                        <div class="flex items-center gap-3 w-full cursor-pointer absolute top-0 h-10" onclick="toggleChannel('${ch}')">
+                            <span class="w-2.5 h-2.5 rounded-full ${bgClass} shadow-sm"></span>
+                            <span class="text-[12px] text-slate-700 font-bold truncate select-none">${ch}</span>
                         </div>
                         ${toggleHtml}
                     `;
                     row.appendChild(stickyCol);
 
+                    // Bars Area
                     const barsArea = document.createElement('div');
                     barsArea.className = "flex-1 h-full relative";
 
                     if(laneCount > 0) {
                         lanes.forEach((laneItems, laneIndex) => {
-                            // SHOW ALL LANES always. Just change appearance based on expansion.
-                            laneItems.forEach(item => {
-                                const s = getDateIndex(item.start);
-                                const e = getDateIndex(item.end);
-                                if(s > totalDays || e < 1) return;
+                            // [수정] isExpanded가 false여도 모든 lane을 그린다.
+                            // 단, top 위치를 모두 동일하게(첫번째 줄) 강제한다.
+                            laneItems.forEach((item, itemIdx) => {
+                                const s = getDaysFromStart(item.start);
+                                const e = getDaysFromStart(item.end);
+                                if(s > TOTAL_DAYS || e < 1) return;
                                 
                                 const start = Math.max(1, s);
-                                const end = Math.min(totalDays, e);
-                                const width = (end - start + 1) * (100/totalDays);
-                                const left = (start - 1) * (100/totalDays);
+                                const end = Math.min(TOTAL_DAYS, e);
+                                const widthPct = (end - start + 1) * (100/TOTAL_DAYS);
+                                const leftPct = (start - 1) * (100/TOTAL_DAYS);
                                 
-                                // Position Calculation
-                                const topPos = (laneIndex * laneHeight) + (isExpanded ? 6 : 4);
-                                const barH = isExpanded ? 28 : 16;
-                                const fontSize = isExpanded ? '11px' : '9px';
-                                
+                                // Layout Calculation
+                                // Expanded: Spread vertically
+                                // Collapsed: All in top row, overlapping using z-index
+                                let topPos = 8;
+                                if (isExpanded) topPos = (laneIndex * LANE_H) + 6;
+                                else topPos = 8; // Collapsed: Fixed top
+
+                                // Style Config
                                 let baseClass = channelConfig[ch].class;
                                 let opacityStyle = "";
-                                let isPast = (year === 2025);
-                                const todayObj = new Date(TODAY_Y, TODAY_M-1, TODAY_D);
-                                if(!isPast) {
-                                    const endObj = new Date(item.end);
-                                    if(endObj < todayObj) isPast = true;
-                                }
-                                if(isPast) opacityStyle = "opacity: 0.5; filter: grayscale(20%);"; 
+                                if(year < 2026) opacityStyle = "opacity: 0.6; filter: grayscale(30%);";
                                 
-                                // Content Logic
+                                // Z-Index Logic for Collapsed Mode: Later starts on top, or hover handles it
+                                const zIdx = 10 + laneIndex;
+
+                                // [수정] 글자 크기 13px로 확대
+                                const fontSize = '13px';
+                                
+                                // Content
                                 const details = [];
                                 if(isExpanded) {
-                                    if(item.type) details.push(item.type);
                                     if(item.benefitType) details.push(item.benefitType);
-                                    if(item.goal > 0) details.push(`🎯${item.goal.toLocaleString()}`);
+                                    if(item.goal > 0) details.push(`🎯${(item.goal/1000).toFixed(0)}K`);
                                 }
-                                
                                 let detailHtml = "";
-                                if(details.length > 0) {
-                                    detailHtml = `<span class="ml-1 opacity-70 text-[9px] font-normal tracking-tight">| ${details.join(' | ')}</span>`;
-                                }
-                                const fullTooltip = `${item.name} | ${item.benefit} | ${item.comment}`;
-
+                                if(details.length > 0) detailHtml = `<span class="ml-2 opacity-80 text-[11px] font-medium tracking-normal border-l border-white/30 pl-2">${details.join(' ')}</span>`;
+                                
                                 const bar = document.createElement('div');
-                                bar.className = `absolute rounded-sm shadow-sm font-bold flex items-center px-2 cursor-pointer timeline-bar overflow-hidden ${baseClass}`;
-                                // Apply Styles
+                                bar.className = `absolute h-[28px] rounded shadow-sm border font-bold flex items-center px-3 cursor-pointer timeline-bar overflow-hidden ${baseClass}`;
+                                
                                 bar.style.top = `${topPos}px`;
-                                bar.style.left = `${left}%`;
-                                bar.style.width = `calc(${width}% - 1px)`;
-                                bar.style.height = `${barH}px`;
+                                bar.style.left = `${leftPct}%`;
+                                bar.style.width = `calc(${widthPct}% - 2px)`;
                                 bar.style.fontSize = fontSize;
+                                bar.style.zIndex = zIdx;
                                 bar.style.cssText += opacityStyle;
                                 bar.style.whiteSpace = "nowrap";
                                 bar.style.textOverflow = "ellipsis";
                                 
-                                bar.setAttribute('title', fullTooltip); 
-                                bar.innerHTML = `<span>${item.name}</span>${detailHtml}`;
+                                bar.setAttribute('title', `${item.name} (${item.start}~${item.end})`); 
+                                bar.innerHTML = `<span class="truncate">${item.name}</span>${detailHtml}`;
                                 bar.onclick = () => openModal(item);
                                 barsArea.appendChild(bar);
                             });
@@ -519,7 +500,7 @@
 
             const activeList = channels.filter(c => activeChannels.has(c));
             
-            let headerHTML = '<tr><th class="sticky left-0 bg-slate-50 z-20 w-32 min-w-[8rem] border-r border-slate-200">구분 (KPI)</th>';
+            let headerHTML = '<tr><th class="sticky left-0 bg-slate-50 z-20 w-40 min-w-[10rem] border-r border-slate-200">구분 (KPI)</th>';
             activeList.forEach(ch => { headerHTML += `<th>${ch}</th>`; });
             headerHTML += '<th class="total-col sticky right-0">Total</th></tr>';
             thead.innerHTML = headerHTML;
@@ -584,73 +565,96 @@
             tbody.innerHTML = trGoal + trRev + trRate + trYoY;
         }
 
-        // Header Grid
+        // --- HEADER GRID (UPDATED FOR DEC START) ---
+        function getDaysFromStart(dateStr) {
+            const d = new Date(dateStr);
+            // Difference in days from START_DATE
+            return Math.floor((d - START_DATE) / (1000 * 60 * 60 * 24)) + 1;
+        }
+
         function renderHeaderAndGrid() {
             const mHead = document.getElementById('month-header');
-            const wHead = document.getElementById('week-header');
             const dHead = document.getElementById('day-header');
             const miHead = document.getElementById('market-issue-header');
             const gl = document.getElementById('grid-lines');
             
-            mHead.innerHTML = ''; wHead.innerHTML = ''; dHead.innerHTML = ''; miHead.innerHTML = ''; gl.innerHTML = '';
+            mHead.innerHTML = ''; dHead.innerHTML = ''; miHead.innerHTML = ''; gl.innerHTML = '';
 
-            const months = [ { name: '1월', days: 31 }, { name: '2월', days: 28 } ];
-            let globalDayIndex = 0; 
+            let curr = new Date(START_DATE);
+            let dayIndex = 0;
+            let currentMonth = -1;
+            let monthDaysCount = 0;
 
-            months.forEach((m, mIdx) => {
-                const mDiv = document.createElement('div');
-                mDiv.className = "flex items-center justify-center border-r border-slate-200 h-full relative";
-                mDiv.style.width = `${(m.days / totalDays) * 100}%`;
-                mDiv.innerHTML = `<span class="sticky left-0">${m.name}</span>`;
-                mHead.appendChild(mDiv);
+            // Loop day by day
+            for(let i=1; i<=TOTAL_DAYS; i++) {
+                const y = curr.getFullYear();
+                const m = curr.getMonth() + 1;
+                const d = curr.getDate();
+                const dayOfWeek = curr.getDay(); // 0=Sun, 6=Sat
+                const dateKey = `${y}-${m}-${d}`;
+                const isToday = (y === NOW.getFullYear() && (curr.getMonth() === NOW.getMonth()) && d === NOW.getDate());
+                
+                // --- Day Cell ---
+                const dDiv = document.createElement('div');
+                let dayClass = "flex-1 border-r border-slate-100 flex flex-col items-center justify-center h-full text-[12px] font-medium relative ";
+                
+                // Color logic
+                if (isToday) dayClass += "bg-red-50 text-red-600 font-extrabold border-red-200 border-x z-10 ";
+                else if (dayOfWeek === 0 || dayOfWeek === 6) dayClass += "text-red-400 bg-slate-50/40 ";
+                else dayClass += "text-slate-400 ";
+                
+                dDiv.className = dayClass;
+                dDiv.innerHTML = `<span>${d}</span>`;
+                // If start of month, show label in Month Header later, here maybe just bold 1
+                if(d === 1) dDiv.classList.add("font-black", "text-slate-800");
 
-                for(let i=1; i<=m.days; i++) {
-                    globalDayIndex++;
-                    const key = `${mIdx+1}-${i}`;
-                    const isToday = (mIdx + 1 === TODAY_M && i === TODAY_D);
-                    // Header Highlight
-                    const highlightClass = isToday ? "bg-red-50 text-red-600 font-extrabold today-pulse border-red-200 border-x" : "";
-                    
-                    const dDiv = document.createElement('div');
-                    dDiv.className = `flex-1 border-r border-slate-100 flex items-center justify-center h-full text-[11px] ${highlightClass}`;
-                    dDiv.innerText = i;
-                    if(!isToday && (globalDayIndex % 7 === 3 || globalDayIndex % 7 === 4)) dDiv.classList.add('text-red-400', 'bg-red-50/20');
-                    dHead.appendChild(dDiv);
+                dHead.appendChild(dDiv);
 
-                    const miDiv = document.createElement('div');
-                    miDiv.className = `flex-1 border-r border-slate-200 flex items-center justify-center h-full overflow-hidden px-0.5 ${isToday ? "bg-red-50 border-x border-red-200" : ""}`;
-                    if(marketIssues[key]) miDiv.innerHTML = `<span class="text-indigo-700 font-bold text-[10px] w-full text-center leading-3 break-all whitespace-normal">${marketIssues[key]}</span>`;
-                    miHead.appendChild(miDiv);
-
-                    const lDiv = document.createElement('div');
-                    // Body Highlight
-                    lDiv.className = "flex-1 border-r border-slate-100 h-full " + ((globalDayIndex % 7 === 3 || globalDayIndex % 7 === 4) ? 'bg-slate-50/50 ' : '') + (isToday ? "bg-red-50/30 border-l border-l-red-200 border-r-red-200" : "");
-                    gl.appendChild(lDiv);
+                // --- Market Issue Cell ---
+                const miDiv = document.createElement('div');
+                miDiv.className = `flex-1 border-r border-slate-200 flex items-center justify-center h-full overflow-hidden px-0.5 ${isToday ? "bg-red-50 border-x border-red-200" : ""}`;
+                if(marketIssues[dateKey]) {
+                    const issueName = marketIssues[dateKey];
+                    // Red badge for holidays
+                    miDiv.innerHTML = `<span class="bg-red-100 text-red-600 text-[10px] font-bold px-1 rounded truncate w-full text-center">${issueName}</span>`;
                 }
-            });
+                miHead.appendChild(miDiv);
 
-            const weeks = [
-                { name: '1주', days: 4 }, { name: '2주', days: 7 }, { name: '3주', days: 7 }, 
-                { name: '4주', days: 7 }, { name: '5주', days: 6, class: 'border-r-0' }, 
-                { name: '5주', days: 1, class: 'border-l-0 text-transparent' }, 
-                { name: '6주', days: 7 }, { name: '7주', days: 7 }, { name: '8주', days: 7 }, { name: '9주', days: 6 }, 
-            ];
-            weeks.forEach(w => {
-                const wDiv = document.createElement('div');
-                wDiv.className = `flex items-center justify-center border-r border-slate-300 h-full text-[11px] bg-white ${w.class || ''}`;
-                wDiv.style.width = `${(w.days / totalDays) * 100}%`;
-                wDiv.innerText = (w.name === '5주' && w.days === 1) ? '' : w.name;
-                wHead.appendChild(wDiv);
-            });
-        }
+                // --- Grid Line ---
+                const lDiv = document.createElement('div');
+                lDiv.className = "flex-1 border-r border-slate-100 h-full relative ";
+                if(dayOfWeek === 0 || dayOfWeek === 6) lDiv.classList.add('bg-slate-50/40');
+                if(isToday) lDiv.classList.add('bg-red-50/20', 'border-l', 'border-l-red-200', 'border-r-red-200');
+                gl.appendChild(lDiv);
 
-        function getDateIndex(dateStr) {
-            if(!dateStr) return -1;
-            const m = parseInt(dateStr.substring(5,7));
-            const d = parseInt(dateStr.substring(8,10));
-            if(m===1) return d;
-            if(m===2) return 31+d;
-            return -1;
+                // --- Month Header Logic ---
+                if (currentMonth !== m) {
+                    if (currentMonth !== -1) {
+                        // Close previous month div
+                        const mDiv = document.createElement('div');
+                        mDiv.className = "flex items-center justify-center border-r border-slate-200 h-full relative text-slate-700 bg-white";
+                        mDiv.style.flex = monthDaysCount; 
+                        // Label
+                        mDiv.innerHTML = `<span class="sticky left-0 font-extrabold">${currentMonth}월</span>`;
+                        mHead.appendChild(mDiv);
+                    }
+                    currentMonth = m;
+                    monthDaysCount = 0;
+                }
+                monthDaysCount++;
+                
+                // Next day
+                curr.setDate(curr.getDate() + 1);
+            }
+            
+            // Append last month
+            if (monthDaysCount > 0) {
+                const mDiv = document.createElement('div');
+                mDiv.className = "flex items-center justify-center border-r border-slate-200 h-full relative text-slate-700 bg-white";
+                mDiv.style.flex = monthDaysCount;
+                mDiv.innerHTML = `<span class="sticky left-0 font-extrabold">${currentMonth}월</span>`;
+                mHead.appendChild(mDiv);
+            }
         }
 
         let chartInstance;
@@ -660,16 +664,27 @@
             document.getElementById('m-year-badge').innerText = item.start.substring(0,4);
             document.getElementById('m-brand-badge').innerText = brandMap[item.brand];
             document.getElementById('m-benefit').innerText = item.benefit || '-';
-            document.getElementById('m-comment').innerText = `"${item.comment}"`;
+            document.getElementById('m-comment').innerText = item.comment ? `"${item.comment}"` : "작성된 코멘트가 없습니다.";
             const ctx = document.getElementById('chart-canvas').getContext('2d');
             if(chartInstance) chartInstance.destroy();
             chartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
-                    datasets: [{ label: 'Sales', data: [120, 190, 150, 220, 300], backgroundColor: '#4f46e5', borderRadius: 4 }]
+                    labels: ['D+1', 'D+2', 'D+3', 'D+4', 'D+5', 'D+6', 'D+7'],
+                    datasets: [{ 
+                        label: '일별 매출 (예상)', 
+                        data: [120, 190, 150, 220, 300, 250, 210], 
+                        backgroundColor: '#6366f1', 
+                        borderRadius: 4,
+                        barThickness: 20
+                    }]
                 },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { grid: { display: false } } } }
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { legend: { display: false } }, 
+                    scales: { y: { display: false }, x: { grid: { display: false } } } 
+                }
             });
         }
 
