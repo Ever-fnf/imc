@@ -175,8 +175,7 @@
             return Date.UTC(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
         }
 
-        // 타임라인 범위: 2025년 12월 1일 ~ 2026년 12월 31일 (고정)
-        // 전년 12월부터 당해 12월까지 표시하여 YoY 비교 가능
+        // 기준일: 2025년 12월 1일 ~ 2026년 12월 31일 (YoY 비교용)
         const START_DATE_MS = Date.UTC(2025, 11, 1);  // 2025-12-01
         const END_DATE_MS = Date.UTC(2026, 11, 31);   // 2026-12-31
         const TOTAL_DAYS = Math.ceil((END_DATE_MS - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
@@ -264,16 +263,13 @@
                 });
                 
                 csvData.sort((a, b) => parseDate(a.start) - parseDate(b.start));
-                
-                console.log(`Timeline: 2025-12-01 ~ 2026-12-31 (${TOTAL_DAYS} days), Data count: ${csvData.length}`);
-                
                 init(); 
             } catch (error) { console.error(error); }
         }
 
         function init() {
-            // [동적 너비] 일수에 따라 컨테이너 너비 조정 (하루당 약 40px)
-            const dynamicWidth = Math.max(2400, TOTAL_DAYS * 40 + 160);
+            // 타임라인 길이에 따라 컨테이너 너비 동적 조정 (하루당 약 30px)
+            const dynamicWidth = Math.max(2400, TOTAL_DAYS * 30 + 160);
             document.getElementById('gantt-content-wrapper').style.minWidth = `${dynamicWidth}px`;
             
             renderHeaderAndGrid();
@@ -376,201 +372,149 @@
             renderSummaryTable(summaryData);
         }
 
-        // [핵심] 날짜 계산 로직: (대상일 - 기준일) + 1
-        function getDaysFromStart(dateStr) {
+        // [핵심 수정] 날짜 계산 로직: (대상일 - 기준일) + 1
+        // shiftYear: 2025년 데이터를 +1년 시프트해서 동일 월-일 위치에 표시
+        function getDaysFromStart(dateStr, shiftYear = 0) {
             if(!dateStr) return -999;
-            const targetMs = parseDate(dateStr);
-            return Math.floor((targetMs - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
-        }
-
-        // [YoY 비교] 2025년 날짜를 +1년 시프트해서 같은 월-일 위치 계산
-        function getDaysFromStartShifted(dateStr, shiftYear = 0) {
-            if(!dateStr) return -999;
-            const parts = dateStr.split('-');
-            const year = parseInt(parts[0]) + shiftYear;
-            const month = parseInt(parts[1]) - 1;
-            const day = parseInt(parts[2]);
-            const targetMs = Date.UTC(year, month, day);
-            return Math.floor((targetMs - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
+            if(shiftYear === 0) {
+                const targetMs = parseDate(dateStr);
+                return Math.floor((targetMs - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
+            } else {
+                const parts = dateStr.split('-');
+                const year = parseInt(parts[0]) + shiftYear;
+                const month = parseInt(parts[1]) - 1;
+                const day = parseInt(parts[2]);
+                const targetMs = Date.UTC(year, month, day);
+                return Math.floor((targetMs - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
+            }
         }
 
         function renderGanttRows(data, selectedYear) {
             const container = document.getElementById('chart-content-layer');
             container.innerHTML = '';
 
-            // 채널별로 2026/2025 데이터 그룹화
-            const group = {};
-            channels.forEach(ch => group[ch] = { y2026: [], y2025: [] });
-            
-            data.forEach(d => {
-                if(!group[d.channel]) return;
-                const year = parseInt(d.start.substring(0, 4));
-                if(year === 2026) group[d.channel].y2026.push(d);
-                else if(year === 2025) group[d.channel].y2025.push(d);
-            });
+            const drawSection = (yearData, year) => {
+                const yearRow = document.createElement('div');
+                yearRow.className = "flex w-full h-8 border-b border-indigo-100 bg-indigo-50/40 items-center shrink-0";
+                const stickyLabel = document.createElement('div');
+                stickyLabel.className = "sticky-left-col w-40 min-w-[10rem] h-full flex items-center justify-center bg-indigo-50 font-bold text-indigo-900 text-xs gap-2 z-40";
+                stickyLabel.innerHTML = `<span class="bg-indigo-600 text-white px-2 py-0.5 rounded text-[10px] shadow-sm">${year}</span>`;
+                yearRow.appendChild(stickyLabel);
+                container.appendChild(yearRow);
 
-            // 연도 필터 적용
-            const show2026 = selectedYear === 'ALL' || selectedYear === '2026';
-            const show2025 = selectedYear === 'ALL' || selectedYear === '2025';
+                const group = {};
+                channels.forEach(ch => group[ch] = []);
+                yearData.forEach(d => { if(group[d.channel]) group[d.channel].push(d); });
 
-            channels.forEach(ch => {
-                if(!activeChannels.has(ch)) return;
-                
-                const items2026 = show2026 ? group[ch].y2026 : [];
-                const items2025 = show2025 ? group[ch].y2025 : [];
-                
-                // 둘 다 비어있으면 스킵
-                if(items2026.length === 0 && items2025.length === 0) return;
-
-                const isExpanded = channelExpanded[ch] || false;
-                const LANE_H = 36;
-                
-                // 레인 패킹 (2026, 2025 각각)
-                const lanes2026 = packItems(items2026);
-                const lanes2025 = packItemsShifted(items2025); // +1년 시프트 적용
-                
-                const laneCount2026 = lanes2026.length;
-                const laneCount2025 = lanes2025.length;
-                const totalLanes = Math.max(1, laneCount2026) + Math.max(show2025 && items2025.length > 0 ? 1 : 0, laneCount2025);
-                
-                // 행 높이 계산
-                let rowHeight = 50;
-                if(isExpanded) {
-                    const h2026 = Math.max(1, laneCount2026) * LANE_H;
-                    const h2025 = show2025 && items2025.length > 0 ? Math.max(1, laneCount2025) * LANE_H : 0;
-                    rowHeight = h2026 + h2025 + 16;
-                }
-                
-                const row = document.createElement('div');
-                row.className = "flex w-full border-b border-slate-200 bg-white items-center group shrink-0 relative hover:bg-slate-50/50 transition-colors";
-                row.style.height = `${rowHeight}px`;
-
-                // 왼쪽 채널 라벨
-                const stickyCol = document.createElement('div');
-                stickyCol.className = "sticky-left-col w-40 min-w-[10rem] h-full flex flex-col justify-center px-4 bg-white z-40 border-r border-slate-200 absolute top-0 left-0 group-hover:bg-slate-50/50 transition-colors";
-                const conf = channelConfig[ch];
-                const bgClass = conf.class.split(' ')[0];
-                
-                let toggleHtml = '';
-                if (laneCount2026 > 1 || laneCount2025 > 1) {
-                    toggleHtml = `
-                        <div onclick="event.stopPropagation(); toggleExpand('${ch}')" class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer p-1.5 hover:bg-slate-200 rounded-md text-slate-400 hover:text-slate-700 transition-colors">
-                            <svg class="w-3.5 h-3.5 rotate-icon ${isExpanded ? 'open' : 'closed'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </div>
-                    `;
-                }
-
-                stickyCol.innerHTML = `
-                    <div class="flex items-center gap-3 cursor-pointer" onclick="toggleChannel('${ch}')">
-                        <span class="w-2.5 h-2.5 rounded-full ${bgClass} shadow-sm"></span>
-                        <span class="text-[13px] text-slate-700 font-bold truncate select-none">${ch}</span>
-                    </div>
-                    ${show2025 && items2025.length > 0 ? `
-                    <div class="flex items-center gap-2 mt-1 ml-5">
-                        <span class="w-3 h-0.5 bg-indigo-600 rounded"></span>
-                        <span class="text-[10px] text-indigo-600 font-semibold">2026</span>
-                        <span class="w-3 h-0.5 bg-amber-500 rounded opacity-60"></span>
-                        <span class="text-[10px] text-amber-600 font-semibold opacity-60">2025</span>
-                    </div>
-                    ` : ''}
-                    ${toggleHtml}
-                `;
-                row.appendChild(stickyCol);
-
-                // 바 영역
-                const barsArea = document.createElement('div');
-                barsArea.className = "flex-1 h-full relative ml-40";
-
-                // 2026년 바 렌더링 (상단)
-                if(laneCount2026 > 0) {
-                    lanes2026.forEach((laneItems, laneIndex) => {
-                        laneItems.forEach(item => {
-                            const s = getDaysFromStart(item.start);
-                            const e = getDaysFromStart(item.end);
-                            if(s > TOTAL_DAYS || e < 1) return;
-                            
-                            const start = Math.max(1, s);
-                            const end = Math.min(TOTAL_DAYS, e);
-                            const widthPct = (end - start + 1) * (100/TOTAL_DAYS);
-                            const leftPct = (start - 1) * (100/TOTAL_DAYS);
-                            
-                            let topPos = isExpanded ? (laneIndex * LANE_H) + 6 : 6;
-
-                            const bar = document.createElement('div');
-                            bar.className = `absolute h-[26px] rounded shadow-sm border-2 flex items-center px-3 cursor-pointer timeline-bar overflow-hidden ${channelConfig[ch].class}`;
-                            bar.style.cssText = `top: ${topPos}px; left: ${leftPct}%; width: calc(${widthPct}% - 2px); font-size: 12px; z-index: ${10 + laneIndex}; white-space: nowrap;`;
-                            
-                            let content = `<span class="font-bold mr-1.5">${item.name}</span>`;
-                            const subs = [];
-                            if(item.type) subs.push(item.type);
-                            if(item.benefitType) subs.push(item.benefitType);
-                            if(subs.length > 0) content += `<span class="font-normal opacity-90 text-[10px] border-l border-white/40 pl-1.5">${subs.join(' | ')}</span>`;
-                            
-                            bar.innerHTML = content;
-                            bar.setAttribute('title', `[2026] ${item.name} | ${item.start} ~ ${item.end}`);
-                            bar.onclick = () => openModal(item);
-                            barsArea.appendChild(bar);
-                        });
-                    });
-                }
-
-                // 2025년 바 렌더링 (하단, +1년 시프트)
-                if(show2025 && laneCount2025 > 0) {
-                    const baseTop = isExpanded ? (Math.max(1, laneCount2026) * LANE_H) + 4 : 28;
+                channels.forEach(ch => {
+                    if(!activeChannels.has(ch)) return; 
+                    const items = group[ch];
+                    const lanes = packItems(items);
+                    const laneCount = lanes.length;
+                    const isExpanded = channelExpanded[ch] || false;
                     
-                    lanes2025.forEach((laneItems, laneIndex) => {
-                        laneItems.forEach(item => {
-                            // +1년 시프트해서 위치 계산
-                            const s = getDaysFromStartShifted(item.start, 1);
-                            const e = getDaysFromStartShifted(item.end, 1);
-                            if(s > TOTAL_DAYS || e < 1) return;
-                            
-                            const start = Math.max(1, s);
-                            const end = Math.min(TOTAL_DAYS, e);
-                            const widthPct = (end - start + 1) * (100/TOTAL_DAYS);
-                            const leftPct = (start - 1) * (100/TOTAL_DAYS);
-                            
-                            let topPos = isExpanded ? baseTop + (laneIndex * LANE_H) : baseTop;
+                    const LANE_H = 40;
+                    const rowHeight = isExpanded ? (Math.max(1, laneCount) * LANE_H + 10) : 44; 
+                    
+                    const row = document.createElement('div');
+                    row.className = "flex w-full border-b border-slate-100 bg-white items-center group shrink-0 relative hover:bg-slate-50 transition-colors";
+                    row.style.height = `${rowHeight}px`;
 
-                            const bar = document.createElement('div');
-                            bar.className = `absolute h-[22px] rounded shadow-sm border-2 border-dashed flex items-center px-2 cursor-pointer timeline-bar overflow-hidden bg-amber-100 text-amber-800 border-amber-400`;
-                            bar.style.cssText = `top: ${topPos}px; left: ${leftPct}%; width: calc(${widthPct}% - 2px); font-size: 11px; z-index: ${5 + laneIndex}; white-space: nowrap; opacity: 0.75;`;
-                            
-                            bar.innerHTML = `<span class="font-semibold">${item.name}</span>`;
-                            bar.setAttribute('title', `[2025 → 비교] ${item.name} | ${item.start} ~ ${item.end}`);
-                            bar.onclick = () => openModal(item);
-                            barsArea.appendChild(bar);
-                        });
-                    });
-                }
-
-                row.appendChild(barsArea);
-                container.appendChild(row);
-            });
-        }
-
-        // 2025년 데이터용 레인 패킹 (+1년 시프트 적용)
-        function packItemsShifted(items) {
-            if (!items || items.length === 0) return [];
-            const sorted = [...items].sort((a, b) => getDaysFromStartShifted(a.start, 1) - getDaysFromStartShifted(b.start, 1));
-            const lanes = [];
-            sorted.forEach(item => {
-                const start = getDaysFromStartShifted(item.start, 1);
-                let placed = false;
-                for (let i = 0; i < lanes.length; i++) {
-                    const lane = lanes[i];
-                    const lastItem = lane[lane.length - 1];
-                    if (start >= getDaysFromStartShifted(lastItem.end, 1) + 1) {
-                        lane.push(item);
-                        placed = true;
-                        break;
+                    const stickyCol = document.createElement('div');
+                    stickyCol.className = "sticky-left-col w-40 min-w-[10rem] h-full flex items-center px-4 bg-white z-40 border-r border-slate-200 absolute top-0 left-0 group-hover:bg-slate-50 transition-colors";
+                    const conf = channelConfig[ch];
+                    const bgClass = conf.class.split(' ')[0]; 
+                    
+                    let toggleHtml = '';
+                    if (laneCount > 1) {
+                        toggleHtml = `
+                            <div onclick="event.stopPropagation(); toggleExpand('${ch}')" class="absolute right-3 cursor-pointer p-1.5 hover:bg-slate-200 rounded-md text-slate-400 hover:text-slate-700 transition-colors">
+                                <svg class="w-3.5 h-3.5 rotate-icon ${isExpanded ? 'open' : 'closed'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        `;
                     }
-                }
-                if (!placed) lanes.push([item]);
-            });
-            return lanes;
+
+                    stickyCol.innerHTML = `
+                        <div class="flex items-center gap-3 w-full cursor-pointer absolute top-0 h-10" onclick="toggleChannel('${ch}')">
+                            <span class="w-2.5 h-2.5 rounded-full ${bgClass} shadow-sm"></span>
+                            <span class="text-[13px] text-slate-700 font-bold truncate select-none">${ch}</span>
+                        </div>
+                        ${toggleHtml}
+                    `;
+                    row.appendChild(stickyCol);
+
+                    const barsArea = document.createElement('div');
+                    barsArea.className = "flex-1 h-full relative ml-40";
+
+                    if(laneCount > 0) {
+                        lanes.forEach((laneItems, laneIndex) => {
+                            laneItems.forEach((item, itemIdx) => {
+                                // 2025년 데이터는 +1년 시프트해서 동일 월-일 위치에 표시
+                                const shiftYear = (year < 2026) ? 1 : 0;
+                                const s = getDaysFromStart(item.start, shiftYear);
+                                const e = getDaysFromStart(item.end, shiftYear);
+                                // 범위 밖이면 렌더링 안함
+                                if(s > TOTAL_DAYS || e < 1) return;
+                                
+                                const start = Math.max(1, s);
+                                const end = Math.min(TOTAL_DAYS, e);
+                                const widthPct = (end - start + 1) * (100/TOTAL_DAYS);
+                                const leftPct = (start - 1) * (100/TOTAL_DAYS);
+                                
+                                let topPos = 8;
+                                if (isExpanded) topPos = (laneIndex * LANE_H) + 6;
+                                else topPos = 8;
+
+                                let baseClass = channelConfig[ch].class;
+                                let opacityStyle = "";
+                                if(year < 2026) opacityStyle = "opacity: 0.6; filter: grayscale(30%);";
+                                const zIdx = 10 + laneIndex;
+
+                                let content = `<span class="font-bold mr-1.5">${item.name}</span>`;
+                                const subs = [];
+                                if(item.type) subs.push(item.type);
+                                if(item.benefitType) subs.push(item.benefitType);
+                                
+                                if(subs.length > 0) {
+                                    content += `<span class="font-normal opacity-90 text-[11px] border-l border-white/40 pl-1.5 tracking-tight">${subs.join(' | ')}</span>`;
+                                }
+                                
+                                const bar = document.createElement('div');
+                                bar.className = `absolute h-[28px] rounded shadow-sm border flex items-center px-3 cursor-pointer timeline-bar overflow-hidden ${baseClass}`;
+                                
+                                bar.style.top = `${topPos}px`;
+                                bar.style.left = `${leftPct}%`;
+                                bar.style.width = `calc(${widthPct}% - 2px)`;
+                                bar.style.fontSize = '13px';
+                                bar.style.zIndex = zIdx;
+                                bar.style.cssText += opacityStyle;
+                                bar.style.whiteSpace = "nowrap";
+                                bar.style.textOverflow = "ellipsis";
+                                
+                                bar.setAttribute('title', `${item.name} | ${item.type} | ${item.benefitType}`); 
+                                bar.innerHTML = content;
+                                bar.onclick = () => openModal(item);
+                                barsArea.appendChild(bar);
+                            });
+                        });
+                    }
+                    row.appendChild(barsArea);
+                    container.appendChild(row);
+                });
+            };
+
+            const d26 = data.filter(d => d.start.startsWith('2026'));
+            const d25 = data.filter(d => d.start.startsWith('2025'));
+
+            if(selectedYear === 'ALL' || selectedYear === '2026') drawSection(d26, 2026);
+            if(selectedYear === 'ALL') {
+                 const div = document.createElement('div');
+                 div.className = "h-4 bg-slate-50 border-y border-slate-100 shrink-0";
+                 container.appendChild(div);
+            }
+            if(selectedYear === 'ALL' || selectedYear === '2025') drawSection(d25, 2025);
         }
 
         function renderSummaryTable(data) {
