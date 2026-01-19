@@ -175,10 +175,10 @@
             return Date.UTC(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
         }
 
-        // 기준일: 2025년 12월 29일 (UTC 기준 설정)
-        const START_DATE_MS = Date.UTC(2025, 11, 29); 
-        const END_DATE_MS = Date.UTC(2026, 1, 28);
-        const TOTAL_DAYS = Math.ceil((END_DATE_MS - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
+        // 타임라인 범위 (데이터 로드 후 동적으로 설정됨)
+        let START_DATE_MS = null;
+        let END_DATE_MS = null;
+        let TOTAL_DAYS = 0;
 
         // 오늘 날짜 표시
         const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
@@ -263,11 +263,35 @@
                 });
                 
                 csvData.sort((a, b) => parseDate(a.start) - parseDate(b.start));
+                
+                // [동적 타임라인] 데이터의 최소/최대 날짜 계산
+                const allDates = csvData.flatMap(d => [parseDate(d.start), parseDate(d.end)]);
+                const minDate = Math.min(...allDates);
+                const maxDate = Math.max(...allDates);
+                
+                // 시작일: 해당 월의 1일로 설정 (여유 확보)
+                const minD = new Date(minDate);
+                START_DATE_MS = Date.UTC(minD.getUTCFullYear(), minD.getUTCMonth(), 1);
+                
+                // 종료일: 해당 월의 말일 + 1주 여유
+                const maxD = new Date(maxDate);
+                const lastDay = new Date(Date.UTC(maxD.getUTCFullYear(), maxD.getUTCMonth() + 1, 0)).getUTCDate();
+                END_DATE_MS = Date.UTC(maxD.getUTCFullYear(), maxD.getUTCMonth(), lastDay + 7);
+                
+                // 총 일수 계산
+                TOTAL_DAYS = Math.ceil((END_DATE_MS - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
+                
+                console.log(`Timeline: ${new Date(START_DATE_MS).toISOString().split('T')[0]} ~ ${new Date(END_DATE_MS).toISOString().split('T')[0]} (${TOTAL_DAYS} days)`);
+                
                 init(); 
             } catch (error) { console.error(error); }
         }
 
         function init() {
+            // [동적 너비] 일수에 따라 컨테이너 너비 조정 (하루당 약 40px)
+            const dynamicWidth = Math.max(2400, TOTAL_DAYS * 40 + 160);
+            document.getElementById('gantt-content-wrapper').style.minWidth = `${dynamicWidth}px`;
+            
             renderHeaderAndGrid();
             renderChannelChips();
             applyFilter();
