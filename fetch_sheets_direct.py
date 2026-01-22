@@ -5,30 +5,37 @@ import json
 
 def get_clean_data(worksheet):
     """
-    헤더에 빈칸이나 중복이 있어도 에러 없이 데이터만 깔끔하게 가져오는 함수
+    1행(설명)은 건너뛰고, 2행(헤더)을 기준으로 3행부터 데이터를 가져오는 함수
     """
     all_values = worksheet.get_all_values()
     
-    # 데이터가 없으면 빈 리스트 반환
-    if not all_values:
+    # 데이터가 최소 2줄(설명+헤더)은 있어야 처리 가능
+    if len(all_values) < 2:
         return []
 
-    # 첫 번째 줄(헤더) 가져오기
-    headers = all_values[0]
+    # [수정 포인트]
+    # all_values[0] -> 1행 (설명/제목) : 무시
+    # all_values[1] -> 2행 (실제 컬럼명/헤더) : 사용
+    headers = all_values[1]
     
-    # 헤더가 비어있지 않은 열의 인덱스만 찾기 (예: A열, B열, E열...)
+    # 헤더가 비어있지 않은 유효한 열(Column)의 인덱스만 찾기
     valid_indices = [i for i, h in enumerate(headers) if h.strip()]
     
     cleaned_data = []
-    for row in all_values[1:]: # 2번째 줄부터 데이터
+    
+    # [수정 포인트] 3행(인덱스 2)부터 실제 데이터로 간주
+    for row in all_values[2:]: 
         item = {}
+        # 유효한 컬럼만 골라서 데이터 매핑
         for i in valid_indices:
-            # 헤더 이름 가져오기
             header_name = headers[i]
-            # 해당 열의 데이터 가져오기 (행 길이가 짧을 경우 안전하게 빈 문자열 처리)
+            # 해당 열에 데이터가 없으면 빈 문자열 처리 (행 길이가 짧을 경우 대비)
             val = row[i] if i < len(row) else ""
             item[header_name] = val
-        cleaned_data.append(item)
+            
+        # 빈 행(모든 값이 비어있는 경우)은 제외
+        if any(item.values()):
+            cleaned_data.append(item)
         
     return cleaned_data
 
@@ -49,7 +56,6 @@ def fetch_extra_sheets():
         # ---------------------------------------------------------
         try:
             ws_goals = spreadsheet.worksheet("2. 월별 목표 매출 관리 시트")
-            # [수정] 안전한 함수 사용
             goals_data = get_clean_data(ws_goals)
             
             with open("monthly_goals.json", "w", encoding="utf-8") as f:
@@ -64,7 +70,6 @@ def fetch_extra_sheets():
         # ---------------------------------------------------------
         try:
             ws_calendar = spreadsheet.worksheet("3. imc/공휴일 일정 관리 시트(자사몰)")
-            # [수정] 안전한 함수 사용
             calendar_data = get_clean_data(ws_calendar)
             
             with open("calendar_issues.json", "w", encoding="utf-8") as f:
@@ -76,7 +81,6 @@ def fetch_extra_sheets():
 
     except Exception as e:
         print(f"CRITICAL ERROR: {e}")
-        # Github Actions에서 에러임을 알리기 위해 raise
         raise e
 
 if __name__ == "__main__":
