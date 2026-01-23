@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMC 통합 성과 대시보드 (v5 - IMC Row Added)</title>
+    <title>IMC 통합 성과 대시보드 (v5 - Text Wrap Fixed)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -112,9 +112,9 @@
                                 <div class="h-6 flex text-[11px] font-semibold text-slate-600 bg-slate-50 border-b border-slate-100" id="week-header"></div>
                                 <div class="h-8 flex text-[12px] text-slate-500 font-medium bg-white border-b border-slate-100" id="day-header"></div>
                                 
-                                <div class="h-7 flex bg-slate-50 border-b border-slate-200 relative" id="market-issue-header">
+                                <div class="h-8 flex bg-slate-50 border-b border-slate-200 relative" id="market-issue-header">
                                     </div>
-                                <div class="h-7 flex bg-green-50/30 border-b border-green-100 relative" id="imc-header">
+                                <div class="h-8 flex bg-green-50/30 border-b border-green-100 relative" id="imc-header">
                                     </div>
                             </div>
                         </div>
@@ -301,7 +301,8 @@
         }
 
         function init() {
-            const dynamicWidth = Math.max(2400, TOTAL_DAYS * 30 + 160);
+            // [수정] 30 -> 40으로 칸 너비 확대
+            const dynamicWidth = Math.max(2400, TOTAL_DAYS * 40 + 160);
             document.getElementById('gantt-content-wrapper').style.minWidth = `${dynamicWidth}px`;
             
             renderHeaderAndGrid();
@@ -397,7 +398,8 @@
             }
             TOTAL_DAYS = Math.ceil((END_DATE_MS - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
             
-            const dynamicWidth = Math.max(1200, TOTAL_DAYS * 30 + 160);
+            // [수정] 30 -> 40
+            const dynamicWidth = Math.max(1200, TOTAL_DAYS * 40 + 160);
             document.getElementById('gantt-content-wrapper').style.minWidth = `${dynamicWidth}px`;
             
             renderHeaderAndGrid();
@@ -624,7 +626,7 @@
             const wHead = document.getElementById('week-header');
             const dHead = document.getElementById('day-header');
             const miHead = document.getElementById('market-issue-header');
-            const imcHead = document.getElementById('imc-header'); // New
+            const imcHead = document.getElementById('imc-header'); 
             const gl = document.getElementById('grid-lines');
             
             mHead.innerHTML = ''; wHead.innerHTML = ''; dHead.innerHTML = ''; 
@@ -677,18 +679,19 @@
                 miDiv.className = `flex-1 border-r border-slate-200 flex items-center justify-center h-full overflow-hidden px-0.5 ${isToday ? "bg-red-50 border-x border-red-200" : ""}`;
                 if(marketIssues[dateKey]) {
                     const issue = marketIssues[dateKey];
-                    // 글자 크기 10px -> 9px, tracking-tighter, title 추가
                     let color = issue.isHoliday ? "text-red-600 bg-red-100" : "text-blue-600 bg-blue-50";
-                    miDiv.innerHTML = `<span title="${issue.name}" class="${color} text-[9px] font-bold px-1 rounded truncate w-full text-center tracking-tighter cursor-help">${issue.name}</span>`;
+                    // [수정] 줄바꿈 속성 추가 및 정렬
+                    miDiv.innerHTML = `<span title="${issue.name}" class="${color} text-[9px] font-bold px-0.5 rounded break-words whitespace-normal w-full text-center tracking-tighter leading-none cursor-help flex items-center justify-center h-full">${issue.name}</span>`;
                 }
                 miHead.appendChild(miDiv);
 
-                // 2. IMC Schedule Row (New)
+                // 2. IMC Schedule Row
                 const imcDiv = document.createElement('div');
                 imcDiv.className = `flex-1 border-r border-green-100 flex items-center justify-center h-full overflow-hidden px-0.5 ${isToday ? "bg-red-50 border-x border-red-200" : ""}`;
                 if(imcSchedules[dateKey]) {
                     const name = imcSchedules[dateKey];
-                    imcDiv.innerHTML = `<span title="${name}" class="text-green-700 bg-green-100 text-[9px] font-bold px-1 rounded truncate w-full text-center tracking-tighter cursor-help">${name}</span>`;
+                    // [수정] 줄바꿈 속성 추가 및 정렬
+                    imcDiv.innerHTML = `<span title="${name}" class="text-green-700 bg-green-100 text-[9px] font-bold px-0.5 rounded break-words whitespace-normal w-full text-center tracking-tighter leading-none cursor-help flex items-center justify-center h-full">${name}</span>`;
                 }
                 imcHead.appendChild(imcDiv);
 
