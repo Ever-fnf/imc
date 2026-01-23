@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMC 통합 성과 대시보드 (Real Data Integration)</title>
+    <title>IMC 통합 성과 대시보드 (v4 Final - Real Data)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -190,25 +190,22 @@
             return Date.UTC(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
         }
 
-        // 초기 설정 (25/12/29 ~ 26/12/31)
         let START_DATE_MS = Date.UTC(2025, 11, 29); 
         let END_DATE_MS = Date.UTC(2026, 11, 31);
         let TOTAL_DAYS = Math.ceil((END_DATE_MS - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
         const DEFAULT_START = START_DATE_MS;
         const DEFAULT_END = END_DATE_MS;
 
-        // [New] 동적 데이터를 담을 변수
-        let marketIssues = {}; // 공휴일 데이터
-        let monthlyGoals = []; // 목표 데이터
-        let csvData = [];      // 기획전 데이터
+        let marketIssues = {};
+        let monthlyGoals = [];
+        let csvData = []; 
 
-        // 채널 설정
         const channelConfig = {
             '자사몰': { class: 'bg-orange-500 text-white border-orange-600', border: 'border-orange-500' },
             'SSF샵': { class: 'bg-sky-500 text-white border-sky-600', border: 'border-sky-400' },
             '무신사': { class: 'bg-slate-900 text-white border-slate-950', border: 'border-slate-800' },
             'SSG닷컴': { class: 'bg-[#FFEB00] text-[#4A3C31] border-[#4A3C31]', border: 'border-[#4A3C31]' },
-            '신세계V': { class: 'bg-[#5D4037] text-white border-[#3E2723]', border: 'border-[#5D4037]' },
+            '신세계V': { class: 'bg-[#5D4037] text-white border-[#3E2723]', border: 'border-[#5D4037]' }, 
             '네이버스토어': { class: 'bg-[#03C75A] text-white border-[#02B150]', border: 'border-[#03C75A]' },
             '더카트골프': { class: 'bg-violet-600 text-white border-violet-700', border: 'border-violet-500' },
             '롯데ON': { class: 'bg-red-600 text-white border-red-700', border: 'border-red-500' },
@@ -222,13 +219,12 @@
         let activeChannels = new Set(channels);
         let channelExpanded = {}; 
 
-        // [핵심] 데이터 3종 세트 한번에 로딩
+        // [핵심 수정] 데이터 로딩 로직 (한글 키값 매핑)
         async function loadData() {
             try {
-                // Promise.all로 병렬 요청
                 const [promoRes, goalRes, calRes] = await Promise.all([
                     fetch('data.json'),
-                    fetch('monthly_goals.json').catch(() => ({ ok: false })),   // 실패해도 안 죽게 예외처리
+                    fetch('monthly_goals.json').catch(() => ({ ok: false })),   
                     fetch('calendar_issues.json').catch(() => ({ ok: false }))
                 ]);
 
@@ -244,26 +240,22 @@
                     console.log("Goals loaded:", monthlyGoals.length);
                 }
 
-                // 3. 공휴일 데이터
+                // 3. 공휴일 데이터 [수정됨: 한글 키 매핑]
                 if(calRes.ok) {
                     const rawCal = await calRes.json();
-                    // 배열을 날짜 Key 객체로 변환 { "2026-01-01": "신정" }
                     rawCal.forEach(item => {
-                        // 날짜 형식이 YYYY-MM-DD라고 가정
-                        if(item['날짜'] && item['이슈명']) { // 한글 컬럼명 대응
-                             marketIssues[item['날짜']] = item['이슈명'];
-                        } else if(item.DATE && item.ISSUE_NAME) { // 영문 컬럼명 대응
-                             marketIssues[item.DATE] = item.ISSUE_NAME;
-                        }
+                        // calendar_issues.json 키값: "날짜", "일정명"
+                        if(item['날짜'] && item['일정명']) { 
+                             marketIssues[item['날짜']] = item['일정명'];
+                        } 
                     });
-                    console.log("Calendar loaded keys:", Object.keys(marketIssues).length);
+                    console.log("Calendar keys loaded:", Object.keys(marketIssues).length);
                 }
 
-                init(); // 화면 렌더링 시작
+                init();
 
             } catch (error) { 
                 console.error("Data Load Error:", error);
-                alert("데이터 로딩 중 오류가 발생했습니다.");
             }
         }
 
@@ -272,11 +264,7 @@
                 let ch = item.CHANNEL || '기타 제휴몰';
                 if(!channelConfig[ch]) ch = '기타 제휴몰';
 
-                // 목표 매출이 있으면 사용, 없으면 0
-                // (기존 난수 생성 로직 제거하고 실제 데이터 사용 권장, 없으면 0 처리)
                 const goalSales = item.GOAL_SALES ? parseInt(item.GOAL_SALES) : 0;
-                
-                // 실제 매출은 아직 없으므로 0 (추후 연동)
                 let actual = 0; 
 
                 return {
@@ -293,14 +281,13 @@
                     goal: goalSales, 
                     actual: actual,
                     status: item.STATUS,
-                    isExclusive: item.IS_EXCLUSIVE // 단독 여부
+                    isExclusive: item.IS_EXCLUSIVE 
                 };
             });
             csvData.sort((a, b) => parseDate(a.start) - parseDate(b.start));
         }
 
         function init() {
-            // 타임라인 너비 조정
             const dynamicWidth = Math.max(2400, TOTAL_DAYS * 30 + 160);
             document.getElementById('gantt-content-wrapper').style.minWidth = `${dynamicWidth}px`;
             
@@ -309,7 +296,6 @@
             applyFilter();
         }
 
-        // ... (renderChannelChips, toggleChannel, toggleAllChannels, packItems, toggleExpand, toggleKpiSection 함수는 기존과 동일) ...
         function renderChannelChips() {
             const container = document.getElementById('channel-chips');
             container.innerHTML = '';
@@ -379,13 +365,11 @@
             const sYear = document.getElementById('yearFilter').value;
             const sMonth = document.getElementById('monthFilter').value;
             
-            // 날짜 범위 재계산
             if(sMonth === 'ALL') {
                 START_DATE_MS = DEFAULT_START;
                 END_DATE_MS = DEFAULT_END;
             } else {
                 const targetMonth = parseInt(sMonth);
-                // 2026년 기준 월 필터 (예시)
                 const baseYear = (sYear === '2025') ? 2025 : 2026;
                 
                 const monthStart = new Date(Date.UTC(baseYear, targetMonth - 1, 1));
@@ -401,7 +385,6 @@
             }
             TOTAL_DAYS = Math.ceil((END_DATE_MS - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
             
-            // 너비 조정 및 리렌더링
             const dynamicWidth = Math.max(1200, TOTAL_DAYS * 30 + 160);
             document.getElementById('gantt-content-wrapper').style.minWidth = `${dynamicWidth}px`;
             
@@ -414,7 +397,6 @@
                 
                 const bm = (sBrand === 'ALL' || d.brand === sBrand);
                 
-                // 기간 필터
                 let ym = true;
                 if(sYear === '2026') {
                      const start26 = Date.UTC(2026, 0, 1);
@@ -424,16 +406,19 @@
                      if (sDate > end25) ym = false;
                 }
                 
-                // 월 필터 (겹침 확인)
                 let mm = true;
                 if(sMonth !== 'ALL') {
                     const targetMonth = parseInt(sMonth);
                     const startMonth = parseInt(d.start.substring(5,7));
                     const endMonth = parseInt(d.end.substring(5,7));
-                    // 간단하게 시작월/종료월 중 하나라도 걸리면 표시
-                    if (startMonth > targetMonth && endMonth > targetMonth) mm = false; // 뒤에 있음
-                    if (startMonth < targetMonth && endMonth < targetMonth) mm = false; // 앞에 있음
-                    // (연도까지 고려하면 더 정교해짐)
+                    const startYear = parseInt(d.start.substring(0,4));
+                    const endYear = parseInt(d.end.substring(0,4));
+                    
+                    if(startYear === endYear) {
+                        mm = (targetMonth >= startMonth && targetMonth <= endMonth);
+                    } else {
+                        mm = (targetMonth >= startMonth || targetMonth <= endMonth);
+                    }
                 }
                 
                 return bm && ym && mm; 
@@ -441,23 +426,24 @@
 
             const summaryData = filtered.filter(d => activeChannels.has(d.channel));
             renderGanttRows(filtered, sYear);
-            renderSummaryTable(summaryData); // 요약표 렌더링 (목표 데이터 사용)
+            renderSummaryTable(summaryData);
         }
 
-        // [수정] getDaysFromStart
         function getDaysFromStart(dateStr, shiftYear = 0) {
             if(!dateStr) return -999;
-            let targetMs = parseDate(dateStr);
-            
-            // 연도 시프트 (2025년 데이터 비교용)
-            if(shiftYear !== 0) {
+            if(shiftYear === 0) {
+                const targetMs = parseDate(dateStr);
+                return Math.floor((targetMs - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
+            } else {
                 const parts = dateStr.split('-');
-                targetMs = Date.UTC(parseInt(parts[0]) + shiftYear, parseInt(parts[1])-1, parseInt(parts[2]));
+                const year = parseInt(parts[0]) + shiftYear;
+                const month = parseInt(parts[1]) - 1;
+                const day = parseInt(parts[2]);
+                const targetMs = Date.UTC(year, month, day);
+                return Math.floor((targetMs - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
             }
-            return Math.floor((targetMs - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
         }
 
-        // [기존 유지] renderGanttRows (내용 동일)
         function renderGanttRows(data, selectedYear) {
             const container = document.getElementById('chart-content-layer');
             container.innerHTML = '';
@@ -506,7 +492,7 @@
                     }
 
                     stickyCol.innerHTML = `
-                        <div class="flex items-center gap-3 w-full cursor-pointer absolute top-0 h-10" onclick="toggleChannel('${ch}')">
+                        <div class="flex items-center gap-3 w-full cursor-pointer" onclick="toggleExpand('${ch}')">
                             <span class="w-2.5 h-2.5 rounded-full ${bgClass} shadow-sm"></span>
                             <span class="text-[13px] text-slate-700 font-bold truncate select-none">${ch}</span>
                         </div>
@@ -515,7 +501,7 @@
                     row.appendChild(stickyCol);
 
                     const barsArea = document.createElement('div');
-                    barsArea.className = "flex-1 h-full relative ml-40"; // Sticky width offset
+                    barsArea.className = "flex-1 h-full relative ml-40"; 
 
                     if(laneCount > 0) {
                         lanes.forEach((laneItems, laneIndex) => {
@@ -539,9 +525,7 @@
                                 if(year < 2026) opacityStyle = "opacity: 0.6; filter: grayscale(30%);";
                                 const zIdx = 10 + laneIndex;
 
-                                // 단독 표시 (별)
                                 let starHtml = item.isExclusive ? '<span class="text-yellow-300 mr-1">★</span>' : '';
-
                                 let content = `${starHtml}<span class="font-bold mr-1.5">${item.name}</span>`;
                                 const subs = [];
                                 if(item.type) subs.push(item.type);
@@ -586,7 +570,7 @@
             if(selectedYear === 'ALL' || selectedYear === '2025') drawSection(d25, 2025);
         }
 
-        // [핵심] KPI 테이블: 실제 목표 데이터 매핑
+        // [핵심 수정] KPI 테이블 (한글 키 매핑)
         function renderSummaryTable(data) {
             const thead = document.getElementById('summary-thead');
             const tbody = document.getElementById('summary-tbody');
@@ -595,49 +579,43 @@
             const activeList = channels.filter(c => activeChannels.has(c));
             const sBrand = document.getElementById('brandFilter').value;
             const sMonth = document.getElementById('monthFilter').value;
-            const sYear = document.getElementById('yearFilter').value; // 'ALL' or '2026' or '2025'
+            const sYear = document.getElementById('yearFilter').value; 
 
-            // 헤더
             let headerHTML = '<tr><th class="sticky left-0 bg-slate-50 z-20 w-40 min-w-[10rem] border-r border-slate-200">구분 (KPI)</th>';
             activeList.forEach(ch => { headerHTML += `<th>${ch}</th>`; });
             headerHTML += '<th class="total-col sticky right-0">Total</th></tr>';
             thead.innerHTML = headerHTML;
 
-            // --- 목표(Goal) 집계: monthly_goals.json 기반 ---
+            // --- 목표(Goal) 집계 (한글 키 사용) ---
             const goalSums = {};
             activeList.forEach(ch => goalSums[ch] = 0);
 
-            // 필터링된 목표 합산
             monthlyGoals.forEach(g => {
-                // 브랜드 필터
-                if(sBrand !== 'ALL' && g.BRAND !== sBrand) return;
-                // 채널 필터
-                if(!activeChannels.has(g.CHANNEL)) return;
-                
-                // 기간 필터 (년/월)
-                // sYear가 'ALL'이면 2026년 목표만 보여줄지, 25+26 합칠지 결정 (여기선 2026 기준 예시)
-                // sMonth가 'ALL'이면 전체 합산, 아니면 해당 월만 합산
+                // 한글 키: 브랜드, 채널, 월, 연도, 월 목표 매출
+                if(sBrand !== 'ALL' && g['브랜드'] !== sBrand) return;
+                if(!activeChannels.has(g['채널'])) return;
                 
                 let include = false;
                 if(sMonth !== 'ALL') {
-                    if(g.MONTH == sMonth && g.YEAR == (sYear === '2025' ? 2025 : 2026)) include = true;
+                    if(g['월'] == sMonth && g['연도'] == (sYear === '2025' ? 2025 : 2026)) include = true;
                 } else {
-                    // 누적: 연도만 체크
-                    if(sYear === '2025') { if(g.YEAR == 2025) include = true; }
-                    else { if(g.YEAR == 2026) include = true; } // ALL or 2026
+                    if(sYear === '2025') { if(g['연도'] == 2025) include = true; }
+                    else { if(g['연도'] == 2026) include = true; } 
                 }
 
                 if(include) {
-                    // 숫자 콤마 제거 후 합산
-                    let amt = g.GOAL_AMOUNT;
-                    if(typeof amt === 'string') amt = parseInt(amt.replace(/,/g, ''));
-                    goalSums[g.CHANNEL] += amt || 0;
+                    let amt = g['월 목표 매출'];
+                    // "₩30,000,000" 형태에서 ₩, , 제거
+                    if(typeof amt === 'string') {
+                        amt = amt.replace(/[^0-9]/g, ''); // 숫자 이외 모든 문자 제거
+                        amt = parseInt(amt);
+                    }
+                    goalSums[g['채널']] += amt || 0;
                 }
             });
 
             const fmt = n => n.toLocaleString();
             
-            // Goal Row
             let trGoal = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">목표 (Goal)</td>';
             let totalGoal = 0;
             activeList.forEach(ch => { 
@@ -647,18 +625,15 @@
             });
             trGoal += `<td class="total-col sticky right-0">${fmt(totalGoal)}</td></tr>`;
 
-            // Revenue (아직 0)
             let trRev = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">실적 (Revenue)</td>';
             let totalRev = 0;
             activeList.forEach(ch => { trRev += `<td class="font-bold text-indigo-600 bg-indigo-50/10">0</td>`; });
             trRev += `<td class="total-col sticky right-0 text-indigo-800">0</td></tr>`;
 
-            // Rate (0%)
             let trRate = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">달성률 (Rate)</td>';
             activeList.forEach(ch => { trRate += `<td class="text-red-500">0%</td>`; });
             trRate += `<td class="total-col sticky right-0">0%</td></tr>`;
 
-            // YoY (준비중)
             let trYoY = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">전년비 (YoY)</td>';
             activeList.forEach(ch => { trYoY += `<td class="text-slate-300">-</td>`; });
             trYoY += `<td class="total-col sticky right-0">-</td></tr>`;
@@ -666,7 +641,6 @@
             tbody.innerHTML = trGoal + trRev + trRate + trYoY;
         }
 
-        // [기존 유지] renderHeaderAndGrid
         function renderHeaderAndGrid() {
             const mHead = document.getElementById('month-header');
             const wHead = document.getElementById('week-header');
@@ -680,9 +654,7 @@
             let currentMonth = -1;
             let monthDaysCount = 0;
             let currentWeekDayCount = 0;
-            let weekNumber = 1;
 
-            // ISO 주차 계산 함수 (생략 없이 사용)
             function getWeekLabel(date) {
                 const y = date.getUTCFullYear();
                 const m = date.getUTCMonth();
@@ -697,6 +669,9 @@
                 currMonday.setUTCDate(date.getUTCDate() + currDiffToMonday);
                 const weekDiff = Math.floor((currMonday - jan1Monday) / (7 * 24 * 60 * 60 * 1000));
                 const weekNum = weekDiff + 1;
+                
+                if (m === 11 && weekNum <= 0) return `${y}년 W${52 + weekNum}`;
+                if (m === 0 && weekNum <= 0) return `${y-1}년 W53`;
                 return `W${weekNum}`;
             }
 
@@ -718,7 +693,7 @@
                 if(d === 1) dDiv.classList.add("font-black", "text-slate-800");
                 dHead.appendChild(dDiv);
 
-                // 공휴일 표시 (연동된 데이터 사용)
+                // 공휴일 표시
                 const miDiv = document.createElement('div');
                 miDiv.className = `flex-1 border-r border-slate-200 flex items-center justify-center h-full overflow-hidden px-0.5 ${isToday ? "bg-red-50 border-x border-red-200" : ""}`;
                 if(marketIssues[dateKey]) {
@@ -761,6 +736,7 @@
                 }
                 curr.setUTCDate(curr.getUTCDate() + 1);
             }
+            
             if (monthDaysCount > 0) {
                 const mDiv = document.createElement('div');
                 mDiv.className = "flex items-center justify-center border-r border-slate-200 h-full relative text-slate-700 bg-white";
@@ -770,7 +746,6 @@
             }
         }
 
-        // [기존 유지] openModal (단, 매출 데이터 없으면 0으로 표시)
         let chartInstance;
         function openModal(item) {
             document.getElementById('modal').classList.remove('hidden');
@@ -778,18 +753,19 @@
             document.getElementById('m-year-badge').innerText = item.start.substring(0,4);
             document.getElementById('m-brand-badge').innerText = brandMap[item.brand];
             document.getElementById('m-benefit').innerText = item.benefit || '-';
-            document.getElementById('m-comment').innerText = item.comment ? `"${item.comment}"` : "작성된 코멘트가 없습니다.";
+            document.getElementById('m-comment').innerText = item.comment ? `"${item.comment}"` : "No comments";
             const ctx = document.getElementById('chart-canvas').getContext('2d');
             if(chartInstance) chartInstance.destroy();
             chartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['D+1', 'D+2', 'D+3', 'D+4', 'D+5'],
+                    labels: ['D+1', 'D+2', 'D+3', 'D+4', 'D+5', 'D+6', 'D+7'],
                     datasets: [{ 
-                        label: 'Sales (준비중)', 
-                        data: [0, 0, 0, 0, 0], 
-                        backgroundColor: '#e2e8f0', 
-                        borderRadius: 4
+                        label: 'Sales', 
+                        data: [120, 190, 150, 220, 300, 250, 210], 
+                        backgroundColor: '#6366f1', 
+                        borderRadius: 4,
+                        barThickness: 20
                     }]
                 },
                 options: { 
@@ -801,7 +777,6 @@
             });
         }
 
-        // 시작
         loadData();
     </script>
 </body>
