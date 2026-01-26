@@ -388,12 +388,21 @@
 
         function renderGanttRows(data, selectedYear, visibleChannels) {
             const container = document.getElementById('chart-content-layer'); container.innerHTML = '';
+            console.log('[DEBUG] renderGanttRows 호출됨, 데이터 수:', data.length);
+            
             const drawSection = (yearData, year) => {
+                console.log(`[DEBUG] drawSection 호출됨 - year: ${year}, 데이터 수: ${yearData.length}`);
                 const yearRow = document.createElement('div'); yearRow.className = "flex w-full h-8 border-b border-indigo-100 bg-indigo-50/40 items-center shrink-0";
                 const stickyLabel = document.createElement('div'); stickyLabel.className = "sticky-left-col w-40 min-w-[10rem] h-full flex items-center justify-center bg-indigo-50 font-bold text-indigo-900 text-xs gap-2 z-40";
                 stickyLabel.innerHTML = `<span class="bg-indigo-600 text-white px-2 py-0.5 rounded text-[10px] shadow-sm">${year}</span>`;
                 yearRow.appendChild(stickyLabel); container.appendChild(yearRow);
                 const group = {}; channels.forEach(ch => group[ch] = []); yearData.forEach(d => { if(group[d.channel]) group[d.channel].push(d); });
+                
+                // SSG닷컴 데이터 디버깅
+                if(group['SSG닷컴'] && group['SSG닷컴'].length > 0) {
+                    console.log(`[DEBUG] SSG닷컴 데이터 (${year}):`, group['SSG닷컴'].map(d => d.name));
+                }
+                
                 visibleChannels.forEach(ch => {
                     if(!activeChannels.has(ch)) return; 
                     const items = group[ch]; const lanes = packItems(items); const laneCount = lanes.length; const isExpanded = channelExpanded[ch] || false;
@@ -413,6 +422,10 @@
                     if(laneCount > 0) {
                         lanes.forEach((laneItems, laneIndex) => {
                             laneItems.forEach((item) => {
+                                // 명품수퍼세일 디버깅
+                                if(item.name.includes('명품수퍼세일')) {
+                                    console.log(`[DEBUG] 명품수퍼세일 bar 렌더링 - year: ${year}, laneIndex: ${laneIndex}, start: ${item.start}`);
+                                }
                                 const shiftYear = (year < 2026) ? 1 : 0; 
                                 const s = getDaysFromStart(item.start, shiftYear); 
                                 const e = getDaysFromStart(item.end, shiftYear);
