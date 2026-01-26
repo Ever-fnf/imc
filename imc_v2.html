@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMC 통합 성과 대시보드 (v8 - Smart Channel Filter)</title>
+    <title>IMC 통합 성과 대시보드 (v9 - Start form Jan 1st)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -44,7 +44,7 @@
         .rotate-icon { transition: transform 0.3s; }
         .rotate-icon.closed { transform: rotate(-90deg); }
 
-        /* [수정] Star Icon with White Stroke */
+        /* Star Icon with White Stroke */
         .star-icon {
             color: #ef4444; /* text-red-500 */
             text-shadow: 
@@ -247,11 +247,12 @@
             return Date.UTC(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
         }
 
-        let START_DATE_MS = Date.UTC(2025, 11, 29);  
+        // [수정] 기본 시작일을 2026년 1월 1일로 변경
+        let START_DATE_MS = Date.UTC(2026, 0, 1);  
         let END_DATE_MS = Date.UTC(2026, 11, 31);    
         let TOTAL_DAYS = Math.ceil((END_DATE_MS - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
         
-        const DEFAULT_START = Date.UTC(2025, 11, 29);
+        const DEFAULT_START = Date.UTC(2026, 0, 1);
         const DEFAULT_END = Date.UTC(2026, 11, 31);
 
         const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
@@ -429,13 +430,11 @@
             icon.classList.toggle('closed');
         }
 
-        // [수정] applyFilter: 동적 채널 리스트 계산 추가
         function applyFilter() {
             const sBrand = document.getElementById('brandFilter').value;
             const sYear = document.getElementById('yearFilter').value;
             const sMonth = document.getElementById('monthFilter').value;
             
-            // 날짜 범위 계산 (기존 동일)
             if(sMonth === 'ALL') {
                 START_DATE_MS = DEFAULT_START;
                 END_DATE_MS = DEFAULT_END;
@@ -459,7 +458,6 @@
             
             renderHeaderAndGrid();
 
-            // 1. 데이터 필터링
             const filtered = csvData.filter(d => {
                 const y = parseInt(d.start.substring(0,4));
                 const sDate = parseDate(d.start);
@@ -491,32 +489,21 @@
                 return bm && ym && mm; 
             });
 
-            // [New] 2. 해당 브랜드에 '유효한' 채널 목록 계산
-            // 기획전(csvData)이나 목표(monthlyGoals)에 데이터가 있는 채널만 남김
             const relevantChannels = new Set();
-            
-            // A. 기획전 데이터 확인 (브랜드 필터링된 전체 데이터 기준)
             csvData.forEach(d => {
                 if (sBrand === 'ALL' || d.brand === sBrand) {
                     relevantChannels.add(d.channel);
                 }
             });
-
-            // B. 목표 데이터 확인
             monthlyGoals.forEach(g => {
                  if (sBrand === 'ALL' || g['브랜드'] === sBrand) {
                     relevantChannels.add(g['채널']);
                  }
             });
 
-            // C. 원본 순서(channels) 유지하면서 필터링
-            // 만약 데이터가 아예 없는 초기 상태라면(Set이 비었으면) 전체 보여주기? 아니면 숨기기? 
-            // -> 깔끔하게 숨기는 게 맞음. 단, Set이 비었으면 그냥 빈 화면.
             const sortedRelevantChannels = channels.filter(ch => relevantChannels.has(ch));
-
             const summaryData = filtered.filter(d => activeChannels.has(d.channel));
             
-            // 렌더링 함수에 '유효 채널 목록' 전달
             renderGanttRows(filtered, sYear, sortedRelevantChannels);
             renderSummaryTable(summaryData, sortedRelevantChannels);
         }
@@ -536,7 +523,6 @@
             }
         }
 
-        // [수정] renderGanttRows: visibleChannels 인자 추가
         function renderGanttRows(data, selectedYear, visibleChannels) {
             const container = document.getElementById('chart-content-layer');
             container.innerHTML = '';
@@ -554,9 +540,7 @@
                 channels.forEach(ch => group[ch] = []);
                 yearData.forEach(d => { if(group[d.channel]) group[d.channel].push(d); });
 
-                // [중요] 전체 channels가 아니라 visibleChannels만 순회
                 visibleChannels.forEach(ch => {
-                    // 상단 필터(activeChannels)에서도 켜져 있어야 보임
                     if(!activeChannels.has(ch)) return; 
                     
                     const items = group[ch];
@@ -610,7 +594,6 @@
                                 if(year < 2026) opacityStyle = "opacity: 0.6; filter: grayscale(30%);";
                                 const zIdx = 10 + laneIndex;
 
-                                // [수정] Star Icon Class 적용
                                 let starHtml = item.isExclusive ? '<span class="star-icon">★</span>' : '';
                                 
                                 let content = `${starHtml}<span class="font-bold mr-1.5 truncate">${item.name}</span>`;
@@ -658,13 +641,11 @@
             if(selectedYear === 'ALL' || selectedYear === '2025') drawSection(d25, 2025);
         }
 
-        // [수정] renderSummaryTable: visibleChannels 인자 추가
         function renderSummaryTable(data, visibleChannels) {
             const thead = document.getElementById('summary-thead');
             const tbody = document.getElementById('summary-tbody');
             thead.innerHTML = ''; tbody.innerHTML = '';
             
-            // visibleChannels 중 활성화된 것만
             const activeList = visibleChannels.filter(c => activeChannels.has(c));
             
             const sBrand = document.getElementById('brandFilter').value;
@@ -679,7 +660,6 @@
             activeList.forEach(ch => goalSums[ch] = 0);
             monthlyGoals.forEach(g => {
                 if(sBrand !== 'ALL' && g['브랜드'] !== sBrand) return;
-                // activeList에 없으면 집계 제외 (즉, 화면에 안 보이면 합산도 안 함)
                 if(!goalSums.hasOwnProperty(g['채널'])) return;
 
                 let include = false;
@@ -720,7 +700,6 @@
             tbody.innerHTML = trGoal + trRev + trRate + trYoY;
         }
 
-        // ... (renderHeaderAndGrid, openModal 등 기존 로직 유지) ...
         function renderHeaderAndGrid() {
             const mHead = document.getElementById('month-header');
             const wHead = document.getElementById('week-header');
