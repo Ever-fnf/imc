@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMC 통합 성과 대시보드 (v11 - Safe Mode)</title>
+    <title>IMC 통합 성과 대시보드 (v12 - Fixed)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -479,6 +479,46 @@
             activeList.forEach(ch => { trYoY += `<td class="text-slate-300">-</td>`; });
             trYoY += `<td class="total-col sticky right-0">-</td></tr>`;
             tbody.innerHTML = trGoal + trRev + trRate + trYoY;
+        }
+
+        // [복구] 누락되었던 핵심 함수
+        function renderHeaderAndGrid() {
+            const mHead = document.getElementById('month-header'); const wHead = document.getElementById('week-header'); const dHead = document.getElementById('day-header');
+            const miHead = document.getElementById('market-issue-header'); const imcHead = document.getElementById('imc-header'); const gl = document.getElementById('grid-lines');
+            const sBrand = document.getElementById('brandFilter').value;
+            mHead.innerHTML = ''; wHead.innerHTML = ''; dHead.innerHTML = ''; miHead.innerHTML = ''; imcHead.innerHTML = ''; gl.innerHTML = '';
+            let curr = new Date(START_DATE_MS); let currentMonth = -1; let monthDaysCount = 0; let currentWeekDayCount = 0;
+            function getWeekLabel(date) {
+                const y = date.getUTCFullYear(); const m = date.getUTCMonth(); const jan1 = new Date(Date.UTC(y, 0, 1)); const jan1Day = jan1.getUTCDay(); const jan1Monday = new Date(jan1); const diffToMonday = (jan1Day === 0) ? -6 : 1 - jan1Day; jan1Monday.setUTCDate(jan1.getUTCDate() + diffToMonday); const currMonday = new Date(date); const currDay = date.getUTCDay(); const currDiffToMonday = (currDay === 0) ? -6 : 1 - currDay; currMonday.setUTCDate(date.getUTCDate() + currDiffToMonday); const weekDiff = Math.floor((currMonday - jan1Monday) / (7 * 24 * 60 * 60 * 1000)); const weekNum = weekDiff + 1;
+                if (m === 11 && weekNum <= 0) return `${y}년 W${52 + weekNum}`; if (m === 0 && weekNum <= 0) return `${y-1}년 W53`; return `W${weekNum}`;
+            }
+            for(let i=1; i<=TOTAL_DAYS; i++) {
+                const y = curr.getUTCFullYear(); const m = curr.getUTCMonth() + 1; const d = curr.getUTCDate(); const dayOfWeek = curr.getUTCDay(); 
+                const dateKey = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`; const isToday = (y === NOW.getFullYear() && (curr.getUTCMonth() === NOW.getMonth()) && d === NOW.getDate());
+                const dDiv = document.createElement('div'); let dayClass = "flex-1 border-r border-slate-100 flex flex-col items-center justify-center h-full text-[12px] font-medium relative ";
+                if (isToday) dayClass += "bg-red-50 text-red-600 font-extrabold border-red-200 border-x z-10 "; else if (dayOfWeek === 0 || dayOfWeek === 6) dayClass += "text-red-400 bg-slate-50/40 "; else dayClass += "text-slate-400 ";
+                dDiv.className = dayClass; dDiv.innerHTML = `<span>${d}</span>`; if(d === 1) dDiv.classList.add("font-black", "text-slate-800"); dHead.appendChild(dDiv);
+                const miDiv = document.createElement('div'); miDiv.className = `flex-1 border-r border-slate-200 flex items-center justify-center h-full overflow-hidden px-0.5 ${isToday ? "bg-red-50 border-x border-red-200" : ""}`;
+                if(marketIssues[dateKey]) {
+                    const issue = marketIssues[dateKey];
+                    if (issue.brand === 'ALL' || sBrand === 'ALL' || issue.brand === sBrand) {
+                        let color = issue.isHoliday ? "text-red-600 bg-red-100" : "text-blue-600 bg-blue-50";
+                        miDiv.innerHTML = `<span title="${issue.name}" class="${color} text-[9px] font-bold px-0.5 rounded break-words whitespace-normal w-full text-center tracking-tighter leading-none cursor-help flex items-center justify-center h-full">${issue.name}</span>`;
+                    }
+                }
+                miHead.appendChild(miDiv);
+                const imcDiv = document.createElement('div'); imcDiv.className = `flex-1 border-r border-green-100 flex items-center justify-center h-full overflow-hidden px-0.5 ${isToday ? "bg-red-50 border-x border-red-200" : ""}`;
+                if(imcSchedules[dateKey]) {
+                    const validEvents = imcSchedules[dateKey].filter(e => { return e.brand === 'ALL' || sBrand === 'ALL' || e.brand === sBrand; });
+                    if(validEvents.length > 0) { const names = validEvents.map(e => e.name).join(', '); imcDiv.innerHTML = `<span title="${names}" class="text-green-700 bg-green-100 text-[9px] font-bold px-0.5 rounded break-words whitespace-normal w-full text-center tracking-tighter leading-none cursor-help flex items-center justify-center h-full">${names}</span>`; }
+                }
+                imcHead.appendChild(imcDiv);
+                const lDiv = document.createElement('div'); lDiv.className = "flex-1 border-r border-slate-100 h-full relative "; if(dayOfWeek === 0 || dayOfWeek === 6) lDiv.classList.add('bg-slate-50/40'); if(isToday) lDiv.classList.add('bg-red-50/20', 'border-l', 'border-l-red-200', 'border-r-red-200'); gl.appendChild(lDiv);
+                if (currentMonth !== m) { if (currentMonth !== -1) { const mDiv = document.createElement('div'); mDiv.className = "flex items-center justify-center border-r border-slate-200 h-full relative text-slate-700 bg-white"; mDiv.style.flex = monthDaysCount; mDiv.innerHTML = `<span class="sticky left-0 font-extrabold">${currentMonth}월</span>`; mHead.appendChild(mDiv); } currentMonth = m; monthDaysCount = 0; } monthDaysCount++;
+                const currWeekLabel = getWeekLabel(curr); currentWeekDayCount++; const nextDay = new Date(curr); nextDay.setUTCDate(curr.getUTCDate() + 1); const nextWeekLabel = (i < TOTAL_DAYS) ? getWeekLabel(nextDay) : '';
+                if (currWeekLabel !== nextWeekLabel || i === TOTAL_DAYS) { const wDiv = document.createElement('div'); wDiv.className = "flex items-center justify-center border-r border-slate-200 h-full text-[11px] text-slate-500 bg-white"; wDiv.style.flex = currentWeekDayCount; wDiv.innerText = currWeekLabel; wHead.appendChild(wDiv); currentWeekDayCount = 0; } curr.setUTCDate(curr.getUTCDate() + 1);
+            }
+            if (monthDaysCount > 0) { const mDiv = document.createElement('div'); mDiv.className = "flex items-center justify-center border-r border-slate-200 h-full relative text-slate-700 bg-white"; mDiv.style.flex = monthDaysCount; mDiv.innerHTML = `<span class="sticky left-0 font-extrabold">${currentMonth}월</span>`; mHead.appendChild(mDiv); }
         }
 
         let chartInstance;
