@@ -17,30 +17,28 @@ def sync_data():
         # 2. 구글 시트 데이터 읽기
         sheet_id = "1aYlXOaRbyRDn0gneVz8n7nATIqdTU7rD4rjMEbw38sw"
         
-        # [수정 1] 시트 이름을 'ever_테스트중2'로 변경
-        sheet = client.open_by_key(sheet_id).worksheet("ever_테스트중2")
+        # [수정 1] 최종 확정된 실무 시트 이름으로 변경
+        sheet = client.open_by_key(sheet_id).worksheet("1. 표준 입력 시트")
         
         all_values = sheet.get_all_values()
         
-        # 데이터가 최소한 헤더까지는 있는지 확인
+        # 데이터 유효성 검사 (최소한 헤더는 있어야 함)
         if len(all_values) < 2:
             print("데이터가 없습니다.")
             return
 
-        # [수정 2] 행 선택 로직 변경
-        # 1행(index 0): 설명 -> 무시
-        # 2행(index 1): 컬럼명(Header) -> 사용
+        # [수정 2] 행 선택 로직 변경 (깔끔해짐)
+        # 1행(index 0): 공지 -> 무시
+        # 2행(index 1): 헤더(컬럼명) -> 사용
         header = all_values[1]
         
-        # 3~6행(index 2~5): 예시 데이터 -> 무시
-        # 7행(index 6)부터: 실제 데이터 -> 사용
-        data = all_values[6:]
+        # 3행(index 2)부터: 실제 데이터 -> 사용
+        data = all_values[2:]
         
         # 데이터프레임 생성
         df = pd.DataFrame(data, columns=header)
         
         # 데이터 정제: 브랜드가 없는 빈 행 제거
-        # (만약 '브랜드'라는 컬럼명을 못 찾으면 첫 번째 컬럼 기준으로 처리)
         if '브랜드' in df.columns:
             df = df[df['브랜드'] != ""].copy()
         elif len(df.columns) > 0:
@@ -49,7 +47,7 @@ def sync_data():
         # [기존 유지] 앞에서부터 15개 컬럼만 가져오기 (관리용 컬럼 제외)
         df = df.iloc[:, :15]
 
-        # [기존 유지] Snowflake 컬럼명 매핑
+        # [기존 유지] Snowflake 컬럼명 매핑 (15개)
         df.columns = [
             'BRAND',            # 1. 브랜드
             'CHANNEL',          # 2. 채널 구분
@@ -96,10 +94,10 @@ def sync_data():
             schema="CRM_MEMBER"
         )
 
-        # overwrite=True: 기존 테이블을 지우고 새로 생성 (구조 변경 반영)
+        # overwrite=True: 기존 테이블을 지우고 새로 생성
         write_pandas(conn, df, "PROMOTION_PLAN", auto_create_table=True, overwrite=True)
         
-        print(f"✅ 데이터 적재 성공! 총 {len(df)}개의 행이 업데이트되었습니다.")
+        print(f"✅ [실전 모드] 데이터 적재 성공! 총 {len(df)}개의 행이 업데이트되었습니다.")
         conn.close()
         
     except Exception as e:
