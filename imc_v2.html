@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMC 통합 성과 대시보드 (v10 Final)</title>
+    <title>IMC 통합 성과 대시보드 (v11 - Safe Mode)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -229,12 +229,23 @@
 
         async function loadData() {
             try {
+                // [안전 모드] 파일 로딩 상태 확인
+                console.log("데이터 로딩 시작...");
                 const [promoRes, goalRes, calRes] = await Promise.all([
                     fetch('data.json'),
                     fetch('monthly_goals.json').catch(() => ({ ok: false })),   
                     fetch('calendar_issues.json').catch(() => ({ ok: false }))
                 ]);
-                if(promoRes.ok) { const rawData = await promoRes.json(); processPromoData(rawData); }
+
+                if(promoRes.ok) { 
+                    const rawData = await promoRes.json(); 
+                    console.log("data.json 로드 성공:", rawData.length, "건");
+                    processPromoData(rawData); 
+                } else {
+                    console.error("data.json 로드 실패!");
+                    alert("❌ data.json 파일을 불러오지 못했습니다. 파이썬 스크립트 실행 결과를 확인해주세요.");
+                }
+
                 if(goalRes.ok) { monthlyGoals = await goalRes.json(); }
                 if(calRes.ok) {
                     const rawCal = await calRes.json();
@@ -247,17 +258,21 @@
                     });
                 }
                 init();
-            } catch (error) { console.error("Data Load Error:", error); }
+            } catch (error) { 
+                console.error("Data Load Error:", error);
+                alert("❌ 데이터 로딩 중 에러 발생: " + error.message);
+            }
         }
 
         function processPromoData(rawData) {
             csvData = rawData.map((item, index) => {
                 let ch = item.CHANNEL || '기타 제휴몰';
                 if(!channelConfig[ch]) ch = '기타 제휴몰';
-                const goalSales = item.GOAL_SALES ? parseInt(item.GOAL_SALES) : 0;
-                // [수정] JSON에서 실제 매출 데이터 가져오기 (없으면 0)
-                const actual = item.ACTUAL_SALES ? parseInt(item.ACTUAL_SALES) : 0;
-                const dailyTrend = item.DAILY_TREND || [];
+                
+                // [안전 모드] 숫자가 아닌 경우 0으로 처리하는 방어 로직 강화
+                const goalSales = (item.GOAL_SALES && !isNaN(item.GOAL_SALES)) ? parseInt(item.GOAL_SALES) : 0;
+                const actual = (item.ACTUAL_SALES && !isNaN(item.ACTUAL_SALES)) ? parseInt(item.ACTUAL_SALES) : 0;
+                const dailyTrend = Array.isArray(item.DAILY_TREND) ? item.DAILY_TREND : [];
 
                 return {
                     id: index + 1, brand: item.BRAND || 'V', channel: ch, name: item.PROMO_NAME || '제목 없음',
@@ -420,7 +435,6 @@
             const goalSums = {}; const actualSums = {};
             activeList.forEach(ch => { goalSums[ch] = 0; actualSums[ch] = 0; });
 
-            // 1. Goal (Monthly Goals)
             monthlyGoals.forEach(g => {
                 if(sBrand !== 'ALL' && g['브랜드'] !== sBrand) return;
                 if(!goalSums.hasOwnProperty(g['채널'])) return;
@@ -433,7 +447,6 @@
                 }
             });
 
-            // 2. Actual (Promo Revenue)
             data.forEach(d => {
                 if(activeList.includes(d.channel)) {
                     actualSums[d.channel] += d.actual || 0;
@@ -446,7 +459,6 @@
             activeList.forEach(ch => { const val = goalSums[ch]; totalGoal += val; trGoal += `<td>${fmt(val)}</td>`; });
             trGoal += `<td class="total-col sticky right-0">${fmt(totalGoal)}</td></tr>`;
 
-            // [수정] Actual Row에 실적 데이터 매핑
             let trRev = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">실적 (Revenue)</td>';
             let totalRev = 0;
             activeList.forEach(ch => { const val = actualSums[ch]; totalRev += val; trRev += `<td class="font-bold text-indigo-600 bg-indigo-50/10">${fmt(val)}</td>`; });
@@ -477,11 +489,9 @@
             const imgEl = document.getElementById('m-image'); const noImgEl = document.getElementById('m-no-image');
             if(item.image) { imgEl.src = item.image; imgEl.classList.remove('hidden'); noImgEl.classList.add('hidden'); } else { imgEl.classList.add('hidden'); noImgEl.classList.remove('hidden'); }
             
-            // [수정] 팝업에 실적 데이터 바인딩
             document.getElementById('m-goal').innerText = item.goal.toLocaleString();
-            document.getElementById('m-actual').innerText = item.actual.toLocaleString(); // 실적 추가
+            document.getElementById('m-actual').innerText = item.actual.toLocaleString(); 
             
-            // 달성률 계산
             let rate = item.goal > 0 ? Math.round((item.actual / item.goal) * 100) : 0;
             document.getElementById('m-rate').innerText = `${rate}% 달성`;
             document.getElementById('m-rate').className = `text-sm font-bold ${rate >= 100 ? 'text-green-600' : 'text-red-500'}`;
@@ -490,13 +500,11 @@
             document.getElementById('m-benefit-type').innerText = item.benefitType; document.getElementById('m-benefit').innerText = item.benefit || '-';
             document.getElementById('m-comment').innerText = item.comment || '작성된 코멘트가 없습니다.';
 
-            // [수정] 차트 데이터 바인딩
             const ctx = document.getElementById('chart-canvas').getContext('2d');
             if(chartInstance) chartInstance.destroy();
             
-            // 일별 추이 데이터가 없으면 빈 배열 처리
             const trendData = item.dailyTrend && item.dailyTrend.length > 0 ? item.dailyTrend : [0,0,0,0,0];
-            const labels = trendData.map((_, i) => `Day ${i+1}`); // D+1, D+2...
+            const labels = trendData.map((_, i) => `Day ${i+1}`);
 
             chartInstance = new Chart(ctx, {
                 type: 'bar',
