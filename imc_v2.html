@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMC 통합 성과 대시보드 (v13 - Monthly Attribution Fixed)</title>
+    <title>IMC 통합 성과 대시보드 (v14 - KPI Advanced)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -368,8 +368,8 @@
             
             renderGanttRows(filtered, sYear, sortedRelevantChannels);
             
-            // 4. KPI 테이블 렌더링 (월별 귀속 로직 전달)
-            renderSummaryTable(summaryData, sortedRelevantChannels, sYear, sMonth);
+            // 4. KPI 테이블 렌더링 (월별 귀속 로직 + 전년비 로직 전달)
+            renderSummaryTable(sortedRelevantChannels, sBrand, sYear, sMonth);
         }
 
         function getDaysFromStart(dateStr, shiftYear = 0) {
@@ -433,81 +433,122 @@
             if(selectedYear === 'ALL' || selectedYear === '2025') drawSection(d25, 2025);
         }
 
-        // [수정] sYear, sMonth 인자 추가
-        function renderSummaryTable(data, visibleChannels, sYear, sMonth) {
+        // [수정] sYear, sMonth를 받아 전년비(YoY)까지 계산하는 강력한 KPI 함수
+        function renderSummaryTable(visibleChannels, sBrand, sYear, sMonth) {
             const thead = document.getElementById('summary-thead'); const tbody = document.getElementById('summary-tbody');
             thead.innerHTML = ''; tbody.innerHTML = '';
+            
             const activeList = visibleChannels.filter(c => activeChannels.has(c));
-            const sBrand = document.getElementById('brandFilter').value; 
+            
             let headerHTML = '<tr><th class="sticky left-0 bg-slate-50 z-20 w-40 min-w-[10rem] border-r border-slate-200">구분 (KPI)</th>';
             activeList.forEach(ch => { headerHTML += `<th>${ch}</th>`; }); headerHTML += '<th class="total-col sticky right-0">Total</th></tr>';
             thead.innerHTML = headerHTML;
-            const goalSums = {}; const actualSums = {};
-            activeList.forEach(ch => { goalSums[ch] = 0; actualSums[ch] = 0; });
+            
+            // 1. 초기화
+            const goalSums = {}; const actualSums = {}; const prevSums = {};
+            activeList.forEach(ch => { goalSums[ch] = 0; actualSums[ch] = 0; prevSums[ch] = 0; });
 
-            // 1. Goal 
+            // 2. Goal 집계 (Current Year)
             monthlyGoals.forEach(g => {
                 if(sBrand !== 'ALL' && g['브랜드'] !== sBrand) return;
                 if(!goalSums.hasOwnProperty(g['채널'])) return;
-                let include = false;
-                if(sMonth !== 'ALL') { if(g['월'] == sMonth && g['연도'] == (sYear === '2025' ? 2025 : 2026)) include = true; } 
-                else { if(sYear === '2025') { if(g['연도'] == 2025) include = true; } else { if(g['연도'] == 2026) include = true; } }
-                if(include) {
+                
+                let isCurrent = false;
+                if(sMonth !== 'ALL') { if(g['월'] == sMonth && g['연도'] == (sYear === '2025' ? 2025 : 2026)) isCurrent = true; } 
+                else { if(sYear === '2025') { if(g['연도'] == 2025) isCurrent = true; } else { if(g['연도'] == 2026) isCurrent = true; } }
+                
+                if(isCurrent) {
                     let amt = g['월 목표 매출']; if(typeof amt === 'string') { amt = amt.replace(/[^0-9]/g, ''); amt = parseInt(amt); }
                     goalSums[g['채널']] += amt || 0;
                 }
             });
 
-            // 2. Actual (Attribution Logic)
-            data.forEach(d => {
+            // 3. Actual & Previous Actual 집계 (Attribution)
+            csvData.forEach(d => {
+                if(sBrand !== 'ALL' && d.brand !== sBrand) return;
                 if(!activeList.includes(d.channel)) return;
 
-                // 전체(ALL) 선택 시에는 총 실적 사용
-                if (sMonth === 'ALL') {
-                    actualSums[d.channel] += d.actual || 0;
-                } else {
-                    // 특정 월 선택 시: dailyTrend 순회하며 '해당 월' 매출만 발라내기
-                    const startMs = parseDate(d.start);
-                    const targetMonth = parseInt(sMonth) - 1; // 0-indexed (0=Jan, 1=Feb)
-                    const targetYear = (sYear === '2025') ? 2025 : 2026;
+                const startMs = parseDate(d.start);
+                const targetMonth = sMonth === 'ALL' ? -1 : parseInt(sMonth) - 1;
+                const currentYear = (sYear === '2025') ? 2025 : 2026;
+                const prevYear = currentYear - 1;
 
-                    if(d.dailyTrend && d.dailyTrend.length > 0) {
-                        d.dailyTrend.forEach((amt, idx) => {
-                            // 날짜 계산: 시작일 + index
-                            const currDate = new Date(startMs + (idx * 24 * 60 * 60 * 1000));
-                            if(currDate.getUTCMonth() === targetMonth && currDate.getUTCFullYear() === targetYear) {
+                if(d.dailyTrend && d.dailyTrend.length > 0) {
+                    d.dailyTrend.forEach((amt, idx) => {
+                        const currDate = new Date(startMs + (idx * 24 * 60 * 60 * 1000));
+                        const m = currDate.getUTCMonth();
+                        const y = currDate.getUTCFullYear();
+
+                        // Current Actual
+                        if (y === currentYear) {
+                            if (sMonth === 'ALL' || m === targetMonth) {
                                 actualSums[d.channel] += amt;
                             }
-                        });
-                    }
+                        }
+                        // Previous Actual (YoY)
+                        if (y === prevYear) {
+                            if (sMonth === 'ALL' || m === targetMonth) {
+                                prevSums[d.channel] += amt;
+                            }
+                        }
+                    });
                 }
             });
 
             const fmt = n => n.toLocaleString();
+            
+            // Render Goal
             let trGoal = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">목표 (Goal)</td>';
             let totalGoal = 0;
             activeList.forEach(ch => { const val = goalSums[ch]; totalGoal += val; trGoal += `<td>${fmt(val)}</td>`; });
             trGoal += `<td class="total-col sticky right-0">${fmt(totalGoal)}</td></tr>`;
 
+            // Render Actual
             let trRev = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">실적 (Revenue)</td>';
             let totalRev = 0;
             activeList.forEach(ch => { const val = actualSums[ch]; totalRev += val; trRev += `<td class="font-bold text-indigo-600 bg-indigo-50/10">${fmt(val)}</td>`; });
             trRev += `<td class="total-col sticky right-0 text-indigo-800">${fmt(totalRev)}</td></tr>`;
 
+            // Render Rate (Traffic Light)
             let trRate = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">달성률 (Rate)</td>';
             activeList.forEach(ch => { 
                 const g = goalSums[ch]; const a = actualSums[ch]; 
                 const rate = g > 0 ? Math.round((a/g)*100) : 0;
-                let color = rate >= 100 ? 'text-green-600' : 'text-red-500';
+                // Color Logic: 100+ Green, 80-99 Orange, <80 Red
+                let color = rate >= 100 ? 'text-green-600 font-extrabold' : (rate >= 80 ? 'text-orange-500 font-bold' : 'text-red-500');
                 trRate += `<td class="${color}">${rate}%</td>`; 
             });
             const totalRate = totalGoal > 0 ? Math.round((totalRev/totalGoal)*100) : 0;
-            let totalColor = totalRate >= 100 ? 'text-green-600' : 'text-red-500';
+            let totalColor = totalRate >= 100 ? 'text-green-600 font-extrabold' : (totalRate >= 80 ? 'text-orange-500 font-bold' : 'text-red-500');
             trRate += `<td class="total-col sticky right-0 ${totalColor}">${totalRate}%</td></tr>`;
 
+            // Render YoY (Red Up, Blue Down)
             let trYoY = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">전년비 (YoY)</td>';
-            activeList.forEach(ch => { trYoY += `<td class="text-slate-300">-</td>`; });
-            trYoY += `<td class="total-col sticky right-0">-</td></tr>`;
+            let totalPrev = 0;
+            activeList.forEach(ch => { 
+                const curr = actualSums[ch]; const prev = prevSums[ch]; 
+                totalPrev += prev;
+                if(prev > 0) {
+                    const yoy = Math.round(((curr - prev) / prev) * 100);
+                    // Color Logic: >0 Red(Up), <0 Blue(Down), 0 Gray
+                    let color = yoy > 0 ? 'text-red-600' : (yoy < 0 ? 'text-blue-600' : 'text-slate-400');
+                    let icon = yoy > 0 ? '▲' : (yoy < 0 ? '▼' : '-');
+                    trYoY += `<td class="${color} font-bold text-xs">${icon} ${Math.abs(yoy)}%</td>`;
+                } else {
+                    trYoY += `<td class="text-slate-300">-</td>`;
+                }
+            });
+            
+            // Total YoY
+            if(totalPrev > 0) {
+                const totalYoy = Math.round(((totalRev - totalPrev) / totalPrev) * 100);
+                let tColor = totalYoy > 0 ? 'text-red-600' : (totalYoy < 0 ? 'text-blue-600' : 'text-slate-400');
+                let tIcon = totalYoy > 0 ? '▲' : (totalYoy < 0 ? '▼' : '-');
+                trYoY += `<td class="total-col sticky right-0 ${tColor} font-bold text-xs">${tIcon} ${Math.abs(totalYoy)}%</td></tr>`;
+            } else {
+                trYoY += `<td class="total-col sticky right-0 text-slate-300">-</td></tr>`;
+            }
+
             tbody.innerHTML = trGoal + trRev + trRate + trYoY;
         }
 
