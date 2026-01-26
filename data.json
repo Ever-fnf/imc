@@ -4541,27 +4541,6 @@
         "BRAND": "V",
         "CHANNEL": "SSG닷컴",
         "DIVISION": "프로모션",
-        "PROMO_TYPE": "전사",
-        "IS_EXCLUSIVE": false,
-        "PROMO_NAME": "명품수퍼세일",
-        "START_DATE": "2026-01-07",
-        "END_DATE": "2026-01-07",
-        "STATUS": "closed",
-        "SLOT": "명품관, 메인 롤링배너",
-        "IMAGE_URL": "",
-        "BENEFIT_TYPE": "쿠폰, 카드할인",
-        "BENEFIT_DETAIL": "이월 10%+윈터악세 10%",
-        "GOAL_SALES": 0,
-        "MD_COMMENT": "",
-        "ACTUAL_SALES": 298000,
-        "DAILY_TREND": [
-            298000
-        ]
-    },
-    {
-        "BRAND": "V",
-        "CHANNEL": "SSG닷컴",
-        "DIVISION": "프로모션",
         "PROMO_TYPE": "자체",
         "IS_EXCLUSIVE": false,
         "PROMO_NAME": "한파 대비 다운 기획전",
