@@ -329,6 +329,7 @@
         }
 
         function applyFilter() {
+            console.log('[DEBUG] applyFilter 호출됨!', new Error().stack);
             const sBrand = document.getElementById('brandFilter').value; 
             const sYear = document.getElementById('yearFilter').value; 
             const sMonth = document.getElementById('monthFilter').value;
