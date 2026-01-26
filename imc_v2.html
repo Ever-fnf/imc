@@ -1,114 +1,525 @@
-import os
-import json
-import snowflake.connector
-from datetime import datetime, timedelta
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMC 통합 성과 대시보드 (v10 Final)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <style>
+        body { font-family: 'Pretendard', 'Inter', sans-serif; }
+        .custom-scroll { overflow: auto; }
+        .custom-scroll::-webkit-scrollbar { height: 12px; width: 12px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-top: 1px solid #e2e8f0; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; border: 3px solid #f1f5f9; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .timeline-bar { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .timeline-bar:hover { transform: translateY(-2px); z-index: 100 !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); opacity: 1 !important; filter: brightness(1.05); }
+        .sticky-col-header { position: sticky; top: 0; z-index: 50; }
+        .sticky-left-col { position: sticky; left: 0; z-index: 40; background: white; border-right: 1px solid #e2e8f0; box-shadow: 4px 0 8px rgba(0,0,0,0.02); }
+        .kpi-table th, .kpi-table td { white-space: nowrap; padding: 12px 18px; }
+        .kpi-table th { background-color: #f8fafc; color: #64748b; font-weight: 700; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; }
+        .kpi-table td { border-bottom: 1px solid #f1f5f9; font-size: 13px; font-weight: 500; color: #334155; }
+        .kpi-table .total-col { background-color: #f8fafc; font-weight: 800; color: #1e293b; border-left: 2px solid #e2e8f0; }
+        .accordion-content { transition: max-height 0.3s ease-in-out, opacity 0.3s; max-height: 1000px; opacity: 1; overflow: hidden; }
+        .accordion-content.collapsed { max-height: 0; opacity: 0; }
+        .rotate-icon { transition: transform 0.3s; }
+        .rotate-icon.closed { transform: rotate(-90deg); }
+        .star-icon { color: #ef4444; text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff; font-size: 13px; margin-right: 4px; display: inline-block; vertical-align: middle; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1)); }
+    </style>
+</head>
+<body class="bg-[#F8F9FC] text-slate-800 h-screen flex flex-col overflow-hidden">
+    <nav class="bg-white border-b border-slate-200 h-16 flex-none flex items-center justify-between px-6 z-50 shadow-sm">
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-500/20">D</div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-800 tracking-tight leading-tight">IMC 통합 성과 대시보드</h1>
+                    <p class="text-[11px] text-slate-400 font-medium">Performance Monitoring System</p>
+                </div>
+            </div>
+            <div class="h-8 border-l border-slate-200 mx-2"></div>
+            <div class="flex items-center gap-3">
+                <select id="brandFilter" onchange="applyFilter()" class="bg-slate-50 border border-slate-200 text-slate-700 text-sm font-bold rounded-lg pl-3 pr-10 py-2 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-slate-100 transition-colors shadow-sm">
+                    <option value="V">듀베티카 (DUVETICA)</option>
+                    <option value="ST">세르지오 타키니 (ST)</option>
+                </select>
+                <select id="yearFilter" onchange="applyFilter()" class="bg-white border border-slate-200 text-slate-600 text-sm font-bold rounded-lg pl-3 pr-10 py-2 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
+                    <option value="ALL">2026 / 2025 비교</option>
+                    <option value="2026">2026년 (Current)</option>
+                    <option value="2025">2025년 (Past)</option>
+                </select>
+                <select id="monthFilter" onchange="applyFilter()" class="bg-white border border-slate-200 text-slate-600 text-sm font-bold rounded-lg pl-3 pr-10 py-2 focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
+                    <option value="ALL">누적</option>
+                    <option value="1">1월</option>
+                    <option value="2">2월</option>
+                    <option value="3">3월</option>
+                    <option value="4">4월</option>
+                    <option value="5">5월</option>
+                    <option value="6">6월</option>
+                    <option value="7">7월</option>
+                    <option value="8">8월</option>
+                    <option value="9">9월</option>
+                    <option value="10">10월</option>
+                    <option value="11">11월</option>
+                    <option value="12">12월</option>
+                </select>
+            </div>
+        </div>
+        <div class="text-xs font-medium text-slate-500 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-100" id="current-date-display"></div>
+    </nav>
+    <div class="bg-white border-b border-slate-200 py-3 px-6 flex items-center gap-4 flex-wrap shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] z-40">
+        <span class="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Channel</span>
+        <div id="filter-all" onclick="toggleAllChannels()" class="cursor-pointer px-4 py-1.5 rounded-full text-xs font-bold bg-slate-800 text-white shadow-md shadow-slate-200 transition-transform active:scale-95">ALL</div>
+        <div class="h-4 border-l border-slate-300"></div>
+        <div id="channel-chips" class="flex items-center gap-2 overflow-x-auto custom-scroll pb-1"></div>
+    </div>
+    <div class="flex-1 flex flex-col overflow-hidden bg-white">
+        <div class="flex-1 flex flex-col relative min-h-0">
+            <div class="flex-1 custom-scroll bg-slate-50/50 relative" id="gantt-container">
+                <div class="min-w-[2400px] h-full relative flex flex-col" id="gantt-content-wrapper">
+                    <div class="sticky-col-header bg-white border-b border-slate-200 shadow-sm flex shrink-0 flex-col z-50">
+                        <div class="flex w-full">
+                            <div class="sticky-left-col w-40 min-w-[10rem] bg-white z-50 border-r border-slate-200 flex flex-col shadow-[4px_0_12px_rgba(0,0,0,0.03)]">
+                                <div class="flex-1 border-b border-slate-100 flex items-center justify-center bg-slate-50">
+                                    <span class="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Channel List</span>
+                                </div>
+                            </div>
+                            <div class="flex-1 flex flex-col relative">
+                                <div class="h-7 flex text-sm font-bold text-slate-600 bg-slate-50/80 border-b border-slate-200 backdrop-blur-sm" id="month-header"></div>
+                                <div class="h-6 flex text-[11px] font-semibold text-slate-600 bg-slate-50 border-b border-slate-100" id="week-header"></div>
+                                <div class="h-8 flex text-[12px] text-slate-500 font-medium bg-white border-b border-slate-100" id="day-header"></div>
+                                <div class="h-8 flex bg-slate-50 border-b border-slate-200 relative" id="market-issue-header"></div>
+                                <div class="h-8 flex bg-green-50/30 border-b border-green-100 relative" id="imc-header"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative flex-1 bg-white">
+                        <div class="absolute inset-0 flex pointer-events-none z-0 pl-40" id="grid-lines"></div>
+                        <div id="chart-content-layer" class="relative z-20 pt-2 pb-10"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white border-t border-slate-200 shadow-[0_-8px_30px_rgba(0,0,0,0.04)] z-30 shrink-0 flex flex-col transition-all duration-300">
+            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 cursor-pointer hover:bg-slate-100 transition-colors group" onclick="toggleKpiSection()">
+                <div class="flex items-center gap-3">
+                    <div class="p-1 rounded-md bg-white border border-slate-200 shadow-sm group-hover:border-indigo-300 transition-colors">
+                        <svg id="kpi-chevron" class="w-4 h-4 text-slate-400 rotate-icon closed" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <h3 class="font-bold text-sm text-slate-700">종합 결과 요약 (KPI Matrix)</h3>
+                </div>
+                <span class="text-[11px] font-bold text-slate-400 bg-white border border-slate-200 px-2 py-1 rounded shadow-sm">단위: 천원</span>
+            </div>
+            <div id="kpi-content" class="flex-1 custom-scroll p-0 relative accordion-content collapsed bg-slate-50/30">
+                <div class="min-w-full inline-block align-middle p-4">
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <table class="kpi-table w-full text-right">
+                            <thead id="summary-thead"></thead>
+                            <tbody id="summary-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/40 backdrop-blur-md p-4 transition-all duration-300 opacity-0 scale-95" style="opacity: 0; pointer-events: none;">
+        <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden ring-1 ring-slate-900/5 max-h-[90vh] flex flex-col">
+            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50 shrink-0">
+                <div class="flex items-center gap-3 overflow-hidden">
+                    <span id="m-brand-badge" class="shrink-0 px-2.5 py-1 bg-slate-900 text-white text-[11px] font-bold uppercase rounded-md shadow-sm">BRAND</span>
+                    <h3 id="m-title" class="text-lg font-bold text-slate-800 tracking-tight truncate">Promo Title</h3>
+                    <span id="m-status" class="shrink-0 px-2 py-0.5 bg-indigo-100 text-indigo-700 text-[10px] font-bold rounded-full uppercase">Status</span>
+                </div>
+                <button onclick="closeModal()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-200 text-slate-400 transition-colors text-xl shrink-0">&times;</button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6 bg-white">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <div class="md:col-span-5 flex flex-col gap-4">
+                        <div class="rounded-xl border border-slate-200 bg-slate-50 overflow-hidden aspect-[4/3] flex items-center justify-center relative group">
+                            <img id="m-image" src="" alt="Report Image" class="w-full h-full object-cover hidden">
+                            <div id="m-no-image" class="text-slate-400 text-xs font-medium flex flex-col items-center gap-2">
+                                <svg class="w-8 h-8 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span>이미지 없음</span>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-xl border border-slate-100 bg-slate-50">
+                            <div class="flex justify-between items-center mb-1">
+                                <p class="text-[11px] font-bold text-slate-400 uppercase">목표 (Goal)</p>
+                                <p class="text-[11px] font-bold text-indigo-400 uppercase">실적 (Actual)</p>
+                            </div>
+                            <div class="flex justify-between items-baseline border-b border-slate-200 pb-2 mb-2">
+                                <div class="flex items-baseline gap-1">
+                                    <span id="m-goal" class="text-xl font-black text-slate-400">0</span>
+                                </div>
+                                <div class="flex items-baseline gap-1">
+                                    <span id="m-actual" class="text-2xl font-black text-indigo-600">0</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span id="m-rate" class="text-sm font-bold text-slate-500">0% 달성</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-7 flex flex-col gap-5">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="p-3 rounded-lg border border-slate-100 bg-white shadow-sm">
+                                <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">구분 / 유형</p>
+                                <p class="text-sm font-semibold text-slate-700 flex gap-2">
+                                    <span id="m-division" class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 text-[11px]">구분</span>
+                                    <span id="m-type" class="px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 text-[11px]">유형</span>
+                                </p>
+                            </div>
+                            <div class="p-3 rounded-lg border border-slate-100 bg-white shadow-sm">
+                                <p class="text-[10px] font-bold text-slate-400 uppercase mb-1">노출 구좌 (Slot)</p>
+                                <p id="m-slot" class="text-sm font-bold text-slate-800">-</p>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-xl border border-indigo-100 bg-indigo-50/30">
+                            <div class="mb-3">
+                                <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-wide">혜택 유형</span>
+                                <span id="m-benefit-type" class="ml-2 text-xs font-bold text-indigo-700 bg-white px-2 py-0.5 rounded shadow-sm border border-indigo-100">-</span>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-bold text-indigo-400 uppercase mb-1">상세 혜택 (Scheme)</p>
+                                <p id="m-benefit" class="text-sm font-medium text-slate-700 leading-relaxed">-</p>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex-1">
+                            <p class="text-[10px] font-bold text-slate-400 uppercase mb-2 flex items-center gap-2">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                                MD Comment
+                            </p>
+                            <p id="m-comment" class="text-sm text-slate-600 italic leading-relaxed whitespace-pre-wrap">작성된 코멘트가 없습니다.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 pt-6 border-t border-slate-100">
+                    <div class="h-48 rounded-xl border border-slate-100 p-4 bg-white relative shadow-sm">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase absolute top-4 left-4">Daily Sales Trend (Real Data)</p>
+                        <canvas id="chart-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const NOW = new Date();
+        function parseDate(str) {
+            if(!str) return null;
+            const parts = str.split('-');
+            return Date.UTC(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+        }
+        let START_DATE_MS = Date.UTC(2026, 0, 1);  
+        let END_DATE_MS = Date.UTC(2026, 11, 31);    
+        let TOTAL_DAYS = Math.ceil((END_DATE_MS - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
+        const DEFAULT_START = Date.UTC(2026, 0, 1);
+        const DEFAULT_END = Date.UTC(2026, 11, 31);
+        const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
+        const dateStr = `${NOW.getFullYear()}.${String(NOW.getMonth()+1).padStart(2,'0')}.${String(NOW.getDate()).padStart(2,'0')} (${weekDays[NOW.getDay()]})`;
+        document.getElementById('current-date-display').innerHTML = `기준일: <span class="text-indigo-600 font-extrabold ml-1">${dateStr}</span>`;
+        let marketIssues = {}; let imcSchedules = {}; let monthlyGoals = []; let csvData = []; 
+        const channelConfig = { '자사몰': { class: 'bg-orange-500 text-white border-orange-600', border: 'border-orange-500' }, 'SSF샵': { class: 'bg-sky-500 text-white border-sky-600', border: 'border-sky-400' }, '무신사': { class: 'bg-slate-900 text-white border-slate-950', border: 'border-slate-800' }, 'SSG닷컴': { class: 'bg-[#FFEB00] text-[#4A3C31] border-[#4A3C31]', border: 'border-[#4A3C31]' }, '신세계V': { class: 'bg-[#5D4037] text-white border-[#3E2723]', border: 'border-[#5D4037]' }, '네이버스토어': { class: 'bg-[#03C75A] text-white border-[#02B150]', border: 'border-[#03C75A]' }, '더카트골프': { class: 'bg-violet-600 text-white border-violet-700', border: 'border-violet-500' }, '롯데ON': { class: 'bg-red-600 text-white border-red-700', border: 'border-red-500' }, '29CM': { class: 'bg-[#000080] text-white border-[#000060]', border: 'border-[#000080]' }, 'EQL': { class: 'bg-lime-400 text-lime-950 border-lime-500', border: 'border-lime-400' }, '기타 제휴몰': { class: 'bg-slate-400 text-white border-slate-500', border: 'border-slate-400' } };
+        const channels = Object.keys(channelConfig);
+        const brandMap = { 'V': '듀베티카', 'ST': '세르지오 타키니' };
+        let activeChannels = new Set(channels);
+        let channelExpanded = {}; 
 
-def get_connection():
-    return snowflake.connector.connect(
-        user=os.environ['SF_USER'],
-        password=os.environ['SF_PASSWORD'],
-        account="gv28284.ap-northeast-2.aws",
-        warehouse="DEV_WH",
-        database="FNF",
-        schema="CRM_MEMBER"
-    )
+        async function loadData() {
+            try {
+                const [promoRes, goalRes, calRes] = await Promise.all([
+                    fetch('data.json'),
+                    fetch('monthly_goals.json').catch(() => ({ ok: false })),   
+                    fetch('calendar_issues.json').catch(() => ({ ok: false }))
+                ]);
+                if(promoRes.ok) { const rawData = await promoRes.json(); processPromoData(rawData); }
+                if(goalRes.ok) { monthlyGoals = await goalRes.json(); }
+                if(calRes.ok) {
+                    const rawCal = await calRes.json();
+                    rawCal.forEach(item => {
+                        const dateKey = item['날짜']; const name = item['일정명']; const type = item['유형'] || ''; const brand = item['브랜드'] || 'ALL';
+                        if(dateKey && name) {
+                            if (type === 'IMC') { if (!imcSchedules[dateKey]) imcSchedules[dateKey] = []; imcSchedules[dateKey].push({ name: name, brand: brand }); } 
+                            else { marketIssues[dateKey] = { name: name, type: type, isHoliday: item['휴일여부'] === 'Y', brand: brand }; }
+                        }
+                    });
+                }
+                init();
+            } catch (error) { console.error("Data Load Error:", error); }
+        }
 
-def fetch_and_process():
-    print("🚀 Starting Data Sync Process...")
-    conn = get_connection()
-    cursor = conn.cursor()
+        function processPromoData(rawData) {
+            csvData = rawData.map((item, index) => {
+                let ch = item.CHANNEL || '기타 제휴몰';
+                if(!channelConfig[ch]) ch = '기타 제휴몰';
+                const goalSales = item.GOAL_SALES ? parseInt(item.GOAL_SALES) : 0;
+                // [수정] JSON에서 실제 매출 데이터 가져오기 (없으면 0)
+                const actual = item.ACTUAL_SALES ? parseInt(item.ACTUAL_SALES) : 0;
+                const dailyTrend = item.DAILY_TREND || [];
 
-    try:
-        # ---------------------------------------------------------
-        # 1. 기획전 계획(Plan) 가져오기
-        # ---------------------------------------------------------
-        print("1. Fetching Promotion Plan...")
-        cursor.execute("SELECT * FROM PROMOTION_PLAN")
-        cols = [col[0] for col in cursor.description]
-        plans = [dict(zip(cols, row)) for row in cursor.fetchall()]
+                return {
+                    id: index + 1, brand: item.BRAND || 'V', channel: ch, name: item.PROMO_NAME || '제목 없음',
+                    start: item.START_DATE, end: item.END_DATE, type: item.PROMO_TYPE || '-', division: item.DIVISION || '-', slot: item.SLOT || '-',
+                    image: item.IMAGE_URL || '', benefitType: item.BENEFIT_TYPE || '', benefit: item.BENEFIT_DETAIL || '', comment: item.MD_COMMENT || '',
+                    goal: goalSales, actual: actual, dailyTrend: dailyTrend, status: item.STATUS || 'Planning', isExclusive: item.IS_EXCLUSIVE 
+                };
+            });
+            csvData.sort((a, b) => parseDate(a.start) - parseDate(b.start));
+        }
 
-        # ---------------------------------------------------------
-        # 2. 실적 데이터(Actual) 가져오기
-        # ---------------------------------------------------------
-        print("2. Fetching Daily Sales Data...")
-        # 날짜를 문자열로 가져오면 매핑이 편합니다.
-        cursor.execute("""
-            SELECT TO_VARCHAR(SALE_DATE, 'YYYY-MM-DD') as SD, BRAND, CHANNEL, REVENUE 
-            FROM DAILY_CHANNEL_SALES
-        """)
-        sales_data = cursor.fetchall()
+        function init() {
+            const dynamicWidth = Math.max(2400, TOTAL_DAYS * 40 + 160);
+            document.getElementById('gantt-content-wrapper').style.minWidth = `${dynamicWidth}px`;
+            renderHeaderAndGrid(); renderChannelChips(); applyFilter();
+        }
 
-        # ---------------------------------------------------------
-        # 3. 고속 조회를 위한 매핑 테이블 생성 (Memory Mapping)
-        # Key: (브랜드, 채널, 날짜) -> Value: 매출액
-        # ---------------------------------------------------------
-        print("3. Building Sales Map...")
-        sales_map = {}
-        for row in sales_data:
-            date_str, brand, channel, revenue = row
-            key = (brand, channel, date_str)
-            # 혹시 데이터가 중복될 경우를 대비해 합산 (`+=`)
-            sales_map[key] = sales_map.get(key, 0) + int(revenue)
+        function renderChannelChips() {
+            const container = document.getElementById('channel-chips'); container.innerHTML = '';
+            channels.forEach(ch => {
+                const isActive = activeChannels.has(ch); const conf = channelConfig[ch]; const chip = document.createElement('div');
+                let css = isActive ? `bg-white text-slate-800 border ${conf.border} shadow-sm font-bold ring-1 ring-inset ${conf.border.replace('border','ring')}` : `bg-slate-100 text-slate-400 border border-slate-200 hover:bg-slate-200`;
+                chip.className = `cursor-pointer px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-all ${css}`;
+                chip.innerText = ch; chip.onclick = () => toggleChannel(ch); container.appendChild(chip);
+            });
+        }
+        function toggleChannel(ch) { if(activeChannels.has(ch)) activeChannels.delete(ch); else activeChannels.add(ch); renderChannelChips(); applyFilter(); }
+        function toggleAllChannels() { if(activeChannels.size === channels.length) activeChannels.clear(); else channels.forEach(c => activeChannels.add(c)); renderChannelChips(); applyFilter(); }
+        function packItems(items) {
+            if (!items || items.length === 0) return [];
+            const sorted = [...items].sort((a, b) => getDaysFromStart(a.start) - getDaysFromStart(b.start));
+            const lanes = [];
+            sorted.forEach(item => {
+                const start = getDaysFromStart(item.start); let placed = false;
+                for (let i = 0; i < lanes.length; i++) {
+                    const lane = lanes[i]; const lastItem = lane[lane.length - 1];
+                    if (start >= getDaysFromStart(lastItem.end) + 0) { lane.push(item); placed = true; break; }
+                }
+                if (!placed) lanes.push([item]);
+            });
+            return lanes;
+        }
+        function toggleExpand(ch) { channelExpanded[ch] = !channelExpanded[ch]; applyFilter(); }
+        function toggleKpiSection() {
+            const content = document.getElementById('kpi-content'); const icon = document.getElementById('kpi-chevron');
+            content.classList.toggle('collapsed'); icon.classList.toggle('closed');
+        }
 
-        # ---------------------------------------------------------
-        # 4. 기획전별 실적 계산 (Mapping)
-        # ---------------------------------------------------------
-        print("4. Calculating Promotion Performance...")
-        final_data = []
-        
-        for p in plans:
-            # 날짜 형식이 문자열인지 객체인지 확인 후 통일
-            start_str = str(p['START_DATE'])
-            end_str = str(p['END_DATE'])
+        function applyFilter() {
+            const sBrand = document.getElementById('brandFilter').value; const sYear = document.getElementById('yearFilter').value; const sMonth = document.getElementById('monthFilter').value;
+            if(sMonth === 'ALL') { START_DATE_MS = DEFAULT_START; END_DATE_MS = DEFAULT_END; } 
+            else {
+                const targetMonth = parseInt(sMonth); const baseYear = (sYear === '2025') ? 2025 : 2026;
+                const monthStart = new Date(Date.UTC(baseYear, targetMonth - 1, 1));
+                const dayOfWeek = monthStart.getUTCDay(); const daysToMonday = (dayOfWeek === 0) ? 6 : dayOfWeek - 1;
+                START_DATE_MS = Date.UTC(baseYear, targetMonth - 1, 1 - daysToMonday);
+                const lastDay = new Date(Date.UTC(baseYear, targetMonth, 0)).getUTCDate();
+                const monthEnd = new Date(Date.UTC(baseYear, targetMonth - 1, lastDay));
+                const endDayOfWeek = monthEnd.getUTCDay(); const daysToSunday = (endDayOfWeek === 0) ? 0 : 7 - endDayOfWeek;
+                END_DATE_MS = Date.UTC(baseYear, targetMonth - 1, lastDay + daysToSunday);
+            }
+            TOTAL_DAYS = Math.ceil((END_DATE_MS - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
+            const dynamicWidth = Math.max(1200, TOTAL_DAYS * 40 + 160);
+            document.getElementById('gantt-content-wrapper').style.minWidth = `${dynamicWidth}px`;
             
-            try:
-                s_date = datetime.strptime(start_str, '%Y-%m-%d')
-                e_date = datetime.strptime(end_str, '%Y-%m-%d')
-            except ValueError:
-                # 날짜 형식이 잘못된 경우 실적 0 처리하고 넘김
-                print(f"   [Skip] Invalid Date: {p.get('PROMO_NAME', 'Unknown')}")
-                p['ACTUAL_SALES'] = 0
-                p['DAILY_TREND'] = []
-                final_data.append(p)
-                continue
+            renderHeaderAndGrid();
+            const filtered = csvData.filter(d => {
+                const y = parseInt(d.start.substring(0,4)); const sDate = parseDate(d.start); const eDate = parseDate(d.end);
+                const bm = (sBrand === 'ALL' || d.brand === sBrand);
+                let ym = true;
+                if(sYear === '2026') { const start26 = Date.UTC(2026, 0, 1); if (eDate < start26) ym = false; } 
+                else if(sYear === '2025') { const end25 = Date.UTC(2025, 11, 31); if (sDate > end25) ym = false; }
+                let mm = true;
+                if(sMonth !== 'ALL') {
+                    const targetMonth = parseInt(sMonth); const startMonth = parseInt(d.start.substring(5,7)); const endMonth = parseInt(d.end.substring(5,7));
+                    const startYear = parseInt(d.start.substring(0,4)); const endYear = parseInt(d.end.substring(0,4));
+                    if(startYear === endYear) { mm = (targetMonth >= startMonth && targetMonth <= endMonth); } 
+                    else { mm = (targetMonth >= startMonth || targetMonth <= endMonth); }
+                }
+                return bm && ym && mm; 
+            });
+            const relevantChannels = new Set();
+            csvData.forEach(d => { if (sBrand === 'ALL' || d.brand === sBrand) { relevantChannels.add(d.channel); } });
+            monthlyGoals.forEach(g => { if (sBrand === 'ALL' || g['브랜드'] === sBrand) { relevantChannels.add(g['채널']); } });
+            const sortedRelevantChannels = channels.filter(ch => relevantChannels.has(ch));
+            const summaryData = filtered.filter(d => activeChannels.has(d.channel));
+            renderGanttRows(filtered, sYear, sortedRelevantChannels);
+            renderSummaryTable(summaryData, sortedRelevantChannels);
+        }
 
-            total_revenue = 0
-            daily_trend = []
+        function getDaysFromStart(dateStr, shiftYear = 0) {
+            if(!dateStr) return -999;
+            if(shiftYear === 0) { const targetMs = parseDate(dateStr); return Math.floor((targetMs - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1; } 
+            else {
+                const parts = dateStr.split('-'); const year = parseInt(parts[0]) + shiftYear;
+                const month = parseInt(parts[1]) - 1; const day = parseInt(parts[2]);
+                const targetMs = Date.UTC(year, month, day); return Math.floor((targetMs - START_DATE_MS) / (1000 * 60 * 60 * 24)) + 1;
+            }
+        }
+
+        function renderGanttRows(data, selectedYear, visibleChannels) {
+            const container = document.getElementById('chart-content-layer'); container.innerHTML = '';
+            const drawSection = (yearData, year) => {
+                const yearRow = document.createElement('div'); yearRow.className = "flex w-full h-8 border-b border-indigo-100 bg-indigo-50/40 items-center shrink-0";
+                const stickyLabel = document.createElement('div'); stickyLabel.className = "sticky-left-col w-40 min-w-[10rem] h-full flex items-center justify-center bg-indigo-50 font-bold text-indigo-900 text-xs gap-2 z-40";
+                stickyLabel.innerHTML = `<span class="bg-indigo-600 text-white px-2 py-0.5 rounded text-[10px] shadow-sm">${year}</span>`;
+                yearRow.appendChild(stickyLabel); container.appendChild(yearRow);
+                const group = {}; channels.forEach(ch => group[ch] = []); yearData.forEach(d => { if(group[d.channel]) group[d.channel].push(d); });
+                visibleChannels.forEach(ch => {
+                    if(!activeChannels.has(ch)) return; 
+                    const items = group[ch]; const lanes = packItems(items); const laneCount = lanes.length; const isExpanded = channelExpanded[ch] || false;
+                    const LANE_H = 40; const rowHeight = isExpanded ? (Math.max(1, laneCount) * LANE_H + 10) : 44; 
+                    const row = document.createElement('div'); row.className = "flex w-full border-b border-slate-100 bg-white items-center group shrink-0 relative hover:bg-slate-50 transition-colors"; row.style.height = `${rowHeight}px`;
+                    const stickyCol = document.createElement('div'); stickyCol.className = "sticky-left-col w-40 min-w-[10rem] h-full flex items-center px-4 bg-white z-40 border-r border-slate-200 group-hover:bg-slate-50 transition-colors";
+                    const conf = channelConfig[ch]; const bgClass = conf.class.split(' ')[0]; 
+                    let toggleHtml = '';
+                    if (laneCount > 1) { toggleHtml = `<div onclick="event.stopPropagation(); toggleExpand('${ch}')" class="absolute right-3 cursor-pointer p-1.5 hover:bg-slate-200 rounded-md text-slate-400 hover:text-slate-700 transition-colors"><svg class="w-3.5 h-3.5 rotate-icon ${isExpanded ? 'open' : 'closed'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>`; }
+                    stickyCol.innerHTML = `<div class="flex items-center gap-3 w-full cursor-pointer" onclick="toggleExpand('${ch}')"><span class="w-2.5 h-2.5 rounded-full ${bgClass} shadow-sm"></span><span class="text-[13px] text-slate-700 font-bold truncate select-none">${ch}</span></div>${toggleHtml}`;
+                    row.appendChild(stickyCol);
+                    const barsArea = document.createElement('div'); barsArea.className = "flex-1 h-full relative ml-40"; 
+                    if(laneCount > 0) {
+                        lanes.forEach((laneItems, laneIndex) => {
+                            laneItems.forEach((item, itemIdx) => {
+                                const shiftYear = (year < 2026) ? 1 : 0; const s = getDaysFromStart(item.start, shiftYear); const e = getDaysFromStart(item.end, shiftYear);
+                                if(s > TOTAL_DAYS || e < 1) return;
+                                const start = Math.max(1, s); const end = Math.min(TOTAL_DAYS, e); const widthPct = (end - start + 1) * (100/TOTAL_DAYS); const leftPct = (start - 1) * (100/TOTAL_DAYS);
+                                let topPos = 8; if (isExpanded) topPos = (laneIndex * LANE_H) + 6; else topPos = 8;
+                                let baseClass = channelConfig[ch].class; let opacityStyle = ""; if(year < 2026) opacityStyle = "opacity: 0.6; filter: grayscale(30%);"; const zIdx = 10 + laneIndex;
+                                let starHtml = item.isExclusive ? '<span class="star-icon">★</span>' : '';
+                                let content = `${starHtml}<span class="font-bold mr-1.5 truncate">${item.name}</span>`;
+                                if(item.division && item.division !== '-') { content += `<span class="px-1.5 py-0.5 rounded-[4px] bg-white/30 text-[10px] font-bold mr-1 leading-none shadow-sm backdrop-blur-sm ring-1 ring-white/10">${item.division}</span>`; }
+                                if(item.type && item.type !== '-') { content += `<span class="px-1.5 py-0.5 rounded-[4px] bg-white/30 text-[10px] font-bold mr-1 leading-none shadow-sm backdrop-blur-sm ring-1 ring-white/10">${item.type}</span>`; }
+                                if(item.benefitType && item.benefitType !== '-') { content += `<span class="font-normal opacity-90 text-[11px] border-l border-white/40 pl-1.5 tracking-tight">${item.benefitType}</span>`; }
+                                const bar = document.createElement('div');
+                                bar.className = `absolute h-[28px] rounded shadow-sm border flex items-center px-2 cursor-pointer timeline-bar overflow-hidden ${baseClass}`;
+                                bar.style.top = `${topPos}px`; bar.style.left = `${leftPct}%`; bar.style.width = `calc(${widthPct}% - 2px)`;
+                                bar.style.fontSize = '12px'; bar.style.zIndex = zIdx; bar.style.cssText += opacityStyle; bar.style.whiteSpace = "nowrap";
+                                bar.setAttribute('title', `${item.name} | ${item.division} | ${item.type}`); bar.innerHTML = content;
+                                bar.onclick = () => openModal(item); barsArea.appendChild(bar);
+                            });
+                        });
+                    }
+                    row.appendChild(barsArea); container.appendChild(row);
+                });
+            };
+            const d26 = data.filter(d => d.start.startsWith('2026')); const d25 = data.filter(d => d.start.startsWith('2025'));
+            if(selectedYear === 'ALL' || selectedYear === '2026') drawSection(d26, 2026);
+            if(selectedYear === 'ALL') { const div = document.createElement('div'); div.className = "h-4 bg-slate-50 border-y border-slate-100 shrink-0"; container.appendChild(div); }
+            if(selectedYear === 'ALL' || selectedYear === '2025') drawSection(d25, 2025);
+        }
+
+        function renderSummaryTable(data, visibleChannels) {
+            const thead = document.getElementById('summary-thead'); const tbody = document.getElementById('summary-tbody');
+            thead.innerHTML = ''; tbody.innerHTML = '';
+            const activeList = visibleChannels.filter(c => activeChannels.has(c));
+            const sBrand = document.getElementById('brandFilter').value; const sMonth = document.getElementById('monthFilter').value; const sYear = document.getElementById('yearFilter').value; 
+            let headerHTML = '<tr><th class="sticky left-0 bg-slate-50 z-20 w-40 min-w-[10rem] border-r border-slate-200">구분 (KPI)</th>';
+            activeList.forEach(ch => { headerHTML += `<th>${ch}</th>`; }); headerHTML += '<th class="total-col sticky right-0">Total</th></tr>';
+            thead.innerHTML = headerHTML;
+            const goalSums = {}; const actualSums = {};
+            activeList.forEach(ch => { goalSums[ch] = 0; actualSums[ch] = 0; });
+
+            // 1. Goal (Monthly Goals)
+            monthlyGoals.forEach(g => {
+                if(sBrand !== 'ALL' && g['브랜드'] !== sBrand) return;
+                if(!goalSums.hasOwnProperty(g['채널'])) return;
+                let include = false;
+                if(sMonth !== 'ALL') { if(g['월'] == sMonth && g['연도'] == (sYear === '2025' ? 2025 : 2026)) include = true; } 
+                else { if(sYear === '2025') { if(g['연도'] == 2025) include = true; } else { if(g['연도'] == 2026) include = true; } }
+                if(include) {
+                    let amt = g['월 목표 매출']; if(typeof amt === 'string') { amt = amt.replace(/[^0-9]/g, ''); amt = parseInt(amt); }
+                    goalSums[g['채널']] += amt || 0;
+                }
+            });
+
+            // 2. Actual (Promo Revenue)
+            data.forEach(d => {
+                if(activeList.includes(d.channel)) {
+                    actualSums[d.channel] += d.actual || 0;
+                }
+            });
+
+            const fmt = n => n.toLocaleString();
+            let trGoal = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">목표 (Goal)</td>';
+            let totalGoal = 0;
+            activeList.forEach(ch => { const val = goalSums[ch]; totalGoal += val; trGoal += `<td>${fmt(val)}</td>`; });
+            trGoal += `<td class="total-col sticky right-0">${fmt(totalGoal)}</td></tr>`;
+
+            // [수정] Actual Row에 실적 데이터 매핑
+            let trRev = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">실적 (Revenue)</td>';
+            let totalRev = 0;
+            activeList.forEach(ch => { const val = actualSums[ch]; totalRev += val; trRev += `<td class="font-bold text-indigo-600 bg-indigo-50/10">${fmt(val)}</td>`; });
+            trRev += `<td class="total-col sticky right-0 text-indigo-800">${fmt(totalRev)}</td></tr>`;
+
+            let trRate = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">달성률 (Rate)</td>';
+            activeList.forEach(ch => { 
+                const g = goalSums[ch]; const a = actualSums[ch]; 
+                const rate = g > 0 ? Math.round((a/g)*100) : 0;
+                let color = rate >= 100 ? 'text-green-600' : 'text-red-500';
+                trRate += `<td class="${color}">${rate}%</td>`; 
+            });
+            const totalRate = totalGoal > 0 ? Math.round((totalRev/totalGoal)*100) : 0;
+            let totalColor = totalRate >= 100 ? 'text-green-600' : 'text-red-500';
+            trRate += `<td class="total-col sticky right-0 ${totalColor}">${totalRate}%</td></tr>`;
+
+            let trYoY = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">전년비 (YoY)</td>';
+            activeList.forEach(ch => { trYoY += `<td class="text-slate-300">-</td>`; });
+            trYoY += `<td class="total-col sticky right-0">-</td></tr>`;
+            tbody.innerHTML = trGoal + trRev + trRate + trYoY;
+        }
+
+        let chartInstance;
+        function openModal(item) {
+            const modal = document.getElementById('modal'); modal.classList.remove('hidden');
+            setTimeout(() => { modal.style.opacity = '1'; modal.style.pointerEvents = 'auto'; modal.classList.remove('scale-95'); }, 10);
+            document.getElementById('m-title').innerText = item.name; document.getElementById('m-brand-badge').innerText = brandMap[item.brand]; document.getElementById('m-status').innerText = item.status;
+            const imgEl = document.getElementById('m-image'); const noImgEl = document.getElementById('m-no-image');
+            if(item.image) { imgEl.src = item.image; imgEl.classList.remove('hidden'); noImgEl.classList.add('hidden'); } else { imgEl.classList.add('hidden'); noImgEl.classList.remove('hidden'); }
             
-            # 시작일 ~ 종료일 루프 돌면서 매출 합산
-            curr = s_date
-            while curr <= e_date:
-                curr_str = curr.strftime('%Y-%m-%d')
-                
-                # 브랜드+채널+날짜가 일치하는 매출 찾기
-                # (주의: 대시보드 채널명과 DB 채널명이 정확히 같아야 함)
-                rev = sales_map.get((p['BRAND'], p['CHANNEL'], curr_str), 0)
-                
-                total_revenue += rev
-                daily_trend.append(rev) # 일별 추이 그래프용 데이터
-                
-                curr += timedelta(days=1)
-
-            # 계산된 실적을 JSON 데이터에 추가
-            p['ACTUAL_SALES'] = total_revenue
-            p['DAILY_TREND'] = daily_trend
+            // [수정] 팝업에 실적 데이터 바인딩
+            document.getElementById('m-goal').innerText = item.goal.toLocaleString();
+            document.getElementById('m-actual').innerText = item.actual.toLocaleString(); // 실적 추가
             
-            final_data.append(p)
+            // 달성률 계산
+            let rate = item.goal > 0 ? Math.round((item.actual / item.goal) * 100) : 0;
+            document.getElementById('m-rate').innerText = `${rate}% 달성`;
+            document.getElementById('m-rate').className = `text-sm font-bold ${rate >= 100 ? 'text-green-600' : 'text-red-500'}`;
 
-        # ---------------------------------------------------------
-        # 5. 결과 저장
-        # ---------------------------------------------------------
-        with open('data.json', 'w', encoding='utf-8') as f:
-            json.dump(final_data, f, ensure_ascii=False, indent=4)
+            document.getElementById('m-division').innerText = item.division; document.getElementById('m-type').innerText = item.type; document.getElementById('m-slot').innerText = item.slot;
+            document.getElementById('m-benefit-type').innerText = item.benefitType; document.getElementById('m-benefit').innerText = item.benefit || '-';
+            document.getElementById('m-comment').innerText = item.comment || '작성된 코멘트가 없습니다.';
+
+            // [수정] 차트 데이터 바인딩
+            const ctx = document.getElementById('chart-canvas').getContext('2d');
+            if(chartInstance) chartInstance.destroy();
             
-        print(f"✅ Success! Processed {len(final_data)} promotions.")
+            // 일별 추이 데이터가 없으면 빈 배열 처리
+            const trendData = item.dailyTrend && item.dailyTrend.length > 0 ? item.dailyTrend : [0,0,0,0,0];
+            const labels = trendData.map((_, i) => `Day ${i+1}`); // D+1, D+2...
 
-    except Exception as e:
-        print(f"❌ Error: {e}")
-        raise e
-    finally:
-        cursor.close()
-        conn.close()
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{ 
+                        label: '매출 (Revenue)', 
+                        data: trendData, 
+                        backgroundColor: '#6366f1', 
+                        borderRadius: 4,
+                        barThickness: 20
+                    }]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { legend: { display: false } }, 
+                    scales: { y: { beginAtZero: true, grid: { display: true, borderDash: [2, 2] } }, x: { grid: { display: false } } } 
+                }
+            });
+        }
 
-if __name__ == "__main__":
-    fetch_and_process()
+        function closeModal() { const modal = document.getElementById('modal'); modal.style.opacity = '0'; modal.style.pointerEvents = 'none'; modal.classList.add('scale-95'); setTimeout(() => { modal.classList.add('hidden'); }, 300); }
+        loadData();
+    </script>
+</body>
+</html>
