@@ -1,10 +1,10 @@
-import snowflake.connector
-import json
 import os
+import json
+import snowflake.connector
+from datetime import datetime, timedelta
 
-def fetch_to_json():
-    # 1. Snowflake 연결 (기존 환경변수 활용)
-    conn = snowflake.connector.connect(
+def get_connection():
+    return snowflake.connector.connect(
         user=os.environ['SF_USER'],
         password=os.environ['SF_PASSWORD'],
         account="gv28284.ap-northeast-2.aws",
@@ -12,30 +12,103 @@ def fetch_to_json():
         database="FNF",
         schema="CRM_MEMBER"
     )
-    
+
+def fetch_and_process():
+    print("🚀 Starting Data Sync Process...")
+    conn = get_connection()
     cursor = conn.cursor()
+
     try:
-        # 2. 데이터 불러오기
+        # ---------------------------------------------------------
+        # 1. 기획전 계획(Plan) 가져오기
+        # ---------------------------------------------------------
+        print("1. Fetching Promotion Plan...")
         cursor.execute("SELECT * FROM PROMOTION_PLAN")
+        cols = [col[0] for col in cursor.description]
+        plans = [dict(zip(cols, row)) for row in cursor.fetchall()]
+
+        # ---------------------------------------------------------
+        # 2. 실적 데이터(Actual) 가져오기
+        # ---------------------------------------------------------
+        print("2. Fetching Daily Sales Data...")
+        # 날짜를 문자열로 가져오면 매핑이 편합니다.
+        cursor.execute("""
+            SELECT TO_VARCHAR(SALE_DATE, 'YYYY-MM-DD') as SD, BRAND, CHANNEL, REVENUE 
+            FROM DAILY_CHANNEL_SALES
+        """)
+        sales_data = cursor.fetchall()
+
+        # ---------------------------------------------------------
+        # 3. 고속 조회를 위한 매핑 테이블 생성 (Memory Mapping)
+        # Key: (브랜드, 채널, 날짜) -> Value: 매출액
+        # ---------------------------------------------------------
+        print("3. Building Sales Map...")
+        sales_map = {}
+        for row in sales_data:
+            date_str, brand, channel, revenue = row
+            key = (brand, channel, date_str)
+            # 혹시 데이터가 중복될 경우를 대비해 합산 (`+=`)
+            sales_map[key] = sales_map.get(key, 0) + int(revenue)
+
+        # ---------------------------------------------------------
+        # 4. 기획전별 실적 계산 (Mapping)
+        # ---------------------------------------------------------
+        print("4. Calculating Promotion Performance...")
+        final_data = []
         
-        # 컬럼명 가져오기
-        columns = [col[0] for col in cursor.description]
-        
-        # 데이터를 딕셔너리 리스트로 변환 (HTML에서 쓰기 편하게)
-        rows = cursor.fetchall()
-        results = []
-        for row in rows:
-            results.append(dict(zip(columns, row)))
+        for p in plans:
+            # 날짜 형식이 문자열인지 객체인지 확인 후 통일
+            start_str = str(p['START_DATE'])
+            end_str = str(p['END_DATE'])
             
-        # 3. data.json 파일로 저장
+            try:
+                s_date = datetime.strptime(start_str, '%Y-%m-%d')
+                e_date = datetime.strptime(end_str, '%Y-%m-%d')
+            except ValueError:
+                # 날짜 형식이 잘못된 경우 실적 0 처리하고 넘김
+                print(f"   [Skip] Invalid Date: {p.get('PROMO_NAME', 'Unknown')}")
+                p['ACTUAL_SALES'] = 0
+                p['DAILY_TREND'] = []
+                final_data.append(p)
+                continue
+
+            total_revenue = 0
+            daily_trend = []
+            
+            # 시작일 ~ 종료일 루프 돌면서 매출 합산
+            curr = s_date
+            while curr <= e_date:
+                curr_str = curr.strftime('%Y-%m-%d')
+                
+                # 브랜드+채널+날짜가 일치하는 매출 찾기
+                # (주의: 대시보드 채널명과 DB 채널명이 정확히 같아야 함)
+                rev = sales_map.get((p['BRAND'], p['CHANNEL'], curr_str), 0)
+                
+                total_revenue += rev
+                daily_trend.append(rev) # 일별 추이 그래프용 데이터
+                
+                curr += timedelta(days=1)
+
+            # 계산된 실적을 JSON 데이터에 추가
+            p['ACTUAL_SALES'] = total_revenue
+            p['DAILY_TREND'] = daily_trend
+            
+            final_data.append(p)
+
+        # ---------------------------------------------------------
+        # 5. 결과 저장
+        # ---------------------------------------------------------
         with open('data.json', 'w', encoding='utf-8') as f:
-            json.dump(results, f, ensure_ascii=False, indent=4)
+            json.dump(final_data, f, ensure_ascii=False, indent=4)
             
-        print("data.json 생성 완료!")
-        
+        print(f"✅ Success! Processed {len(final_data)} promotions.")
+
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        raise e
     finally:
         cursor.close()
         conn.close()
 
 if __name__ == "__main__":
-    fetch_to_json()
+    fetch_and_process()
