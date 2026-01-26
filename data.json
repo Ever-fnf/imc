@@ -14,7 +14,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "16%, 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 3871500,
+        "DAILY_TREND": [
+            202300,
+            322800,
+            244000,
+            665600,
+            542200,
+            0,
+            0,
+            668500,
+            412600,
+            351700,
+            402500,
+            59300,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -31,7 +48,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "16%, 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 4869600,
+        "DAILY_TREND": [
+            1142200,
+            354400,
+            601000,
+            175600,
+            139000,
+            0,
+            0,
+            1192300,
+            0,
+            0,
+            0,
+            1265100,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -48,7 +82,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "더카트부담 13% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 4811400,
+        "DAILY_TREND": [
+            322800,
+            244000,
+            665600,
+            542200,
+            0,
+            0,
+            668500,
+            412600,
+            351700,
+            402500,
+            59300,
+            0,
+            0,
+            1142200
+        ]
     },
     {
         "BRAND": "ST",
@@ -65,7 +116,13 @@
         "BENEFIT_TYPE": "즉시할인",
         "BENEFIT_DETAIL": "23FW 30% 인하 상품",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": -189400,
+        "DAILY_TREND": [
+            -189400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -82,7 +139,17 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "10% 쿠폰 + 사은품(양말)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 8279000,
+        "DAILY_TREND": [
+            4544600,
+            430500,
+            805300,
+            1700000,
+            798600,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -99,7 +166,17 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "10% 쿠폰 + 사은품(양말)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 7194600,
+        "DAILY_TREND": [
+            2902300,
+            1443200,
+            1211900,
+            621300,
+            1015900,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -116,7 +193,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "다다",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 14523600,
+        "DAILY_TREND": [
+            1700000,
+            798600,
+            0,
+            0,
+            2902300,
+            1443200,
+            1211900,
+            621300,
+            1015900,
+            0,
+            0,
+            496500,
+            4333800,
+            100
+        ]
     },
     {
         "BRAND": "ST",
@@ -133,7 +227,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "20%or30% 쿠폰 (반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 7194600,
+        "DAILY_TREND": [
+            2902300,
+            1443200,
+            1211900,
+            621300,
+            1015900,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -150,7 +254,20 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "10% 장바구니 쿠폰+곰돌이키링",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 3904600,
+        "DAILY_TREND": [
+            273200,
+            0,
+            0,
+            2171000,
+            747600,
+            986700,
+            147000,
+            -420900,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -167,7 +284,17 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "10% 장바구니 쿠폰+곰돌이키링",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 5197900,
+        "DAILY_TREND": [
+            3051100,
+            314900,
+            1121600,
+            13800,
+            696500,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -184,7 +311,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "5만원이상 10%, 10만원이상 12% ",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 5445200,
+        "DAILY_TREND": [
+            13800,
+            696500,
+            0,
+            0,
+            4323200,
+            -589400,
+            1001100
+        ]
     },
     {
         "BRAND": "ST",
@@ -201,7 +338,13 @@
         "BENEFIT_TYPE": "즉시할인",
         "BENEFIT_DETAIL": "10% 인하",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 696500,
+        "DAILY_TREND": [
+            696500,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -218,7 +361,22 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "10% 장바구니 쿠폰+곰돌이키링",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 5855010,
+        "DAILY_TREND": [
+            317300,
+            327900,
+            0,
+            0,
+            1468210,
+            717000,
+            399800,
+            487600,
+            660400,
+            0,
+            0,
+            1476800
+        ]
     },
     {
         "BRAND": "ST",
@@ -235,7 +393,21 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 7365100,
+        "DAILY_TREND": [
+            1147200,
+            717800,
+            0,
+            0,
+            3810100,
+            199000,
+            352700,
+            -113700,
+            1252000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -252,7 +424,24 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "20만원↑5%, 50만원↑10% 페이백 / 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 7948000,
+        "DAILY_TREND": [
+            199000,
+            352700,
+            -113700,
+            1252000,
+            0,
+            0,
+            3787900,
+            326200,
+            237000,
+            522600,
+            -945000,
+            0,
+            0,
+            2329300
+        ]
     },
     {
         "BRAND": "ST",
@@ -269,7 +458,22 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% or 15% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 10451500,
+        "DAILY_TREND": [
+            3787900,
+            326200,
+            237000,
+            522600,
+            -945000,
+            0,
+            0,
+            2329300,
+            427000,
+            2489600,
+            1177400,
+            99500
+        ]
     },
     {
         "BRAND": "ST",
@@ -286,7 +490,13 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "24FW : 30% 상품쿠폰 + 24SS : 10% 상품쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": -945000,
+        "DAILY_TREND": [
+            -945000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -303,7 +513,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "행사상품 15% 쿠폰(24FW 30% 인하->10% 상품쿠폰)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6522800,
+        "DAILY_TREND": [
+            2329300,
+            427000,
+            2489600,
+            1177400,
+            99500,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -320,7 +540,13 @@
         "BENEFIT_TYPE": "즉시할인",
         "BENEFIT_DETAIL": "즉시할인 30%(반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 5245900,
+        "DAILY_TREND": [
+            2329300,
+            427000,
+            2489600
+        ]
     },
     {
         "BRAND": "ST",
@@ -337,7 +563,20 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "5%/10%/20%/50% 럭키 쿠폰 드로우",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 12630400,
+        "DAILY_TREND": [
+            2489600,
+            1177400,
+            99500,
+            0,
+            0,
+            5324600,
+            0,
+            0,
+            0,
+            3539300
+        ]
     },
     {
         "BRAND": "ST",
@@ -354,7 +593,13 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "20%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 3539300,
+        "DAILY_TREND": [
+            3539300,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -371,7 +616,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "아울렛 인하 상품",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 8208800,
+        "DAILY_TREND": [
+            1823900,
+            1958900,
+            1620600,
+            925200,
+            1880200,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -388,7 +643,13 @@
         "BENEFIT_TYPE": "즉시할인",
         "BENEFIT_DETAIL": "즉시할인 35%(SSF:셀러->2:1)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1880200,
+        "DAILY_TREND": [
+            1880200,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -405,7 +666,18 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "10% 쿠폰 + 사은품 ((10% 장바구니 쿠폰 (SSF SHOP 지원 요청)) + 사은품 증정 (10만원 이상 구매 고객 – 양말, 30만원 – 파우치)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 11398700,
+        "DAILY_TREND": [
+            5321900,
+            1819200,
+            1092200,
+            768000,
+            646900,
+            0,
+            0,
+            1750500
+        ]
     },
     {
         "BRAND": "ST",
@@ -422,7 +694,19 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "20-30% 장바구니(SSF) 페이백(50%~15%)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 12186700,
+        "DAILY_TREND": [
+            5321900,
+            1819200,
+            1092200,
+            768000,
+            646900,
+            0,
+            0,
+            1750500,
+            788000
+        ]
     },
     {
         "BRAND": "ST",
@@ -439,7 +723,20 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "SSF 부담 추가 쿠폰 진행 (10/15%)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 13328300,
+        "DAILY_TREND": [
+            5321900,
+            1819200,
+            1092200,
+            768000,
+            646900,
+            0,
+            0,
+            1750500,
+            788000,
+            1141600
+        ]
     },
     {
         "BRAND": "ST",
@@ -456,7 +753,20 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "SSF부담 7% 추가 쿠폰 /SSF부담 퍼플 코인 페이백",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 10271400,
+        "DAILY_TREND": [
+            1141600,
+            464300,
+            982600,
+            0,
+            0,
+            3612900,
+            901200,
+            1100700,
+            1059900,
+            1008200
+        ]
     },
     {
         "BRAND": "ST",
@@ -473,7 +783,19 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "SSF 부담 추가 쿠폰 진행 (5/7/10/20%)/SSF 부담 퍼플 코인 페이백 진행",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 9996900,
+        "DAILY_TREND": [
+            3612900,
+            901200,
+            1100700,
+            1059900,
+            1008200,
+            0,
+            0,
+            0,
+            2314000
+        ]
     },
     {
         "BRAND": "ST",
@@ -490,7 +812,20 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "10% 상품쿠폰(SSF부담) / 곰돌이 키링 + 15% 쿠폰 일부 적용",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 4792600,
+        "DAILY_TREND": [
+            -423600,
+            0,
+            0,
+            2924500,
+            740500,
+            538300,
+            828000,
+            184900,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -507,7 +842,17 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "SSF 부담 무제한 추가 쿠폰 진행 (5/10/20%) + 퍼플코인 + 구매 금액대별 페이백",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 5216200,
+        "DAILY_TREND": [
+            2924500,
+            740500,
+            538300,
+            828000,
+            184900,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -524,7 +869,21 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "SSF 부담 쿠폰 (10/15/20%) + 최대 50% 페이백",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 12865100,
+        "DAILY_TREND": [
+            1386500,
+            1883600,
+            786700,
+            810200,
+            1958200,
+            0,
+            0,
+            3323200,
+            1781900,
+            33000,
+            901800
+        ]
     },
     {
         "BRAND": "ST",
@@ -541,7 +900,13 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "15%상품쿠폰(셀러:SSF -> 5%:10%)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1958200,
+        "DAILY_TREND": [
+            1958200,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -558,7 +923,13 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "15% 즉시할인 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": -78000,
+        "DAILY_TREND": [
+            -78000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -575,7 +946,21 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "10% 상품쿠폰 + 곰돌이 키링 사은품",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 5387200,
+        "DAILY_TREND": [
+            901800,
+            -78000,
+            0,
+            0,
+            2571700,
+            651300,
+            -73000,
+            346200,
+            1067200,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -592,7 +977,15 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10%쿠폰 (최대 2만원/ 반반부담) 24FW 시즌오프 상품 5%//20% 쿠폰진행",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 816000,
+        "DAILY_TREND": [
+            0,
+            945000,
+            -129000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -609,7 +1002,15 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "8%쿠폰 (최대1,5만원/반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 353900,
+        "DAILY_TREND": [
+            923900,
+            129000,
+            268000,
+            -1026000,
+            59000
+        ]
     },
     {
         "BRAND": "ST",
@@ -626,7 +1027,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "스킴 별도 X",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1883300,
+        "DAILY_TREND": [
+            1579300,
+            0,
+            0,
+            -59000,
+            363000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -643,7 +1054,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "스킴 별도 X",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1463800,
+        "DAILY_TREND": [
+            98000,
+            0,
+            0,
+            143400,
+            1222400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -660,7 +1081,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 상품 할인 쿠폰(반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 15166600,
+        "DAILY_TREND": [
+            4440400,
+            0,
+            0,
+            0,
+            10726200,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -677,7 +1108,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 상품 할인 쿠폰(반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 17499600,
+        "DAILY_TREND": [
+            10345400,
+            2069400,
+            1114500,
+            1838300,
+            2132000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -694,7 +1135,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "7만원 이상 8% 최대 5만원 한도 내에서 쿠폰 발급",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 5662800,
+        "DAILY_TREND": [
+            1222400,
+            0,
+            0,
+            4440400,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -711,7 +1162,23 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "스킴 별도 X",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 11727000,
+        "DAILY_TREND": [
+            2069400,
+            1114500,
+            1838300,
+            2132000,
+            0,
+            0,
+            2921500,
+            821900,
+            472800,
+            175900,
+            180700,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -728,7 +1195,13 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "24FW 30% 상품쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 2132000,
+        "DAILY_TREND": [
+            2132000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -745,7 +1218,17 @@
         "BENEFIT_TYPE": "카드할인",
         "BENEFIT_DETAIL": "10% 신한카드(반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 4572800,
+        "DAILY_TREND": [
+            2921500,
+            821900,
+            472800,
+            175900,
+            180700,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -762,7 +1245,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "8% 장바구니 (최대 2.5만원) /7% 상품쿠폰 (최대 1만원)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6241100,
+        "DAILY_TREND": [
+            3556700,
+            1032800,
+            320100,
+            761400,
+            570100,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -779,7 +1272,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 상품쿠폰( 반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6748100,
+        "DAILY_TREND": [
+            445200,
+            357800,
+            1586000,
+            2109800,
+            2249300,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -796,7 +1299,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 상품쿠폰( 반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6748100,
+        "DAILY_TREND": [
+            445200,
+            357800,
+            1586000,
+            2109800,
+            2249300,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -813,7 +1326,14 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 4359100,
+        "DAILY_TREND": [
+            2109800,
+            2249300,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -830,7 +1350,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 상품쿠폰( 반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 12409900,
+        "DAILY_TREND": [
+            0,
+            4663100,
+            3381800,
+            1687800,
+            2677200,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -847,7 +1377,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 상품쿠폰( 반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 12409900,
+        "DAILY_TREND": [
+            0,
+            4663100,
+            3381800,
+            1687800,
+            2677200,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -864,7 +1404,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10,000 원 이상 구매 시 1개만 12 % 할인",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 10079100,
+        "DAILY_TREND": [
+            6434000,
+            1235100,
+            -14100,
+            1545600,
+            878500,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -881,7 +1431,14 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10,000 원 이상 구매 시 1개만 12 % 할인",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 9200600,
+        "DAILY_TREND": [
+            6434000,
+            1235100,
+            -14100,
+            1545600
+        ]
     },
     {
         "BRAND": "ST",
@@ -898,7 +1455,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 10079100,
+        "DAILY_TREND": [
+            6434000,
+            1235100,
+            -14100,
+            1545600,
+            878500,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -915,7 +1482,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "3만원이상 12% 최대 3만원(ID 당 2매) / 장바구니 쿠폰(APP전용)  > 패션/명품 > 1만원 이상 20% 최대 1만원(1일 1매)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 10158300,
+        "DAILY_TREND": [
+            2968300,
+            1120500,
+            1116100,
+            1727200,
+            3226200,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -932,7 +1509,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "3만원이상 12% 최대 3만원(ID 당 2매) / 장바구니 쿠폰(APP전용)  > 패션/명품 > 1만원 이상 20% 최대 1만원(1일 1매)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 10158300,
+        "DAILY_TREND": [
+            2968300,
+            1120500,
+            1116100,
+            1727200,
+            3226200,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -949,7 +1536,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "25S/24F/24N 일부 -> 10% 쿠폰(SSG:셀러 - 6:4)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6061200,
+        "DAILY_TREND": [
+            3803600,
+            -289700,
+            500100,
+            761900,
+            1285300,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -966,7 +1563,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10%CM 할인 : 롯데온 부담",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 485400,
+        "DAILY_TREND": [
+            237300,
+            -279300,
+            0,
+            168400,
+            359000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -983,7 +1590,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10%CM 할인 : 롯데온 부담(해당 기간 15% 롯데온 부담 진행중)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1362900,
+        "DAILY_TREND": [
+            1362900,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1000,7 +1617,13 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10%CM 할인 : 롯데온 부담",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1017,7 +1640,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10%CM 할인 : 롯데온 부담",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 137400,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            137400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1034,7 +1667,12 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "아울렛 가격 인하 상품",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1051,7 +1689,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% (셀러분담 100)+ 10%CM (롯데온)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 903800,
+        "DAILY_TREND": [
+            0,
+            0,
+            343100,
+            0,
+            0,
+            0,
+            560700
+        ]
     },
     {
         "BRAND": "ST",
@@ -1068,7 +1716,11 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "기획전 노출",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1085,7 +1737,12 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "아울렛 가격 인하 상품",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 560700,
+        "DAILY_TREND": [
+            560700,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1102,7 +1759,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "스킴 별도 X",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 906700,
+        "DAILY_TREND": [
+            497500,
+            144000,
+            139000,
+            71700,
+            54500,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1119,7 +1786,20 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "11%CM(롯데온부담) or 온세상 10%반반쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 718500,
+        "DAILY_TREND": [
+            168900,
+            79600,
+            39600,
+            0,
+            0,
+            0,
+            0,
+            278000,
+            152400,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1136,7 +1816,13 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "11%CM(롯데온부담) or 온세상 10%반반쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1153,7 +1839,13 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "라스트찬스 10% 쿠폰(셀러부담100)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 430400,
+        "DAILY_TREND": [
+            278000,
+            152400,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1170,7 +1862,11 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10%CM(롯데부담) / 아울렛 인하 상품",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1187,7 +1883,11 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "15%CM(롯데부담) / 아울렛 인하 상품",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1204,7 +1904,11 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "15%CM(롯데부담) / 아울렛 인하 상품",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1221,7 +1925,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "11%CM(롯데온부담) or 온세상 10%반반쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 709300,
+        "DAILY_TREND": [
+            565900,
+            0,
+            0,
+            0,
+            143400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1238,7 +1952,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "11%CM(롯데온부담) or 온세상 10%반반쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 709300,
+        "DAILY_TREND": [
+            565900,
+            0,
+            0,
+            0,
+            143400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1255,7 +1979,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": " 10%CM할인(롯데온부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 216400,
+        "DAILY_TREND": [
+            139000,
+            77400,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1272,7 +2006,13 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "라스트찬스 10% 쿠폰(셀러부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1289,7 +2029,11 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "24S->12%CM/25S->10%CM(롯데온부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1306,7 +2050,32 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "10%쿠폰 + 10만원이상 주문시 사은품 곰돌이(컬러3 중 랜덤1) 증정",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 59904800,
+        "DAILY_TREND": [
+            1892000,
+            0,
+            0,
+            5719900,
+            3709100,
+            3162200,
+            2996200,
+            1750500,
+            0,
+            0,
+            9628000,
+            3181000,
+            3060900,
+            2010800,
+            2636700,
+            0,
+            0,
+            9601500,
+            3161700,
+            2735800,
+            2825400,
+            1833100
+        ]
     },
     {
         "BRAND": "ST",
@@ -1323,7 +2092,25 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10%쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 47456800,
+        "DAILY_TREND": [
+            5719900,
+            3709100,
+            3162200,
+            2996200,
+            1750500,
+            0,
+            0,
+            9628000,
+            3181000,
+            3060900,
+            2010800,
+            2636700,
+            0,
+            0,
+            9601500
+        ]
     },
     {
         "BRAND": "ST",
@@ -1340,7 +2127,23 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "25S 한정 10%쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 34029200,
+        "DAILY_TREND": [
+            3161700,
+            2735800,
+            2825400,
+            1833100,
+            0,
+            0,
+            8597600,
+            2184200,
+            6533200,
+            2248900,
+            3909300,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -1357,7 +2160,32 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "10%쿠폰 + 10만원이상 주문시 사은품 곰돌이(컬러3 중 랜덤1) 증정",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 64071100,
+        "DAILY_TREND": [
+            1249600,
+            0,
+            0,
+            4711400,
+            1258000,
+            864300,
+            2007100,
+            1626700,
+            0,
+            0,
+            3936000,
+            3070000,
+            2829500,
+            25368200,
+            2035800,
+            0,
+            0,
+            4772500,
+            3623500,
+            1525500,
+            2344700,
+            2848300
+        ]
     },
     {
         "BRAND": "ST",
@@ -1374,7 +2202,11 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "29% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 2829500,
+        "DAILY_TREND": [
+            2829500
+        ]
     },
     {
         "BRAND": "ST",
@@ -1391,7 +2223,23 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "25S 한정 10%쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 25179000,
+        "DAILY_TREND": [
+            3623500,
+            1525500,
+            2344700,
+            2848300,
+            0,
+            0,
+            5280500,
+            2935000,
+            2560700,
+            1953000,
+            2107800,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1408,7 +2256,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "30% 인하 / 노세일 상품 10%, 15% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 10715700,
+        "DAILY_TREND": [
+            772000,
+            -1386000,
+            1110000,
+            836000,
+            261000,
+            0,
+            0,
+            3821800,
+            2542500,
+            682800,
+            1362600,
+            713000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1425,7 +2290,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "13% 쿠폰 (더카트 부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 10036700,
+        "DAILY_TREND": [
+            -1386000,
+            1110000,
+            836000,
+            261000,
+            0,
+            0,
+            3821800,
+            2542500,
+            682800,
+            1362600,
+            713000,
+            0,
+            0,
+            93000
+        ]
     },
     {
         "BRAND": "V",
@@ -1442,7 +2324,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 쿠폰, 패키지 발송",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 5249100,
+        "DAILY_TREND": [
+            93000,
+            2185600,
+            -571500,
+            262000,
+            0,
+            0,
+            0,
+            2473000,
+            0,
+            0,
+            0,
+            807000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1459,7 +2358,23 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 7216800,
+        "DAILY_TREND": [
+            1028300,
+            1013100,
+            308000,
+            1017800,
+            0,
+            0,
+            1931700,
+            1152400,
+            750000,
+            15500,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1476,7 +2391,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10%, 12%, 15% 쿠폰 (더카트 부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 16367600,
+        "DAILY_TREND": [
+            308000,
+            1017800,
+            0,
+            0,
+            1931700,
+            1152400,
+            750000,
+            15500,
+            0,
+            0,
+            0,
+            1086400,
+            9719400,
+            386400
+        ]
     },
     {
         "BRAND": "V",
@@ -1493,7 +2425,18 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "10% 쿠폰, 쇼핑백 증정",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 17137300,
+        "DAILY_TREND": [
+            1086400,
+            9719400,
+            386400,
+            2811000,
+            997300,
+            0,
+            0,
+            2136800
+        ]
     },
     {
         "BRAND": "V",
@@ -1510,7 +2453,14 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "20%, 30% 쿠폰 (반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 3808300,
+        "DAILY_TREND": [
+            2811000,
+            997300,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1527,7 +2477,23 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "김지원 착용 15%, 25SS 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 8793000,
+        "DAILY_TREND": [
+            3136000,
+            -756000,
+            862400,
+            473000,
+            0,
+            0,
+            0,
+            2035000,
+            1952000,
+            1232000,
+            -141400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1544,7 +2510,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10%, 12% 쿠폰 (전사쿠폰), 김지원 착용 15% 쿠폰, 코쟈 미니 더카트 단독 판매",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 8943600,
+        "DAILY_TREND": [
+            1404000,
+            226000,
+            0,
+            0,
+            3731800,
+            546200,
+            3035600
+        ]
     },
     {
         "BRAND": "V",
@@ -1561,7 +2537,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "15% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 11268400,
+        "DAILY_TREND": [
+            3731800,
+            546200,
+            3035600,
+            2393000,
+            1561800,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1578,7 +2564,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 8251800,
+        "DAILY_TREND": [
+            4652600,
+            1014000,
+            -414400,
+            3085600,
+            -86000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1595,7 +2591,22 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "25SS 10% 쿠폰, 24FW 30% 인하 + 20만원 이상 쇼핑백 증정",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6919100,
+        "DAILY_TREND": [
+            0,
+            457800,
+            2896600,
+            0,
+            0,
+            3228000,
+            -1551000,
+            911000,
+            -74000,
+            1050700,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1612,7 +2623,18 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "25SS 10% 쿠폰, 패키지 발송",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 30912900,
+        "DAILY_TREND": [
+            7552900,
+            638000,
+            -133000,
+            2487400,
+            4152400,
+            0,
+            0,
+            16215200
+        ]
     },
     {
         "BRAND": "V",
@@ -1629,7 +2651,20 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "20% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 31446000,
+        "DAILY_TREND": [
+            4152400,
+            0,
+            0,
+            16215200,
+            2453400,
+            998300,
+            3653300,
+            3973400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1646,7 +2681,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 쿠폰 + 5% 더블 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 19532400,
+        "DAILY_TREND": [
+            4787100,
+            2287000,
+            1766000,
+            2122000,
+            8570300,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1663,7 +2708,11 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "20% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 2122000,
+        "DAILY_TREND": [
+            2122000
+        ]
     },
     {
         "BRAND": "V",
@@ -1680,7 +2729,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 24759500,
+        "DAILY_TREND": [
+            12273700,
+            1225500,
+            6115000,
+            3914200,
+            1231100,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1697,7 +2756,17 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "10% 쿠폰, 쇼핑백 증정",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 7722800,
+        "DAILY_TREND": [
+            8475200,
+            -147600,
+            106400,
+            -2786000,
+            2074800,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1714,7 +2783,23 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "15% 쿠폰, 20만원 이상 쇼핑백 증정",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 20654700,
+        "DAILY_TREND": [
+            859000,
+            2954400,
+            1272800,
+            -525400,
+            0,
+            0,
+            0,
+            10084500,
+            2592400,
+            2697000,
+            720000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1731,7 +2816,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 8025200,
+        "DAILY_TREND": [
+            6296000,
+            3573800,
+            -369000,
+            1041000,
+            -2516600,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1748,7 +2843,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 8025200,
+        "DAILY_TREND": [
+            6296000,
+            3573800,
+            -369000,
+            1041000,
+            -2516600,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1765,7 +2870,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 상품 쿠폰, 5% 쇼핑백 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 7200200,
+        "DAILY_TREND": [
+            4666400,
+            670400,
+            -994000,
+            1164000,
+            1693400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1782,7 +2897,20 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "20% 쿠폰 (SI 15%:F&F 5%)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 10585200,
+        "DAILY_TREND": [
+            1693400,
+            0,
+            0,
+            6815400,
+            1225000,
+            230400,
+            -357000,
+            978000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1799,7 +2927,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "15%, 20% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 2178000,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            -340500,
+            2518500,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1816,7 +2954,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "김지원 착용 15% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 179393300,
+        "DAILY_TREND": [
+            6498500,
+            1487000,
+            189000,
+            2702300,
+            1698500,
+            0,
+            0,
+            8661200,
+            -1058700,
+            11803700,
+            58705300,
+            88706500,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1833,7 +2988,24 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "5만/7만/10만 쿠폰팩, 5%, 10% 페이백",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 241589700,
+        "DAILY_TREND": [
+            1487000,
+            189000,
+            2702300,
+            1698500,
+            0,
+            0,
+            8661200,
+            -1058700,
+            11803700,
+            58705300,
+            88706500,
+            0,
+            0,
+            68694900
+        ]
     },
     {
         "BRAND": "V",
@@ -1850,7 +3022,14 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "22F 20% 쿠폰, 그 외 15% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 159215500,
+        "DAILY_TREND": [
+            11803700,
+            58705300,
+            88706500,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1867,7 +3046,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 235660100,
+        "DAILY_TREND": [
+            11803700,
+            58705300,
+            88706500,
+            0,
+            0,
+            68694900,
+            7749700
+        ]
     },
     {
         "BRAND": "V",
@@ -1884,7 +3073,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "15% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 121735100,
+        "DAILY_TREND": [
+            68694900,
+            7749700,
+            6232800,
+            -8690800,
+            -563500,
+            0,
+            0,
+            22292600,
+            0,
+            0,
+            0,
+            26437400,
+            -418000,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1901,7 +3107,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 52655300,
+        "DAILY_TREND": [
+            16958000,
+            3657900,
+            10439500,
+            15785400,
+            5814500,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1918,7 +3134,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "7% 장바구니 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 52655300,
+        "DAILY_TREND": [
+            16958000,
+            3657900,
+            10439500,
+            15785400,
+            5814500,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1935,7 +3161,25 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 140625100,
+        "DAILY_TREND": [
+            49956200,
+            12245800,
+            8521800,
+            9879900,
+            6979000,
+            0,
+            0,
+            27861000,
+            9004500,
+            3272900,
+            2675200,
+            -303500,
+            0,
+            0,
+            10532300
+        ]
     },
     {
         "BRAND": "V",
@@ -1952,7 +3196,24 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "10% 쿠폰, 김지원 착용 15%, 신상 구매시 쇼핑백 증정",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 46464800,
+        "DAILY_TREND": [
+            0,
+            7160100,
+            9588900,
+            4998600,
+            4740400,
+            0,
+            0,
+            15800000,
+            2072000,
+            -585400,
+            2723000,
+            -32800,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -1969,7 +3230,18 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "5만/7만/10만 쿠폰팩, 1만/2만 페이백",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 26783400,
+        "DAILY_TREND": [
+            15800000,
+            2072000,
+            -585400,
+            2723000,
+            -32800,
+            0,
+            0,
+            6806600
+        ]
     },
     {
         "BRAND": "V",
@@ -1986,7 +3258,21 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "5만/7만/10만 쿠폰팩",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 19799800,
+        "DAILY_TREND": [
+            6806600,
+            525000,
+            -2407200,
+            1270200,
+            226400,
+            0,
+            0,
+            3798000,
+            3436400,
+            728400,
+            5416000
+        ]
     },
     {
         "BRAND": "V",
@@ -2003,7 +3289,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6421000,
+        "DAILY_TREND": [
+            6806600,
+            525000,
+            -2407200,
+            1270200,
+            226400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2020,7 +3316,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "15% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 20320200,
+        "DAILY_TREND": [
+            3798000,
+            3436400,
+            728400,
+            5416000,
+            6941400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2037,7 +3343,15 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "1만원 이상 10% (최대 2만원/반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 4893000,
+        "DAILY_TREND": [
+            425000,
+            -1272000,
+            5740000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2054,7 +3368,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "1만원 이상 8% (최대 1.5만원 /반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 16782400,
+        "DAILY_TREND": [
+            9460000,
+            1047400,
+            3063000,
+            1182000,
+            2030000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2071,7 +3395,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "(대체)SSG 공식명품관 메인롤링 24FW 시즌오프 15% 30%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1335100,
+        "DAILY_TREND": [
+            6725600,
+            124900,
+            -2403000,
+            -155000,
+            -2957400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2088,7 +3422,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "15%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6971900,
+        "DAILY_TREND": [
+            1057300,
+            1531100,
+            1765100,
+            55000,
+            2563400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2105,7 +3449,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "7만원 이상 8% 최대 5만원 (ID당 1매) / 카드 할인 00% (미정)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 8319300,
+        "DAILY_TREND": [
+            2563400,
+            0,
+            0,
+            5755900,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2122,7 +3476,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 7186900,
+        "DAILY_TREND": [
+            5755900,
+            0,
+            0,
+            0,
+            1431000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2139,7 +3503,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "25SS 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6646400,
+        "DAILY_TREND": [
+            1797000,
+            -193600,
+            2621000,
+            -670000,
+            3092000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2156,7 +3530,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "24FW 10%(브랜드) 24FW남성&피오카 15%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 24912500,
+        "DAILY_TREND": [
+            9486700,
+            2912400,
+            4312500,
+            3413300,
+            4787600,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2173,7 +3557,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "쇼핑익스프레스 7만원이상 8% 1만원이상 7%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 16299000,
+        "DAILY_TREND": [
+            6769800,
+            2869400,
+            1424800,
+            1257800,
+            3977200,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2190,7 +3584,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "임직원 20% 반반",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 16299000,
+        "DAILY_TREND": [
+            6769800,
+            2869400,
+            1424800,
+            1257800,
+            3977200,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2207,7 +3611,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "김지원 MAIN 2SS 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 10748600,
+        "DAILY_TREND": [
+            9008400,
+            888600,
+            3305200,
+            -2007600,
+            -446000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2224,7 +3638,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "25SS 15% / 신상 제외 전상품 상시 5% / 김지원 MAIN 2SS 15%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 15937300,
+        "DAILY_TREND": [
+            0,
+            6291000,
+            5572200,
+            2076000,
+            1998100,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2241,7 +3665,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "25SS 15% / 신상 제외 전상품 상시 5% / 해피벌쓱데이 12%(반반)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 13696800,
+        "DAILY_TREND": [
+            11726200,
+            955000,
+            173200,
+            1336800,
+            -494400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2258,7 +3692,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "15만원 이상 10%, 최대 15만원 (50:50부담) / ID당 2매 발급",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 11410100,
+        "DAILY_TREND": [
+            2696500,
+            2555800,
+            5444400,
+            663400,
+            50000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2275,7 +3719,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "김지원착장 15%, 전상품 5%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 15036400,
+        "DAILY_TREND": [
+            10983000,
+            1344000,
+            2614000,
+            -934000,
+            1029400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2292,7 +3746,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "15% 대상상품 (10% 롯데온: 5% 듀베) / 30% (반반부담) (24FW 시즌오프 15% 30%)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 2036000,
+        "DAILY_TREND": [
+            0,
+            -1090000,
+            478000,
+            0,
+            0,
+            2409000,
+            239000
+        ]
     },
     {
         "BRAND": "V",
@@ -2309,7 +3773,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "15% 대상상품 (10% 롯데온 부담 : 5% 듀베부담) / 30% 대상상품 (반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 2409000,
+        "DAILY_TREND": [
+            2409000,
+            239000,
+            0,
+            -239000,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2326,7 +3800,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": -3646400,
+        "DAILY_TREND": [
+            -1127400,
+            -1290000,
+            -1229000,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2343,7 +3827,12 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "24F 15%,30% (CM15%)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": -239000,
+        "DAILY_TREND": [
+            0,
+            -239000
+        ]
     },
     {
         "BRAND": "V",
@@ -2360,7 +3849,18 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 949000,
+        "DAILY_TREND": [
+            154700,
+            613000,
+            0,
+            0,
+            181300,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2377,7 +3877,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2394,7 +3904,11 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2411,7 +3925,20 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 181300,
+        "DAILY_TREND": [
+            0,
+            0,
+            181300,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2428,7 +3955,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 350000,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            181300,
+            168700,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2445,7 +3982,12 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "25SS 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 181300,
+        "DAILY_TREND": [
+            0,
+            181300
+        ]
     },
     {
         "BRAND": "V",
@@ -2462,7 +4004,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "25SS 10% + 24FW 30% (카드할인 7% 반반",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1043000,
+        "DAILY_TREND": [
+            0,
+            1043000,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2479,7 +4031,17 @@
         "BENEFIT_TYPE": "사은품",
         "BENEFIT_DETAIL": "쇼핑팩/패키지",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1043000,
+        "DAILY_TREND": [
+            0,
+            1043000,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2496,7 +4058,20 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1942000,
+        "DAILY_TREND": [
+            1812000,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            130000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2513,7 +4088,14 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "25SS 10% + 아울렛",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1058000,
+        "DAILY_TREND": [
+            1058000,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2530,7 +4112,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "25ss 15% , 22ss 23ss 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 2381400,
+        "DAILY_TREND": [
+            0,
+            130000,
+            790000,
+            0,
+            1461400,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2547,7 +4139,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "아울렛 40~60% 할인 / 상품>15% 쿠폰 / SSG 행사 쿠폰(장바구니)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 11410100,
+        "DAILY_TREND": [
+            2696500,
+            2555800,
+            5444400,
+            663400,
+            50000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2564,7 +4166,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "임직원 20%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 11410100,
+        "DAILY_TREND": [
+            2696500,
+            2555800,
+            5444400,
+            663400,
+            50000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2581,7 +4193,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "25SS 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1729400,
+        "DAILY_TREND": [
+            570000,
+            867400,
+            0,
+            430000,
+            -138000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2598,7 +4220,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 16296700,
+        "DAILY_TREND": [
+            1373000,
+            1874400,
+            1938600,
+            0,
+            3398400,
+            0,
+            7712300
+        ]
     },
     {
         "BRAND": "V",
@@ -2615,7 +4247,14 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 11110700,
+        "DAILY_TREND": [
+            0,
+            3398400,
+            0,
+            7712300
+        ]
     },
     {
         "BRAND": "V",
@@ -2632,7 +4271,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6651800,
+        "DAILY_TREND": [
+            897700,
+            445000,
+            446000,
+            2028700,
+            1555400,
+            0,
+            1279000
+        ]
     },
     {
         "BRAND": "V",
@@ -2649,7 +4298,21 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 슈즈 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 11083800,
+        "DAILY_TREND": [
+            1555400,
+            0,
+            1279000,
+            -1681500,
+            3674400,
+            4447000,
+            -203000,
+            -941900,
+            0,
+            291000,
+            2663400
+        ]
     },
     {
         "BRAND": "V",
@@ -2666,7 +4329,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "윈터 악세 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 5586000,
+        "DAILY_TREND": [
+            -1681500,
+            3674400,
+            4447000,
+            -203000,
+            -941900,
+            0,
+            291000
+        ]
     },
     {
         "BRAND": "V",
@@ -2683,7 +4356,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "한파대비 윈터 다운",
         "GOAL_SALES": 0,
-        "MD_COMMENT": "쿠폰 미운영"
+        "MD_COMMENT": "쿠폰 미운영",
+        "ACTUAL_SALES": -103884800,
+        "DAILY_TREND": [
+            13330000,
+            465000,
+            -101768500,
+            -17114100,
+            -2281600,
+            0,
+            3484400
+        ]
     },
     {
         "BRAND": "V",
@@ -2700,7 +4383,14 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "윈터 악세 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 9942000,
+        "DAILY_TREND": [
+            4122400,
+            -1267000,
+            4627400,
+            2459200
+        ]
     },
     {
         "BRAND": "V",
@@ -2717,7 +4407,16 @@
         "BENEFIT_TYPE": "쿠폰, 사은품, 리워드",
         "BENEFIT_DETAIL": "이월 10%+윈터악세 10% 단독최저가",
         "GOAL_SALES": 0,
-        "MD_COMMENT": "금액사은품 크로스백OR스크런치, 구매적립 리워드"
+        "MD_COMMENT": "금액사은품 크로스백OR스크런치, 구매적립 리워드",
+        "ACTUAL_SALES": 116866400,
+        "DAILY_TREND": [
+            5087400,
+            24755000,
+            19829400,
+            31537800,
+            35656800,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2734,7 +4433,11 @@
         "BENEFIT_TYPE": "쿠폰, 사은품, 리워드",
         "BENEFIT_DETAIL": "이월 10%+윈터악세 10% 단독최저가",
         "GOAL_SALES": 0,
-        "MD_COMMENT": "금액사은품 크로스백OR스크런치, 구매적립 리워드"
+        "MD_COMMENT": "금액사은품 크로스백OR스크런치, 구매적립 리워드",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2751,7 +4454,16 @@
         "BENEFIT_TYPE": "쿠폰, 사은품, 리워드",
         "BENEFIT_DETAIL": "이월 10%+윈터악세 10% 단독최저가",
         "GOAL_SALES": 0,
-        "MD_COMMENT": "금액사은품 크로스백OR스크런치, 구매적립 리워드"
+        "MD_COMMENT": "금액사은품 크로스백OR스크런치, 구매적립 리워드",
+        "ACTUAL_SALES": 116866400,
+        "DAILY_TREND": [
+            5087400,
+            24755000,
+            19829400,
+            31537800,
+            35656800,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -2768,7 +4480,14 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10%+윈터악세 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": -2002000,
+        "DAILY_TREND": [
+            3397000,
+            1285000,
+            -3330000,
+            -3354000
+        ]
     },
     {
         "BRAND": "V",
@@ -2785,7 +4504,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10%+윈터악세 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 24160700,
+        "DAILY_TREND": [
+            -2316000,
+            0,
+            5458000,
+            4640000,
+            -520600,
+            -2616000,
+            19515300
+        ]
     },
     {
         "BRAND": "V",
@@ -2802,7 +4531,11 @@
         "BENEFIT_TYPE": "쿠폰, 리워드, 사은품",
         "BENEFIT_DETAIL": "이월 10%+윈터악세 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": "방한슈즈 구매 시 스크런치 사은품(선착 20명) / 신세계 부담 인스타, 카카오톡 등 외부광고 진행 / 신세계 부담 5% 페이백/ 이태리 품번 오픈"
+        "MD_COMMENT": "방한슈즈 구매 시 스크런치 사은품(선착 20명) / 신세계 부담 인스타, 카카오톡 등 외부광고 진행 / 신세계 부담 5% 페이백/ 이태리 품번 오픈",
+        "ACTUAL_SALES": 19515300,
+        "DAILY_TREND": [
+            19515300
+        ]
     },
     {
         "BRAND": "V",
@@ -2819,7 +4552,11 @@
         "BENEFIT_TYPE": "쿠폰, 카드할인",
         "BENEFIT_DETAIL": "이월 10%+윈터악세 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 298000,
+        "DAILY_TREND": [
+            298000
+        ]
     },
     {
         "BRAND": "V",
@@ -2836,7 +4573,17 @@
         "BENEFIT_TYPE": "쿠폰, 카드할인",
         "BENEFIT_DETAIL": "이월 10%+윈터악세 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 14711200,
+        "DAILY_TREND": [
+            1309000,
+            1059000,
+            5218300,
+            1532600,
+            -2275700,
+            0,
+            7868000
+        ]
     },
     {
         "BRAND": "ST",
@@ -2853,7 +4600,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6268200,
+        "DAILY_TREND": [
+            2020300,
+            2472800,
+            166300,
+            0,
+            240200,
+            0,
+            1368600
+        ]
     },
     {
         "BRAND": "ST",
@@ -2870,7 +4627,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6171300,
+        "DAILY_TREND": [
+            1392100,
+            1253900,
+            705700,
+            1028700,
+            951300,
+            0,
+            839600
+        ]
     },
     {
         "BRAND": "ST",
@@ -2887,7 +4654,20 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 8192800,
+        "DAILY_TREND": [
+            1392100,
+            1253900,
+            705700,
+            1028700,
+            951300,
+            0,
+            839600,
+            1086500,
+            688200,
+            246800
+        ]
     },
     {
         "BRAND": "ST",
@@ -2904,7 +4684,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 12111900,
+        "DAILY_TREND": [
+            1086500,
+            688200,
+            246800,
+            1692400,
+            530300,
+            0,
+            1134900,
+            1571000,
+            1696100,
+            393100,
+            648600,
+            1101700,
+            0,
+            1322300
+        ]
     },
     {
         "BRAND": "ST",
@@ -2921,7 +4718,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "프론트 기준 30% 이상 할인 FW 상품",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -2938,7 +4745,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 9942800,
+        "DAILY_TREND": [
+            2040500,
+            1565500,
+            791500,
+            0,
+            2879500,
+            0,
+            2665800
+        ]
     },
     {
         "BRAND": "ST",
@@ -2955,7 +4772,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6105000,
+        "DAILY_TREND": [
+            2278000,
+            340500,
+            361800,
+            1405100,
+            256200,
+            0,
+            1463400
+        ]
     },
     {
         "BRAND": "ST",
@@ -2972,7 +4799,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 24252200,
+        "DAILY_TREND": [
+            2385700,
+            1370000,
+            756600,
+            1203400,
+            2795900,
+            0,
+            2997500,
+            4181800,
+            1851000,
+            2005900,
+            1489300,
+            1484200,
+            0,
+            1730900
+        ]
     },
     {
         "BRAND": "ST",
@@ -2989,7 +4833,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3006,7 +4860,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3023,7 +4887,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3040,7 +4921,14 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3057,7 +4945,16 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": -504200,
+        "DAILY_TREND": [
+            219100,
+            -95600,
+            -663400,
+            0,
+            0,
+            35700
+        ]
     },
     {
         "BRAND": "ST",
@@ -3074,7 +4971,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 4454200,
+        "DAILY_TREND": [
+            74300,
+            595000,
+            268600,
+            717400,
+            154600,
+            0,
+            843700,
+            341100,
+            605500,
+            274600,
+            136500,
+            156000,
+            0,
+            286900
+        ]
     },
     {
         "BRAND": "ST",
@@ -3091,7 +5005,36 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 5 / 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 3784900,
+        "DAILY_TREND": [
+            268600,
+            717400,
+            154600,
+            0,
+            843700,
+            341100,
+            605500,
+            274600,
+            136500,
+            156000,
+            0,
+            286900,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3108,7 +5051,23 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3125,7 +5084,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3142,7 +5111,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3159,7 +5138,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1909500,
+        "DAILY_TREND": [
+            86100,
+            69500,
+            541700,
+            0,
+            817900,
+            0,
+            394300
+        ]
     },
     {
         "BRAND": "ST",
@@ -3176,7 +5165,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 4155600,
+        "DAILY_TREND": [
+            1101400,
+            791500,
+            226800,
+            1216400,
+            287500,
+            0,
+            532000
+        ]
     },
     {
         "BRAND": "ST",
@@ -3193,7 +5192,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "신상/이월 20% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 2944900,
+        "DAILY_TREND": [
+            326900,
+            109100,
+            83400,
+            1017700,
+            756400,
+            0,
+            651400
+        ]
     },
     {
         "BRAND": "ST",
@@ -3210,7 +5219,28 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6194100,
+        "DAILY_TREND": [
+            83400,
+            1017700,
+            756400,
+            0,
+            651400,
+            829600,
+            1514800,
+            250200,
+            242500,
+            344700,
+            0,
+            503400,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3227,7 +5257,12 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 2344400,
+        "DAILY_TREND": [
+            829600,
+            1514800
+        ]
     },
     {
         "BRAND": "ST",
@@ -3244,7 +5279,13 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% / 15% 장바구니 쿠폰 (반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1212200,
+        "DAILY_TREND": [
+            817900,
+            0,
+            394300
+        ]
     },
     {
         "BRAND": "ST",
@@ -3261,7 +5302,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 4155600,
+        "DAILY_TREND": [
+            1101400,
+            791500,
+            226800,
+            1216400,
+            287500,
+            0,
+            532000
+        ]
     },
     {
         "BRAND": "ST",
@@ -3278,7 +5329,20 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 5% / 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 5455100,
+        "DAILY_TREND": [
+            109100,
+            83400,
+            1017700,
+            756400,
+            0,
+            651400,
+            829600,
+            1514800,
+            250200,
+            242500
+        ]
     },
     {
         "BRAND": "ST",
@@ -3295,7 +5359,20 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 5455100,
+        "DAILY_TREND": [
+            109100,
+            83400,
+            1017700,
+            756400,
+            0,
+            651400,
+            829600,
+            1514800,
+            250200,
+            242500
+        ]
     },
     {
         "BRAND": "ST",
@@ -3312,7 +5389,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "20/30/50만원 이상 구매 시 사용 가능한 2/3/7만원 장바구니 쿠폰 증정 (SSF 부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3329,7 +5416,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3346,7 +5443,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3363,7 +5477,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3380,7 +5504,19 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "5, 10% 쿠폰+1만 페이백",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3397,7 +5533,21 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 5% / 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3414,7 +5564,18 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "5, 10% 쿠폰+APP 출석체크+함께할인 7%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3431,7 +5592,21 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "5, 10% 쿠폰+10% 함께할인",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3448,7 +5623,20 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "5, 10% 쿠폰 + 금액대별 페이백",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3465,7 +5653,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "20% 쿠폰 (반반 부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3482,7 +5687,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 331700,
+        "DAILY_TREND": [
+            6500,
+            268300,
+            0,
+            0,
+            -83200,
+            0,
+            140100
+        ]
     },
     {
         "BRAND": "ST",
@@ -3499,7 +5714,14 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "쇼익 10% 분담 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 56900,
+        "DAILY_TREND": [
+            0,
+            -83200,
+            0,
+            140100
+        ]
     },
     {
         "BRAND": "ST",
@@ -3516,7 +5738,17 @@
         "BENEFIT_TYPE": "카드할인",
         "BENEFIT_DETAIL": "카드 분담 5만원 이상 8%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 753500,
+        "DAILY_TREND": [
+            -839100,
+            646300,
+            55600,
+            172900,
+            312400,
+            0,
+            405400
+        ]
     },
     {
         "BRAND": "ST",
@@ -3533,7 +5765,14 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 딜 10% (반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 890700,
+        "DAILY_TREND": [
+            172900,
+            312400,
+            0,
+            405400
+        ]
     },
     {
         "BRAND": "ST",
@@ -3550,7 +5789,17 @@
         "BENEFIT_TYPE": "카드할인",
         "BENEFIT_DETAIL": "카드분담 5만원이상 8%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1788300,
+        "DAILY_TREND": [
+            622700,
+            89400,
+            500500,
+            -139000,
+            528200,
+            0,
+            186500
+        ]
     },
     {
         "BRAND": "ST",
@@ -3567,7 +5816,17 @@
         "BENEFIT_TYPE": "카드할인",
         "BENEFIT_DETAIL": "10% 카드 분담 행사",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 2393600,
+        "DAILY_TREND": [
+            429700,
+            564500,
+            505800,
+            89300,
+            507300,
+            0,
+            297000
+        ]
     },
     {
         "BRAND": "ST",
@@ -3584,7 +5843,14 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 딜 10% (반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 893600,
+        "DAILY_TREND": [
+            89300,
+            507300,
+            0,
+            297000
+        ]
     },
     {
         "BRAND": "ST",
@@ -3601,7 +5867,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3618,7 +5894,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3635,7 +5921,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3652,7 +5948,14 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "쇼익 10% 분담쿠폰, 7% 수준 청구할인",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3669,7 +5972,24 @@
         "BENEFIT_TYPE": "카드할인",
         "BENEFIT_DETAIL": "8% 카드 분담 행사",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3686,7 +6006,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 2658200,
+        "DAILY_TREND": [
+            0,
+            204600,
+            548900,
+            -1300,
+            0,
+            0,
+            0,
+            287900,
+            135600,
+            176800,
+            0,
+            0,
+            0,
+            1305700
+        ]
     },
     {
         "BRAND": "ST",
@@ -3703,7 +6040,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -3720,7 +6067,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -3737,7 +6094,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 7713000,
+        "DAILY_TREND": [
+            963400,
+            5223300,
+            -140000,
+            0,
+            1385300,
+            0,
+            281000
+        ]
     },
     {
         "BRAND": "V",
@@ -3754,7 +6121,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 7% 쿠폰 (최대 2만/더카트 부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 1119300,
+        "DAILY_TREND": [
+            -505000,
+            -488000,
+            494000,
+            0,
+            622300,
+            283000,
+            713000
+        ]
     },
     {
         "BRAND": "V",
@@ -3771,7 +6148,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "방한용품 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": -388000,
+        "DAILY_TREND": [
+            283000,
+            713000,
+            0,
+            -395000,
+            553000,
+            0,
+            0,
+            -756000,
+            0,
+            -159000,
+            -802000,
+            0,
+            0,
+            175000
+        ]
     },
     {
         "BRAND": "V",
@@ -3788,7 +6182,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 5%, 10% 쿠폰(최대 5천, 2만/더카트 부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": -1384000,
+        "DAILY_TREND": [
+            0,
+            -395000,
+            553000,
+            0,
+            0,
+            -756000,
+            0,
+            -159000,
+            -802000,
+            0,
+            0,
+            175000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -3805,7 +6216,18 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -3822,7 +6244,18 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -3839,7 +6272,23 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -3856,7 +6305,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -3873,7 +6332,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "방한용품 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 10979000,
+        "DAILY_TREND": [
+            13144400,
+            0,
+            1306300,
+            790000,
+            70300,
+            -2211000,
+            -2121000
+        ]
     },
     {
         "BRAND": "V",
@@ -3890,7 +6359,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "방한용품, 이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 3068000,
+        "DAILY_TREND": [
+            2655000,
+            0,
+            413000,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -3907,7 +6386,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -3924,7 +6413,11 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "이월 10% / 쇼핑백쿠폰 15% ? / 5% 페이백",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -3941,7 +6434,18 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -3958,7 +6462,23 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -3975,7 +6495,21 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10%",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -3992,7 +6526,20 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4009,7 +6556,25 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": -3443700,
+        "DAILY_TREND": [
+            -5809600,
+            -3441400,
+            -14813000,
+            4223400,
+            -15673000,
+            0,
+            10246000,
+            -2969700,
+            3873300,
+            -368600,
+            0,
+            7789600,
+            0,
+            7732300,
+            5767000
+        ]
     },
     {
         "BRAND": "V",
@@ -4026,7 +6591,24 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "100/70/50만원 이상 구매 시 10/7/5만원 쿠폰 (SSF부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 49561600,
+        "DAILY_TREND": [
+            -2969700,
+            3873300,
+            -368600,
+            0,
+            7789600,
+            0,
+            7732300,
+            5767000,
+            4617000,
+            10252000,
+            5458400,
+            -1597000,
+            0,
+            9007300
+        ]
     },
     {
         "BRAND": "V",
@@ -4043,7 +6625,25 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 44586100,
+        "DAILY_TREND": [
+            5767000,
+            4617000,
+            10252000,
+            5458400,
+            -1597000,
+            0,
+            9007300,
+            3569700,
+            -335300,
+            -468000,
+            -182000,
+            -2000000,
+            0,
+            6233000,
+            4264000
+        ]
     },
     {
         "BRAND": "V",
@@ -4060,7 +6660,21 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10%, 15% 쿠폰 (최대 10만/SSF부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": -92300,
+        "DAILY_TREND": [
+            -335300,
+            -468000,
+            -182000,
+            -2000000,
+            0,
+            6233000,
+            4264000,
+            -976000,
+            -3646000,
+            -4141000,
+            1159000
+        ]
     },
     {
         "BRAND": "V",
@@ -4077,7 +6691,25 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "방한용품 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 4117400,
+        "DAILY_TREND": [
+            3569700,
+            -335300,
+            -468000,
+            -182000,
+            -2000000,
+            0,
+            6233000,
+            4264000,
+            -976000,
+            -3646000,
+            -4141000,
+            1159000,
+            0,
+            640000,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4094,7 +6726,25 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4111,7 +6761,18 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4128,7 +6789,23 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4145,7 +6822,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4162,7 +6849,14 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 다운로드 쿠폰 (최대 1만/반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 9150300,
+        "DAILY_TREND": [
+            0,
+            6125300,
+            0,
+            3025000
+        ]
     },
     {
         "BRAND": "V",
@@ -4179,7 +6873,17 @@
         "BENEFIT_TYPE": "카드할인",
         "BENEFIT_DETAIL": "8% 카드 청구 할인 (최대 10만/반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 36405700,
+        "DAILY_TREND": [
+            5352300,
+            5993000,
+            298000,
+            11601000,
+            5123100,
+            0,
+            8038300
+        ]
     },
     {
         "BRAND": "V",
@@ -4196,7 +6900,11 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "10% 다운로드 쿠폰 (최대 10만/반반부담)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 298000,
+        "DAILY_TREND": [
+            298000
+        ]
     },
     {
         "BRAND": "V",
@@ -4213,7 +6921,17 @@
         "BENEFIT_TYPE": "카드할인, 쿠폰",
         "BENEFIT_DETAIL": "8% 카드 즉시 할인 (최대 10만/반반부담), 방한용품 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 14711200,
+        "DAILY_TREND": [
+            1309000,
+            1059000,
+            5218300,
+            1532600,
+            -2275700,
+            0,
+            7868000
+        ]
     },
     {
         "BRAND": "V",
@@ -4230,7 +6948,17 @@
         "BENEFIT_TYPE": "카드할인, 쿠폰",
         "BENEFIT_DETAIL": "5% 카드 청구 할인 (최대 10만/SSG부담), 방한용품 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 9226400,
+        "DAILY_TREND": [
+            -2286000,
+            4175000,
+            2003000,
+            273000,
+            -402900,
+            0,
+            5464300
+        ]
     },
     {
         "BRAND": "V",
@@ -4247,7 +6975,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 5% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 5389800,
+        "DAILY_TREND": [
+            2663400,
+            -1575600,
+            1535000,
+            243000,
+            2080000,
+            0,
+            444000
+        ]
     },
     {
         "BRAND": "V",
@@ -4264,7 +7002,21 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 5% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 5389800,
+        "DAILY_TREND": [
+            2663400,
+            -1575600,
+            1535000,
+            243000,
+            2080000,
+            0,
+            444000,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4281,7 +7033,18 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰 (반반부담 요청)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4298,7 +7061,18 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4315,7 +7089,23 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4332,7 +7122,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4349,7 +7149,28 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "이월 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4366,7 +7187,35 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "방한용품 10% 쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 185020120,
+        "DAILY_TREND": [
+            404300,
+            14068500,
+            10755680,
+            16726100,
+            9962800,
+            9223860,
+            12711300,
+            6275900,
+            811150,
+            9479680,
+            9916700,
+            18080400,
+            6030400,
+            5285570,
+            16656790,
+            9232500,
+            1887400,
+            7856490,
+            19654600,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4383,7 +7232,42 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 104080530,
+        "DAILY_TREND": [
+            9479680,
+            9916700,
+            18080400,
+            6030400,
+            5285570,
+            16656790,
+            9232500,
+            1887400,
+            7856490,
+            19654600,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4400,7 +7284,29 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 104891680,
+        "DAILY_TREND": [
+            811150,
+            9479680,
+            9916700,
+            18080400,
+            6030400,
+            5285570,
+            16656790,
+            9232500,
+            1887400,
+            7856490,
+            19654600,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4417,7 +7323,35 @@
         "BENEFIT_TYPE": "사은품",
         "BENEFIT_DETAIL": "상품/구매금액별 사은품 증정",
         "GOAL_SALES": 0,
-        "MD_COMMENT": "방한슈즈 구매 시 스크런치 사은품 증정(20명)/신상 100만원 이상 구매 시 패딩크로스백 증정(20명)/다운 구매 시 쇼핑백,인박스 증정"
+        "MD_COMMENT": "방한슈즈 구매 시 스크런치 사은품 증정(20명)/신상 100만원 이상 구매 시 패딩크로스백 증정(20명)/다운 구매 시 쇼핑백,인박스 증정",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4434,7 +7368,36 @@
         "BENEFIT_TYPE": "쿠폰, 리워드",
         "BENEFIT_DETAIL": "기획전배너 X) 25FW SS 10%쿠폰 26SS 10% 적립",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 50759510,
+        "DAILY_TREND": [
+            2422560,
+            3130300,
+            2096480,
+            915820,
+            3138500,
+            1557760,
+            519290,
+            1082330,
+            3460520,
+            3299800,
+            6501000,
+            3591160,
+            4245700,
+            1478860,
+            2425510,
+            1072240,
+            2499630,
+            2189000,
+            2566490,
+            2566560,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4451,7 +7414,29 @@
         "BENEFIT_TYPE": "리워드",
         "BENEFIT_DETAIL": "브랜드데이 중복) 25FW SS 10%쿠폰 26SS 10% 적립",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 36978800,
+        "DAILY_TREND": [
+            1082330,
+            3460520,
+            3299800,
+            6501000,
+            3591160,
+            4245700,
+            1478860,
+            2425510,
+            1072240,
+            2499630,
+            2189000,
+            2566490,
+            2566560,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4468,7 +7453,29 @@
         "BENEFIT_TYPE": "사은품, 쿠폰",
         "BENEFIT_DETAIL": "브랜드데이 중복) 24F 추가 노출",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 36978800,
+        "DAILY_TREND": [
+            1082330,
+            3460520,
+            3299800,
+            6501000,
+            3591160,
+            4245700,
+            1478860,
+            2425510,
+            1072240,
+            2499630,
+            2189000,
+            2566490,
+            2566560,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4485,7 +7492,30 @@
         "BENEFIT_TYPE": "리워드",
         "BENEFIT_DETAIL": "30만원이상 7%리워드, 50만원이상 10%리워드 + 사은품",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4502,7 +7532,30 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4519,7 +7572,30 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "26S 10% 쿠폰 + 사은품",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4536,7 +7612,18 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 15901000,
+        "DAILY_TREND": [
+            3130300,
+            2096480,
+            915820,
+            3138500,
+            1557760,
+            519290,
+            1082330,
+            3460520
+        ]
     },
     {
         "BRAND": "ST",
@@ -4553,7 +7640,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 9821680,
+        "DAILY_TREND": [
+            2499630,
+            2189000,
+            2566490,
+            2566560,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4570,7 +7667,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 0,
+        "DAILY_TREND": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4587,7 +7694,25 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "20/40만원 이상 구매시 3/5만원 금액할인(전상품)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 55389100,
+        "DAILY_TREND": [
+            0,
+            3201000,
+            -26000,
+            3524900,
+            -147900,
+            2958000,
+            0,
+            0,
+            13594700,
+            9672800,
+            11037800,
+            3995000,
+            7578800,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4604,7 +7729,20 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "공통: 아우터5만, 전상품 10%(카카오플친 10%대응), 온라인단독: 플라잉스커트 신상 2만할인, 사은품(요가매트&모자)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 33646900,
+        "DAILY_TREND": [
+            5415800,
+            0,
+            0,
+            2671900,
+            0,
+            0,
+            0,
+            28404200,
+            -2845000,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4621,7 +7759,24 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "1) 24SS 30% 주문서 쿠폰\n2) AO 시그니처 컬러(블루/화이트) 제품 구매 시 댐프너 증정\n적용상품: 24SS FW 84sku)",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 87199200,
+        "DAILY_TREND": [
+            13594700,
+            9672800,
+            11037800,
+            3995000,
+            7578800,
+            0,
+            0,
+            18931700,
+            7720800,
+            5210000,
+            4041800,
+            5415800,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4638,7 +7793,16 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "DJ DV PD (24F 25sku, 23F 13sku-재출고 30%) 24F 30% 쿠폰, 23F 재출고 30% 고객혜택가",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 6309000,
+        "DAILY_TREND": [
+            -26000,
+            3524900,
+            -147900,
+            2958000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4655,7 +7819,28 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "2만원 할인 → 매쉬 TWSK12153(2.11~28) 백플리츠 TWSK22151(2.17~28) ",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 88213500,
+        "DAILY_TREND": [
+            2143000,
+            2666000,
+            1821900,
+            2428700,
+            0,
+            0,
+            5524000,
+            6901900,
+            13154000,
+            14310900,
+            10163600,
+            0,
+            0,
+            1102000,
+            44206700,
+            1927000,
+            -978000,
+            -17158200
+        ]
     },
     {
         "BRAND": "ST",
@@ -4672,7 +7857,17 @@
         "BENEFIT_TYPE": "쿠폰",
         "BENEFIT_DETAIL": "> 적용상품: 24SS\r\n> 혜택: 상시 40% + 10% 주문서쿠폰",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 50054400,
+        "DAILY_TREND": [
+            5524000,
+            6901900,
+            13154000,
+            14310900,
+            10163600,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "ST",
@@ -4689,7 +7884,21 @@
         "BENEFIT_TYPE": "쿠폰, 사은품",
         "BENEFIT_DETAIL": "단품 구매시 2만원 주문서 쿠폰\n세트 구매시 5만원 주문서 쿠폰 + 24FW 양말 사은품",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 73629900,
+        "DAILY_TREND": [
+            6901900,
+            13154000,
+            14310900,
+            10163600,
+            0,
+            0,
+            1102000,
+            44206700,
+            1927000,
+            -978000,
+            -17158200
+        ]
     },
     {
         "BRAND": "ST",
@@ -4706,7 +7915,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "MKT STO 캠페인컷 릴리즈 1차",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 45066600,
+        "DAILY_TREND": [
+            2716900,
+            2883000,
+            158000,
+            6401800,
+            0,
+            0,
+            32906900
+        ]
     },
     {
         "BRAND": "ST",
@@ -4723,7 +7942,17 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "IMC 맨투맨",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 23454500,
+        "DAILY_TREND": [
+            44206700,
+            1927000,
+            -978000,
+            -17158200,
+            -4543000,
+            0,
+            0
+        ]
     },
     {
         "BRAND": "V",
@@ -4740,7 +7969,28 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 17660400,
+        "DAILY_TREND": [
+            -2570400,
+            10741900,
+            -3077700,
+            1291800,
+            5088100,
+            2512100,
+            3051600,
+            1560800,
+            -2500300,
+            383300,
+            -4033900,
+            574300,
+            1358000,
+            -623000,
+            3001700,
+            -235300,
+            -579600,
+            1717000
+        ]
     },
     {
         "BRAND": "V",
@@ -4757,7 +8007,39 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 73196570,
+        "DAILY_TREND": [
+            4664500,
+            2470400,
+            3242500,
+            2764100,
+            3574500,
+            2731400,
+            3194600,
+            2025500,
+            1685500,
+            311000,
+            -1917500,
+            3171000,
+            2428000,
+            3371900,
+            1454000,
+            1035500,
+            -1550500,
+            2204000,
+            2959900,
+            2275000,
+            1604670,
+            -330000,
+            5762400,
+            3298000,
+            3150400,
+            8201900,
+            3657000,
+            5543400,
+            213500
+        ]
     },
     {
         "BRAND": "V",
@@ -4774,7 +8056,39 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 56188520,
+        "DAILY_TREND": [
+            1374400,
+            3885300,
+            1173000,
+            4377000,
+            -1236000,
+            1452600,
+            -395100,
+            1822000,
+            375620,
+            -1950300,
+            5371400,
+            2765700,
+            966000,
+            4664500,
+            2470400,
+            3242500,
+            2764100,
+            3574500,
+            2731400,
+            3194600,
+            2025500,
+            1685500,
+            311000,
+            -1917500,
+            3171000,
+            2428000,
+            3371900,
+            1454000,
+            1035500
+        ]
     },
     {
         "BRAND": "V",
@@ -4791,7 +8105,37 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 53778620,
+        "DAILY_TREND": [
+            3885300,
+            1173000,
+            4377000,
+            -1236000,
+            1452600,
+            -395100,
+            1822000,
+            375620,
+            -1950300,
+            5371400,
+            2765700,
+            966000,
+            4664500,
+            2470400,
+            3242500,
+            2764100,
+            3574500,
+            2731400,
+            3194600,
+            2025500,
+            1685500,
+            311000,
+            -1917500,
+            3171000,
+            2428000,
+            3371900,
+            1454000
+        ]
     },
     {
         "BRAND": "V",
@@ -4808,7 +8152,39 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 70917970,
+        "DAILY_TREND": [
+            2470400,
+            3242500,
+            2764100,
+            3574500,
+            2731400,
+            3194600,
+            2025500,
+            1685500,
+            311000,
+            -1917500,
+            3171000,
+            2428000,
+            3371900,
+            1454000,
+            1035500,
+            -1550500,
+            2204000,
+            2959900,
+            2275000,
+            1604670,
+            -330000,
+            5762400,
+            3298000,
+            3150400,
+            8201900,
+            3657000,
+            5543400,
+            213500,
+            2385900
+        ]
     },
     {
         "BRAND": "V",
@@ -4825,7 +8201,27 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 47658100,
+        "DAILY_TREND": [
+            8201900,
+            3657000,
+            5543400,
+            213500,
+            2385900,
+            3107100,
+            1115200,
+            -162000,
+            3084200,
+            3245600,
+            2133300,
+            2363500,
+            2002500,
+            3603500,
+            1358500,
+            3464000,
+            2341000
+        ]
     },
     {
         "BRAND": "V",
@@ -4842,6 +8238,33 @@
         "BENEFIT_TYPE": "",
         "BENEFIT_DETAIL": "",
         "GOAL_SALES": 0,
-        "MD_COMMENT": ""
+        "MD_COMMENT": "",
+        "ACTUAL_SALES": 60473620,
+        "DAILY_TREND": [
+            -162000,
+            3084200,
+            3245600,
+            2133300,
+            2363500,
+            2002500,
+            3603500,
+            1358500,
+            3464000,
+            2341000,
+            3298500,
+            5919700,
+            4505100,
+            4631000,
+            1323900,
+            3688500,
+            4637900,
+            -644500,
+            3468500,
+            -1089780,
+            416000,
+            2747900,
+            2815500,
+            1321300
+        ]
     }
 ]
