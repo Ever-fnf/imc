@@ -21,8 +21,8 @@
         .sticky-left-col { position: sticky; left: 0; z-index: 40; background: white; border-right: 1px solid #e2e8f0; box-shadow: 4px 0 8px rgba(0,0,0,0.02); }
         .kpi-table th, .kpi-table td { white-space: nowrap; padding: 12px 18px; }
         .kpi-table th { background-color: #f8fafc; color: #64748b; font-weight: 700; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; }
-        .kpi-table td { border-bottom: 1px solid #f1f5f9; font-size: 13px; font-weight: 500; color: #334155; }
-        .kpi-table .total-col { background-color: #f8fafc; font-weight: 800; color: #1e293b; border-left: 2px solid #e2e8f0; }
+        .kpi-table td { border-bottom: 1px solid #f1f5f9; font-size: 13px; font-weight: 500; }
+        .kpi-table .total-col { background-color: #f8fafc; font-weight: 800; border-left: 2px solid #e2e8f0; }
         .accordion-content { transition: max-height 0.3s ease-in-out, opacity 0.3s; max-height: 1000px; opacity: 1; overflow: hidden; }
         .accordion-content.collapsed { max-height: 0; opacity: 0; }
         .rotate-icon { transition: transform 0.3s; }
@@ -500,8 +500,8 @@
             const fmt = n => n.toLocaleString();
             let trGoal = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">목표 (Goal)</td>';
             let totalGoal = 0;
-            activeList.forEach(ch => { const val = goalSums[ch]; totalGoal += val; trGoal += `<td>${fmt(val)}</td>`; });
-            trGoal += `<td class="total-col sticky right-0">${fmt(totalGoal)}</td></tr>`;
+            activeList.forEach(ch => { const val = goalSums[ch]; totalGoal += val; trGoal += `<td class="text-slate-600">${fmt(val)}</td>`; });
+            trGoal += `<td class="total-col sticky right-0 text-slate-800">${fmt(totalGoal)}</td></tr>`;
 
             let trRev = '<tr><td class="font-bold text-slate-600 sticky left-0 bg-white z-10 border-r border-slate-100">실적 (Revenue)</td>';
             let totalRev = 0;
