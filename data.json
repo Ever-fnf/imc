@@ -4406,7 +4406,7 @@
         "IMAGE_URL": "",
         "BENEFIT_TYPE": "쿠폰, 사은품, 리워드",
         "BENEFIT_DETAIL": "이월 10%+윈터악세 10% 단독최저가",
-        "GOAL_SALES": 0,
+        "GOAL_SALES": 70000,
         "MD_COMMENT": "금액사은품 크로스백OR스크런치, 구매적립 리워드",
         "ACTUAL_SALES": 116866400,
         "DAILY_TREND": [
@@ -4432,7 +4432,7 @@
         "IMAGE_URL": "",
         "BENEFIT_TYPE": "쿠폰, 사은품, 리워드",
         "BENEFIT_DETAIL": "이월 10%+윈터악세 10% 단독최저가",
-        "GOAL_SALES": 0,
+        "GOAL_SALES": 20000,
         "MD_COMMENT": "금액사은품 크로스백OR스크런치, 구매적립 리워드",
         "ACTUAL_SALES": 0,
         "DAILY_TREND": [
